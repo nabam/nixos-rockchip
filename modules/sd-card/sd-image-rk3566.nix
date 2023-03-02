@@ -5,7 +5,11 @@
     <nixpkgs/nixos/modules/installer/sd-card/sd-image.nix>
   ];
 
-  boot = {
+  options = {
+    rk3566.uBoot = lib.mkOption {};
+  };
+
+  config.boot = {
     consoleLogLevel = lib.mkDefault 7;
     kernelPackages = pkgs.linuxPackages_latest;
 
@@ -15,8 +19,8 @@
     };
   };
 
-  sdImage = let
-    ubootQuartz64 = pkgs.callPackage ../../pkgs/uboot-rk3566.nix {};
+  config.sdImage = let
+    uBoot = config.rk3566.uBoot;
 
     idbloaderOffset = 64; # 0x40
     ubootOffset = 16384; # 0x4000
@@ -26,7 +30,7 @@
   {
     compressImage = false;
 
-    # Override expension script built into sd-image.nix module as it fails to identify partition number correctly
+    # Override expansion script built into sd-image.nix module as it fails to identify partition number correctly
     expandOnBoot = false;
 
     # Module sd-image.nix always creates special firmware partition for RPi,
@@ -37,8 +41,8 @@
     # Overwrite firmware partition with u-boot bootloader
     postBuildCommands = ''
       sfdisk --part-type "$img" 1 DA # mark patition as "Non-FS data"
-      dd if="${ubootQuartz64}/idbloader.img" of="$img" conv=fsync,notrunc bs=16M seek=${toString (idbloaderOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
-      dd if="${ubootQuartz64}/u-boot.itb" of="$img" conv=fsync,notrunc bs=16M seek=${toString (ubootOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+      dd if="${uBoot}/idbloader.img" of="$img" conv=fsync,notrunc bs=16M seek=${toString (idbloaderOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+      dd if="${uBoot}/u-boot.itb" of="$img" conv=fsync,notrunc bs=16M seek=${toString (ubootOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
       sfdisk -d "$img"
     '';
     # Fill the root partition with this nix configuration in /etc/nixos
@@ -49,7 +53,7 @@
   };
 
   # Get rid of the firmware partition
-  fileSystems = lib.mkForce {
+  config.fileSystems = lib.mkForce {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
@@ -57,7 +61,7 @@
   };
 
   # Override commands from sd-image.nix module as it fails to identify partition number correctly
-  boot.postBootCommands = lib.mkBefore ''
+  config.boot.postBootCommands = lib.mkBefore ''
     # On the first boot do some maintenance tasks
     if [ -f /nix-path-registration ]; then
       set -euo pipefail

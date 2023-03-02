@@ -3,7 +3,7 @@
 with (import (<nixpkgs/nixos/lib/eval-config.nix>) {
   modules = [ 
       <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
-      ../modules/sd-card/sd-image-rk3566.nix
+      ../modules/sd-card/sd-image-quartz64a.nix
       ./config.nix
   ];
 });

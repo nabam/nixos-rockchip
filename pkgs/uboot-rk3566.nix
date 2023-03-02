@@ -32,7 +32,6 @@ let
     ];
 
     preConfigure = ''
-        make mrproper
         ln -sf ${rkbin}/bin/rk35/rk3568_bl31_v1.34.elf ./bl31.elf
         ln -sf ${rkbin}/bin/rk35/rk3566_ddr_1056MHz_v1.13.bin ./ram_init.bin
     '';

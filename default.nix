@@ -4,7 +4,9 @@ let
   quartz64a = with (import (<nixpkgs/nixos/lib/eval-config.nix>) {
     modules = [
         ./modules/sd-card/sd-image-rk3566-installer.nix
-        ./modules/sd-card/sd-image-quartz64a.nix
+        {
+          rk3566.uBoot = (pkgs.callPackage ./pkgs/uboot-rk3566.nix {}).uBootQuartz64A;
+        }
     ];
   }); {
     inherit (config.system.build) sdImage;
@@ -13,7 +15,9 @@ let
   quartz64b = with (import (<nixpkgs/nixos/lib/eval-config.nix>) {
     modules = [
         ./modules/sd-card/sd-image-rk3566-installer.nix
-        ./modules/sd-card/sd-image-quartz64b.nix
+        {
+          rk3566.uBoot = (pkgs.callPackage ./pkgs/uboot-rk3566.nix {}).uBootQuartz64B;
+        }
     ];
   }); {
     inherit (config.system.build) sdImage;
@@ -22,7 +26,9 @@ let
   soquartz = with (import (<nixpkgs/nixos/lib/eval-config.nix>) {
     modules = [
         ./modules/sd-card/sd-image-rk3566-installer.nix
-        ./modules/sd-card/sd-image-soquartz.nix
+        {
+          rk3566.uBoot = (pkgs.callPackage ./pkgs/uboot-rk3566.nix {}).uBootSoQuartz;
+        }
     ];
   }); {
     inherit (config.system.build) sdImage;

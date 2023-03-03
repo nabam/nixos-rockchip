@@ -24,9 +24,9 @@
       kernel = pkgs.callPackage ./pkgs/linux-rockchip.nix { pkgs = pkgsUnstable; };
 
       boards = {
-        "Quartz64A"      = { uBoot = uBoot.uBootQuartz64A; kernel = kernel.linux_6_1_rockchip; };
-        "Quartz64B"      = { uBoot = uBoot.uBootQuartz64B; kernel = kernel.linux_6_1_rockchip; };
-        "SoQuartzModelA" = { uBoot = uBoot.uBootSoQuartzModelA;  kernel = kernel.linux_6_2_rockchip; };
+        "Quartz64A"      = { uBoot = uBoot.uBootQuartz64A;      kernel = kernel.linux_6_1_rockchip; };
+        "Quartz64B"      = { uBoot = uBoot.uBootQuartz64B;      kernel = kernel.linux_6_1_rockchip; };
+        "SoQuartzModelA" = { uBoot = uBoot.uBootSoQuartzModelA; kernel = kernel.linux_6_2_rockchip; };
         "SoQuartzCM4"    = { uBoot = uBoot.uBootSoQuartzCM4IO;  kernel = kernel.linux_6_2_rockchip; };
         "SoQuartzBlade"  = { uBoot = uBoot.uBootSoQuartzBlade;  kernel = kernel.linux_6_2_rockchip; };
       };

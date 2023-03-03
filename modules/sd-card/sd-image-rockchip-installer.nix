@@ -1,8 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, modulesPath, ... }:
 {
   imports = [
-    <nixpkgs/nixos/modules/profiles/installation-device.nix>
-    ./sd-image-rk3566.nix
+    (modulesPath + "/profiles/installation-device.nix")
+    ./sd-image-rockchip.nix
   ];
 
   # the installation media is also the installation target,

@@ -1,17 +1,17 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, modulesPath, ... }:
 {
   imports = [
-    <nixpkgs/nixos/modules/profiles/base.nix>
-    <nixpkgs/nixos/modules/installer/sd-card/sd-image.nix>
+    (modulesPath + "/profiles/base.nix")
+    (modulesPath + "/installer/sd-card/sd-image.nix")
   ];
 
   options = {
-    rk3566.uBoot = lib.mkOption {};
+    rockchip.uBoot = lib.mkOption {};
   };
 
   config.boot = {
     consoleLogLevel = lib.mkDefault 7;
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = lib.mkDefault (pkgs.callPackage ../../pkgs/linux-rockchip.nix {}).linux_6_1;
 
     loader = {
       grub.enable = false;
@@ -20,7 +20,7 @@
   };
 
   config.sdImage = let
-    uBoot = config.rk3566.uBoot;
+    uBoot = config.rockchip.uBoot;
 
     idbloaderOffset = 64; # 0x40
     ubootOffset = 16384; # 0x4000
@@ -40,7 +40,7 @@
     populateFirmwareCommands = "";
     # Overwrite firmware partition with u-boot bootloader
     postBuildCommands = ''
-      sfdisk --part-type "$img" 1 DA # mark patition as "Non-FS data"
+      sfdisk --part-type "$img" 1 DA # mark partition as "Non-FS data"
       dd if="${uBoot}/idbloader.img" of="$img" conv=fsync,notrunc bs=16M seek=${toString (idbloaderOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
       dd if="${uBoot}/u-boot.itb" of="$img" conv=fsync,notrunc bs=16M seek=${toString (ubootOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
       sfdisk -d "$img"

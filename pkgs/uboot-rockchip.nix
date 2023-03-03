@@ -12,10 +12,10 @@ let
     src = fetchFromGitHub {
       owner = "u-boot";
       repo = "u-boot";
-      rev = "v2022.04-rc1";
-      sha256 = "grFRNvr/Z5tQxqj/16q3JpD/ncLozdqSKfYZqa1SGzg=";
+      rev = "v2023.04-rc1";
+      sha256 = "";
     };
-    version = "v2022.04-rc1-quartz64-2ea8c1c";
+    version = "v2023.04-rc1-quartz64-2ea8c1c";
   in buildUBoot {
     src = src;
     version = version;
@@ -26,8 +26,8 @@ let
     patches = [
       (fetchpatch {
         name = "quartz64.patch";
-        url = "https://github.com/CounterPillow/u-boot-quartz64/compare/df887a045a1d726bbd654ef266e5cbe8cc0c2db3...2ea8c1c4db6d739273ae3821970c02e9d3b6180b.diff";
-        sha256 = "tA0wuallJVoA585zpGWywQco/iBKQMBBKH4ReXme8Uc=";
+        url = "https://github.com/CounterPillow/u-boot-quartz64/compare/v2023.04-rc1...be645fef058885e2fc9882e839dacd6941693ac6.diff";
+        sha256 = "";
       })
     ];
 
@@ -42,7 +42,7 @@ let
     };
   };
 in {
-  uBootSoQuartz  = buildRK3566UBoot "soquartz-rk3566_defconfig";
-  uBootQuartz64B = buildRK3566UBoot "quartz64-b-rk3566_defconfig";
   uBootQuartz64A = buildRK3566UBoot "quartz64-a-rk3566_defconfig";
+  uBootQuartz64B = buildRK3566UBoot "quartz64-b-rk3566_defconfig";
+  uBootSoQuartz  = buildRK3566UBoot "soquartz-rk3566_defconfig";
 }

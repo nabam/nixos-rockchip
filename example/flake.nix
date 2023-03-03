@@ -21,8 +21,8 @@
           ./config.nix
           { 
             rockchip.uBoot = inputs.rockchip.uBoot.uBootQuartz64A; 
-            # boot.kernelPackages = inputs.rockchip.kernel.linux_6_1;
-            boot.kernelPackages = inputs.rockchip.kernel.linux_6_1_rockchip;
+            boot.kernelPackages = inputs.rockchip.kernel.linux_6_1;
+            # boot.kernelPackages = inputs.rockchip.kernel.linux_6_1_rockchip;
           }
         ];
         specialArgs = {

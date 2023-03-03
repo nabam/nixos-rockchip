@@ -17,7 +17,7 @@
       kernel = pkgs.callPackage ./pkgs/linux-rockchip.nix {};
 
       boards = {
-        "Quartz64A" = { uBoot = uBoot.uBootQuartz64A; kernel = kernel.linux_6_1; };
+        "Quartz64A" = { uBoot = uBoot.uBootQuartz64A; kernel = kernel.linux_6_1_rockchip; };
         "Quartz64B" = { uBoot = uBoot.uBootQuartz64B; kernel = kernel.linux_6_1_rockchip; };
         "SoQuartz" =  { uBoot = uBoot.uBootSoQuartz;  kernel = kernel.linux_6_1_rockchip; };
       };

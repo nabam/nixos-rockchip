@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "nixpkgs-22-11": {
+    "nixpkgsStable": {
       "locked": {
         "lastModified": 1677779205,
         "narHash": "sha256-6DBjL9wjq86p2GczmwnHtFRnWPBPItc67gapWENBgX8=",
@@ -16,7 +16,7 @@
         "type": "github"
       }
     },
-    "nixpkgs-unstable": {
+    "nixpkgsUnstable": {
       "locked": {
         "lastModified": 1677676435,
         "narHash": "sha256-6FxdcmQr5JeZqsQvfinIMr0XcTyTuR7EXX0H3ANShpQ=",
@@ -34,8 +34,8 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs-22-11": "nixpkgs-22-11",
-        "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgsStable": "nixpkgsStable",
+        "nixpkgsUnstable": "nixpkgsUnstable",
         "utils": "utils"
       }
     },

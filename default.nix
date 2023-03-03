@@ -5,7 +5,7 @@ let
     with (import (<nixpkgs/nixos/lib/eval-config.nix>) {
       modules = [
           ./modules/sd-card/sd-image-rockchip-installer.nix
-          { rockchip.uBoot = uBoot;  }
+          { rockchip.uBoot = uBoot; boot.kernelPackages = kernel; }
       ];
     }); {
       inherit (config.system.build) sdImage;

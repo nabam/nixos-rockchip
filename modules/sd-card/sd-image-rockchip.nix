@@ -35,8 +35,8 @@
 
     # Module sd-image.nix always creates special firmware partition for RPi,
     # replace firmware partition with U-Boot after the image is ready.
-    firmwarePartitionOffset = idbloaderOffset;
-    firmwareSize = (ubootOffset + ubootSize - idbloaderOffset) / 2048;
+    firmwarePartitionOffset = ubootOffset / 2048;
+    firmwareSize = ubootSize / 2048;
     populateFirmwareCommands = "";
     # Overwrite firmware partition with u-boot bootloader
     postBuildCommands = ''
@@ -50,14 +50,6 @@
       mkdir -p ./files/boot
       ${config.boot.loader.generic-extlinux-compatible.populateCmd} -c ${config.system.build.toplevel} -d ./files/boot
     '';
-  };
-
-  # Get rid of the firmware partition
-  config.fileSystems = lib.mkForce {
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
-      fsType = "ext4";
-    };
   };
 
   # Override commands from sd-image.nix module as it fails to identify partition number correctly

@@ -2,10 +2,16 @@
   description = "Build NixOS images for rockchip based single computer boards";
 
   inputs = {
-    # rockchip.url = "github:nabam/nixos-rockchip";
-    rockchip.url = "path:..";
     utils.url    = "github:numtide/flake-utils";
     nixpkgs.url  = "github:NixOS/nixpkgs/nixos-22.11";
+
+    rockchip = {
+      # url = "github:nabam/nixos-rockchip";
+      url = "path:..";
+
+      inputs.utils.follows         = "utils";
+      inputs.nixpkgsStable.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, ... }@inputs:
@@ -19,7 +25,6 @@
         modules = [
           inputs.rockchip.nixosModules.sdImageRockchip
           inputs.rockchip.nixosModules.dtOverlayQuartz64ASATA
-          ( inputs.nixpkgs + "/nixos/modules/installer/cd-dvd/channel.nix" )
           ./config.nix
           { 
             rockchip.uBoot = inputs.rockchip.uBoot.uBootQuartz64A; 

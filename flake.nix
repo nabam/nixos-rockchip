@@ -11,13 +11,16 @@
     let
       pkgs = import inputs.nixpkgsStable {
         system = "aarch64-linux";
-        config = { allowUnfree = true; };
+        config = {
+          allowUnfree = true;
+        };
       };
 
       pkgsUnstable = import inputs.nixpkgsUnstable {
-        config.allowBroken = true; # ZFS is broken on linux 6.2 from unstable
         system = "aarch64-linux";
-        config = { allowUnfree = true; };
+        config = {
+          allowUnfree = true;
+        };
       };
 
       uBoot  = pkgs.callPackage ./pkgs/uboot-rockchip.nix {};
@@ -37,6 +40,7 @@
           modules = [
             self.nixosModules.sdImageRockchipInstaller
             { rockchip.uBoot = value.uBoot; boot.kernelPackages = value.kernel; }
+            { nixpkgs.overlays = [ (final: super: { zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; }); }) ]; } # ZFS is broken on linux 6.2 from unstable
           ];
           specialArgs = {
             inherit inputs;

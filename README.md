@@ -41,6 +41,11 @@ nix build .#image.Quartz64A .#image.Quartz64B .#image.SoQuartzModelA .#image.SoQ
 Check out [the example](/example) to see how custom images can be built with 
 this flake. To build the example run: `(cd example && nix flake update && nix build)`.
 
+### Cache
+
+Build cache is vailable on Cachix: [nabam-nixos-rockchip](https://app.cachix.org/cache/nabam-nixos-rockchip).
+Use it to speed up builds.
+
 #### Exported Modules
 ##### nixosModules.sdImageRockchip
 
@@ -58,17 +63,17 @@ Applies device tree overlay to enable SATA port on Quartz64A.
 
 | Board                | Attribute      | Status                                                                      |
 | ---------------------|----------------| --------------------------------------------------------------------------- |
-| Quartz64 Model A     | Quartz64A      | Tested  & Works                                                             |
-| Quartz64 Model B     | Quartz64A      | Tested  & Works                                                             |
-| SoQuartz Model A     | SoQuartzModelA | Tested  & Works                                                             |
-| SoQuartz CM4         | SoQuartzCM4    | Tested  & Works                                                             |
-| SoQuartz Blade       | SoQuartzBlade  | Tested  & Works                                                             |
-| [ROCK64][]           | Rock64         | Untested                                                                    |
-| [ROCKPro64][]        | RockPro64      | Untested                                                                    |
-| [roc-pc-rk3399][]    | RocPCRK3399    | Untested                                                                    |
+| Quartz64 Model A     | Quartz64A      | Tested & Works                                                             |
+| Quartz64 Model B     | Quartz64A      | Tested & Works                                                             |
+| SoQuartz Model A     | SoQuartzModelA | Tested & Works                                                             |
+| SoQuartz CM4         | SoQuartzCM4    | Tested & Works                                                             |
+| SoQuartz Blade       | SoQuartzBlade  | Tested & Works                                                             |
+| [Rock64][]           | Rock64         | Untested                                                                    |
+| [RockPro64][]        | RockPro64      | Untested                                                                    |
+| [ROC PC RK3399][]    | RocPCRK3399    | Untested                                                                    |
 | [Pinebook Pro][]     | PinebookPro    | Untested                                                                    |
 
 [Rock64]: https://nixos.wiki/wiki/NixOS_on_ARM/PINE64_ROCK64
 [RockPro64]: https://nixos.wiki/wiki/NixOS_on_ARM/PINE64_ROCKPro64
-[roc-pc-rk3399]: https://nixos.wiki/wiki/NixOS_on_ARM/Libre_Computer_ROC-RK3399-PC
-[PinebookPro]: https://nixos.wiki/wiki/NixOS_on_ARM/PINE64_Pinebook_Pro
+[ROC PC RK3399]: https://nixos.wiki/wiki/NixOS_on_ARM/Libre_Computer_ROC-RK3399-PC
+[Pinebook Pro]: https://nixos.wiki/wiki/NixOS_on_ARM/PINE64_Pinebook_Pro

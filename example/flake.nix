@@ -36,7 +36,9 @@
           inherit inputs;
         };
       };
-    in inputs.utils.lib.eachDefaultSystem (system: {
+    in {
+      nixosConfigurations.quartz64 = osConfig;
+    } // inputs.utils.lib.eachDefaultSystem ( system: {
       packages.image = osConfig.config.system.build.sdImage;
       defaultPackage = self.packages."${system}".image;
     });

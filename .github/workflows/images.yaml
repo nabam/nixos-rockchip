@@ -62,10 +62,9 @@ jobs:
         name: nabam-nixos-rockchip
         authToken: '${{ secrets.CACHIX_TOKEN }}'
         extraPullNames: nabam-nixos-rockchip
+        pushFilter: '(.*-nixos-sd-image-.*)\.img$'
     - run: |
         nix build -j4 .#image.${{ matrix.platform }}
-    - run: |
-        nix path-info --all | grep -v nixos-sd-image | cachix push nabam-nixos-rockchip
     - name: Get version
       id: version
       run: echo "::set-output name=version::$(find result/sd-image -name nixos-sd-image-*-aarch64-linux.img | cut -f5 -d-)"

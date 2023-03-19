@@ -9,11 +9,11 @@ firmware. Utilizes sd-card installer build infrastructure from nixpkgs.
 
 Check out `flake.nix` for the list of supported configurations. To build an
 installer sd-card image for desired platform using flake execute 
-`nix build github:nabam/nixos-rockchip#image.Quartz64A` or `nix build .#image.Quartz64A`
+`nix build github:nabam/nixos-rockchip#Quartz64A` or `nix build .#Quartz64A`
 (Quartz 64 A in this example). Without flakes: `nix-build -A Quartz64A`.
 
 ``` console
-$ nix build github:nabam/nixos-rockchip#image.Quartz64A
+$ nix build github:nabam/nixos-rockchip#Quartz64A
 $ sfdisk --dump result/sd-image/nixos-sd-image-*.img
 label: dos
 label-id: 0x2178694e
@@ -33,7 +33,7 @@ $ sudo dd if=./result/sd-image/nixos-sd-image-*.img of=/dev/mmcblk0 iflag=direct
 
 To build all images run:
 ``` console
-nix build .#image.Quartz64A .#image.Quartz64B .#image.SoQuartzModelA .#image.SoQuartzCM4 .#image.SoQuartzBlade .#image.Rock64 .#image.RockPro64 .#image.RockPCRK3399 .#image.PinebookPro
+nix build .#Quartz64A .#Quartz64B .#SoQuartzModelA .#SoQuartzCM4 .#SoQuartzBlade .#Rock64 .#RockPro64 .#RockPCRK3399 .#PinebookPro
 ```
 
 ### Custom Image
@@ -59,19 +59,19 @@ Configures installer image build.
 
 Applies device tree overlay to enable SATA port on Quartz64A.
 
-## Supported platforms
+## Supported Boards
 
-| Board                | Attribute      | Status                                                                      |
-| ---------------------|----------------| --------------------------------------------------------------------------- |
-| Quartz64 Model A     | Quartz64A      | Tested & Works                                                             |
-| Quartz64 Model B     | Quartz64A      | Tested & Works                                                             |
-| SoQuartz Model A     | SoQuartzModelA | Tested & Works                                                             |
-| SoQuartz CM4         | SoQuartzCM4    | Tested & Works                                                             |
-| SoQuartz Blade       | SoQuartzBlade  | Tested & Works                                                             |
-| [Rock64][]           | Rock64         | Untested                                                                    |
-| [RockPro64][]        | RockPro64      | Untested                                                                    |
-| [ROC PC RK3399][]    | RocPCRK3399    | Untested                                                                    |
-| [Pinebook Pro][]     | PinebookPro    | Untested                                                                    |
+| Board                | Attribute      | Status          |
+| ---------------------|----------------| ----------------|
+| Quartz64 Model A     | Quartz64A      | Tested & Works  |
+| Quartz64 Model B     | Quartz64A      | Tested & Works  |
+| SoQuartz Model A     | SoQuartzModelA | Tested & Works  |
+| SoQuartz CM4         | SoQuartzCM4    | Tested & Works  |
+| SoQuartz Blade       | SoQuartzBlade  | Tested & Works  |
+| [Rock64][]           | Rock64         | Untested        |
+| [RockPro64][]        | RockPro64      | Untested        |
+| [ROC PC RK3399][]    | RocPCRK3399    | Untested        |
+| [Pinebook Pro][]     | PinebookPro    | Untested        |
 
 [Rock64]: https://nixos.wiki/wiki/NixOS_on_ARM/PINE64_ROCK64
 [RockPro64]: https://nixos.wiki/wiki/NixOS_on_ARM/PINE64_ROCKPro64

@@ -56,6 +56,8 @@
         (name: value: value.config.system.build.sdImage) osConfigs;
     in
     {
+      inherit uBoot kernel images;
+
       nixosModules = {
         sdImageRockchipInstaller = import ./modules/sd-card/sd-image-rockchip-installer.nix;
         sdImageRockchip = import ./modules/sd-card/sd-image-rockchip.nix;
@@ -64,7 +66,7 @@
     } // inputs.utils.lib.eachDefaultSystem
       (system:
         {
-          packages.image = images;
+          packages = images;
         }
       );
 }

@@ -56,7 +56,7 @@
         (name: value: value.config.system.build.sdImage) osConfigs;
     in
     {
-      inherit uBoot kernel images;
+      inherit uBoot kernel;
 
       nixosModules = {
         sdImageRockchipInstaller = import ./modules/sd-card/sd-image-rockchip-installer.nix;
@@ -66,7 +66,17 @@
     } // inputs.utils.lib.eachDefaultSystem
       (system:
         {
-          packages = images // { inherit kernel uBoot; };
+          packages = images // {
+            kernel_linux_6_1_rockchip = kernel.linux_6_1_rockchip.kernel;
+            kernel_linux_6_2_rockchip = kernel.linux_6_2_rockchip.kernel;
+
+            uBootQuartz64A = uBoot.uBootQuartz64A;
+            uBootQuartz64B = uBoot.uBootQuartz64B;
+
+            uBootSoQuartzModelA = uBoot.uBootSoQuartzModelA;
+            uBootSoQuartzCM4IO  = uBoot.uBootSoQuartzCM4IO;
+            uBootSoQuartzBlade  = uBoot.uBootSoQuartzBlade;
+          };
         }
       );
 }

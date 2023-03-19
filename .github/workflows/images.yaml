@@ -12,9 +12,31 @@ permissions:
   contents: write
 
 jobs:
+  build_linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: |
+        DEBIAN_FRONTEND=noninteractive
+        sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
+    - uses: cachix/install-nix-action@v20
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+          extra-platforms = aarch64-linux
+    - uses: cachix/cachix-action@v12
+      with:
+        name: nabam-nixos-rockchip
+        authToken: '${{ secrets.CACHIX_TOKEN }}'
+    - run: |
+        nix build -L -j4 .#kernel_linux_6_1_rockchip .#kernel_linux_6_2_rockchip \
+          .#uBootQuartz64A .#uBootQuartz64B .#uBootSoQuartzModelA .#uBootSoQuartzCM4IO \
+          .#uBootSoQuartzBlade
+
   create_release:
     runs-on: ubuntu-latest
-    
+    needs: build_linux
     steps:
     - uses: actions/checkout@v3
     - uses: cachix/install-nix-action@v20
@@ -30,7 +52,7 @@ jobs:
         echo "version=$(nix eval .#Quartz64A.imageName | cut -f4 -d-)" >> $GITHUB_OUTPUT
     - uses: mukunku/tag-exists-action@9298fbcc409758ba624a0ae16b83df86637cb8ce # v1.2.0
       id: checkTag
-      with: 
+      with:
         tag: v${{ steps.version.outputs.version }}
     - id: create_release
       uses: actions/create-release@v1
@@ -50,7 +72,6 @@ jobs:
     needs: create_release
     if: needs.create_release.outputs.upload_url != ''
     strategy:
-      max-parallel: 1
       matrix:
         board:
         - Quartz64A
@@ -86,7 +107,7 @@ jobs:
       run: |
         set -Eeuo pipefail
         FILE="$(sed --expression 's/\([A-Z]\)/-\L\1/g' --expression 's/^-//' <<< "${{ matrix.board }}")-nixos-sd-image-aarch64-linux.img.zst"
-        zstd -o ./$FILE ./result/sd-image/nixos-sd-image-${{ needs.create_release.outputs.version }}-aarch64-linux.img 
+        zstd -o ./$FILE ./result/sd-image/nixos-sd-image-${{ needs.create_release.outputs.version }}-aarch64-linux.img
         echo image=$FILE >> $GITHUB_OUTPUT
     - id: upload-release-asset
       uses: actions/upload-release-asset@v1

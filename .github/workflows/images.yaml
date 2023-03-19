@@ -78,7 +78,7 @@ jobs:
         authToken: '${{ secrets.CACHIX_TOKEN }}'
         pushFilter: '(.*-nixos-sd-image-.*)\.img$'
     - run: |
-        nix build -j4 .#${{ matrix.board }}
+        nix build -L -j4 .#${{ matrix.board }}
     - name: Compress with zstd
       id: zstd
       run: |

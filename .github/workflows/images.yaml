@@ -106,7 +106,7 @@ jobs:
       id: zstd
       run: |
         set -Eeuo pipefail
-        FILE="$(sed --expression 's/\([A-Z]\)/-\L\1/g' --expression 's/^-//' <<< "${{ matrix.board }}")-nixos-sd-image-aarch64-linux.img.zst"
+        FILE="$(sed --expression 's/\([A-Z][a-z]\)/-\L\1/g' --expression 's/\([a-z]\)\([A-Z]\)/\1-\L\2/g' --expression 's/\(.*\)/\L\1/g' --expression 's/^-//' <<< "${{ matrix.board }}")-nixos-sd-image-aarch64-linux.img.zst"
         zstd -o ./$FILE ./result/sd-image/nixos-sd-image-${{ needs.create_release.outputs.version }}-aarch64-linux.img
         echo image=$FILE >> $GITHUB_OUTPUT
     - id: upload-release-asset

@@ -32,6 +32,11 @@
         "SoQuartzModelA" = { uBoot = uBoot.uBootSoQuartzModelA; kernel = kernel.linux_6_2_rockchip; };
         "SoQuartzCM4"    = { uBoot = uBoot.uBootSoQuartzCM4IO;  kernel = kernel.linux_6_2_rockchip; };
         "SoQuartzBlade"  = { uBoot = uBoot.uBootSoQuartzBlade;  kernel = kernel.linux_6_2_rockchip; };
+
+        "Rock64"       = { uBoot = pkgs.ubootRock64;      kernel = kernel.linux_6_1_rockchip; };
+        "RockPro64"    = { uBoot = pkgs.ubootRockPro64;   kernel = kernel.linux_6_1_rockchip; };
+        "RockPCRK3399" = { uBoot = pkgs.ubootROCPCRK3399; kernel = kernel.linux_6_1_rockchip; };
+        "PinebookPro"  = { uBoot = pkgs.ubootPinebookPro; kernel = kernel.linux_6_1_rockchip; };
       };
 
       osConfigs = builtins.mapAttrs

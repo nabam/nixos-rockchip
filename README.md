@@ -33,7 +33,7 @@ $ sudo dd if=./result/sd-image/nixos-sd-image-*.img of=/dev/mmcblk0 iflag=direct
 
 To build all images run:
 ``` console
-nix build .#Quartz64A .#Quartz64B .#SoQuartzModelA .#SoQuartzCM4 .#SoQuartzBlade .#Rock64 .#RockPro64 .#RockPCRK3399 .#PinebookPro
+nix build .#Quartz64A .#Quartz64B .#SoQuartzModelA .#SoQuartzCM4 .#SoQuartzBlade .#Rock64 .#RockPro64 .#ROCPCRK3399 .#PinebookPro
 ```
 
 ### Custom Image
@@ -70,7 +70,7 @@ Applies device tree overlay to enable SATA port on Quartz64A.
 | SoQuartz Blade       | SoQuartzBlade  | Tested & Works  |
 | [Rock64][]           | Rock64         | Untested        |
 | [RockPro64][]        | RockPro64      | Untested        |
-| [ROC PC RK3399][]    | RocPCRK3399    | Untested        |
+| [ROC PC RK3399][]    | ROCPCRK3399    | Untested        |
 | [Pinebook Pro][]     | PinebookPro    | Untested        |
 
 [Rock64]: https://nixos.wiki/wiki/NixOS_on_ARM/PINE64_ROCK64

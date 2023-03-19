@@ -20,8 +20,8 @@ in {
   SoQuartzCM4IO  = ( buildImage { uBoot = uBoot.uBootSoQuartzCM4IO;  kernel = kernel.linux_6_2_rockchip; } ).sdImage;
   SoQuartzBlade  = ( buildImage { uBoot = uBoot.uBootSoQuartzBlade;  kernel = kernel.linux_6_2_rockchip; } ).sdImage;
 
-  Rock64       = ( buildImage { uBoot = pkgs.ubootRock64;      kernel = kernel.linux_6_1_rockchip; } ).sdImage;
-  RockPro64    = ( buildImage { uBoot = pkgs.ubootRockPro64;   kernel = kernel.linux_6_1_rockchip; } ).sdImage;
-  RockPCRK3399 = ( buildImage { uBoot = pkgs.ubootROCPCRK3399; kernel = kernel.linux_6_1_rockchip; } ).sdImage;
-  PinebookPro  = ( buildImage { uBoot = pkgs.ubootPinebookPro; kernel = kernel.linux_6_1_rockchip; } ).sdImage;
+  Rock64      = ( buildImage { uBoot = pkgs.ubootRock64;      kernel = kernel.linux_6_1_rockchip; } ).sdImage;
+  RockPro64   = ( buildImage { uBoot = pkgs.ubootRockPro64;   kernel = kernel.linux_6_1_rockchip; } ).sdImage;
+  ROKPCRK3399 = ( buildImage { uBoot = pkgs.ubootROCPCRK3399; kernel = kernel.linux_6_1_rockchip; } ).sdImage;
+  PinebookPro = ( buildImage { uBoot = pkgs.ubootPinebookPro; kernel = kernel.linux_6_1_rockchip; } ).sdImage;
 }

@@ -66,7 +66,7 @@
     } // inputs.utils.lib.eachDefaultSystem
       (system:
         {
-          packages = images;
+          packages = images // { inherit kernel uBoot; };
         }
       );
 }

@@ -14,9 +14,14 @@ let
   uBoot  = pkgs.callPackage ./pkgs/uboot-rockchip.nix {};
   kernel = pkgs.callPackage ./pkgs/linux-rockchip.nix {};
 in {
-  quartz64a      = ( buildImage { uBoot = uBoot.uBootQuartz64A;      kernel = kernel.linux_6_1_rockchip; } ).sdImage;
-  quartz64b      = ( buildImage { uBoot = uBoot.uBootQuartz64B;      kernel = kernel.linux_6_1_rockchip; } ).sdImage;
-  soQuartzModelA = ( buildImage { uBoot = uBoot.uBootSoQuartzModelA; kernel = kernel.linux_6_2_rockchip; } ).sdImage;
-  soQuartzCM4IO  = ( buildImage { uBoot = uBoot.uBootSoQuartzCM4IO;  kernel = kernel.linux_6_2_rockchip; } ).sdImage;
-  soQuartzBlade  = ( buildImage { uBoot = uBoot.uBootSoQuartzBlade;  kernel = kernel.linux_6_2_rockchip; } ).sdImage;
+  Quartz64A      = ( buildImage { uBoot = uBoot.uBootQuartz64A;      kernel = kernel.linux_6_1_rockchip; } ).sdImage;
+  Quartz64B      = ( buildImage { uBoot = uBoot.uBootQuartz64B;      kernel = kernel.linux_6_1_rockchip; } ).sdImage;
+  SoQuartzModelA = ( buildImage { uBoot = uBoot.uBootSoQuartzModelA; kernel = kernel.linux_6_2_rockchip; } ).sdImage;
+  SoQuartzCM4IO  = ( buildImage { uBoot = uBoot.uBootSoQuartzCM4IO;  kernel = kernel.linux_6_2_rockchip; } ).sdImage;
+  SoQuartzBlade  = ( buildImage { uBoot = uBoot.uBootSoQuartzBlade;  kernel = kernel.linux_6_2_rockchip; } ).sdImage;
+
+  Rock64       = ( buildImage { uBoot = pkgs.ubootRock64;      kernel = kernel.linux_6_1_rockchip; } ).sdImage;
+  RockPro64    = ( buildImage { uBoot = pkgs.ubootRockPro64;   kernel = kernel.linux_6_1_rockchip; } ).sdImage;
+  RockPCRK3399 = ( buildImage { uBoot = pkgs.ubootROCPCRK3399; kernel = kernel.linux_6_1_rockchip; } ).sdImage;
+  PinebookPro  = ( buildImage { uBoot = pkgs.ubootPinebookPro; kernel = kernel.linux_6_1_rockchip; } ).sdImage;
 }

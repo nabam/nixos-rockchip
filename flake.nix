@@ -9,27 +9,28 @@
 
   outputs = { self, ... }@inputs:
     let
-      pkgs = system: import inputs.nixpkgsStable {
-        inherit system;
-
+      crossSystemConfig = system: if system != "aarch64-linux" then {
         crossSystem = {
+          system = "aarch64-linux";
           config = "aarch64-unknown-linux-gnu";
         };
+      } else {};
+
+      pkgs = system: import inputs.nixpkgsStable ({
+        inherit system;
+
         config = {
           allowUnfree = true;
         };
-      };
+      } // crossSystemConfig system);
 
-      pkgsUnstable = system: import inputs.nixpkgsUnstable {
+      pkgsUnstable = system: import inputs.nixpkgsUnstable ({
         inherit system;
 
-        crossSystem = {
-          config = "aarch64-unknown-linux-gnu";
-        };
         config = {
           allowUnfree = true;
         };
-      };
+      } // crossSystemConfig system);
 
       uBoot  = system: (pkgs system).callPackage ./pkgs/uboot-rockchip.nix {};
       kernel = system: (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix {};
@@ -49,7 +50,8 @@
 
       osConfigs = system: builtins.mapAttrs
         (name: value: inputs.nixpkgsStable.lib.nixosSystem {
-          system = "arch64-linux";
+          system = "aarch64-linux";
+
           modules = [
             self.nixosModules.sdImageRockchipInstaller
             { rockchip.uBoot = value.uBoot; boot.kernelPackages = value.kernel; }

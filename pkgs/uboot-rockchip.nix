@@ -34,6 +34,14 @@ let
       touch board/pine64/quartz64-a-rk3566/quartz64-a-rk3566.c # required empty file, not created from patch
     '';
 
+    buildInputs = with pkgs; [
+      openssl # for cross-compilation
+
+      ncurses # tools/kwboot
+      libuuid # tools/mkeficapsule
+      gnutls # tools/mkeficapsule
+    ];
+
     nativeBuildInputs = with pkgs; [
       ncurses # tools/kwboot
       bc

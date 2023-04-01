@@ -20,6 +20,7 @@ let
     src = src;
     version = version;
     defconfig = defconfig;
+    extraMakeFlags = [ "CROSS_BUILD_TOOLS=1"];
     filesToInstall = [ "u-boot.itb" "idbloader.img"];
 
     patches = [
@@ -35,11 +36,10 @@ let
     '';
 
     buildInputs = with pkgs; [
-      openssl # for cross-compilation
-
       ncurses # tools/kwboot
       libuuid # tools/mkeficapsule
       gnutls # tools/mkeficapsule
+      openssl # tools/imagetool
     ];
 
     nativeBuildInputs = with pkgs; [

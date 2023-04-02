@@ -23,10 +23,13 @@
           inputs.rockchip.nixosModules.dtOverlayQuartz64ASATA
           ./config.nix
           { 
+            # Use cross-compilation for uBoot and Kernel
             rockchip.uBoot = (inputs.rockchip.uBoot system).uBootQuartz64A;
             # boot.kernelPackages = (inputs.rockchip.kernel system).linux_6_1;
             boot.kernelPackages = (inputs.rockchip.kernel system).linux_6_1_rockchip;
           }
+          # Cross-compiling the whole system is hard, install from caches or compile with emulation instead
+          # { nixpkgs.crossSystem.system = "aarch64-linux"; }
         ];
       };
     in {

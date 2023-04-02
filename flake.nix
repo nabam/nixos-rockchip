@@ -9,19 +9,16 @@
 
   outputs = { self, ... }@inputs:
     let
-      crossSystemConfig = {
-        crossSystem = {
-          system = "aarch64-linux";
-        };
+      # Use cross-compilation for uBoot and Kernel
+      pkgs = system: import inputs.nixpkgsStable {
+        inherit system;
+        crossSystem.system = "aarch64-linux";
       };
 
-      pkgs = system: import inputs.nixpkgsStable ({
+      pkgsUnstable = system: import inputs.nixpkgsUnstable {
         inherit system;
-      } // crossSystemConfig);
-
-      pkgsUnstable = system: import inputs.nixpkgsUnstable ({
-        inherit system;
-      } // crossSystemConfig);
+        crossSystem.system = "aarch64-linux";
+      };
 
       uBoot  = system: (pkgs system).callPackage ./pkgs/uboot-rockchip.nix {};
       kernel = system: (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix {};
@@ -47,6 +44,8 @@
             self.nixosModules.sdImageRockchipInstaller
             { rockchip.uBoot = value.uBoot; boot.kernelPackages = value.kernel; }
             { nixpkgs.overlays = [ (final: super: { zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; }); }) ]; } # ZFS is broken on linux 6.2 from unstable
+            # Cross-compiling the whole system is hard, install from caches or compile with emulation instead
+            # { nixpkgs.crossSystem.system = "aarch64-linux"; }
           ];
         }) (boards system);
 

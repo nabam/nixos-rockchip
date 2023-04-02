@@ -20,6 +20,7 @@ let
     src = src;
     version = version;
     defconfig = defconfig;
+    extraMakeFlags = [ "CROSS_BUILD_TOOLS=1"];
     filesToInstall = [ "u-boot.itb" "idbloader.img"];
 
     patches = [
@@ -33,6 +34,13 @@ let
     preConfigure = ''
       touch board/pine64/quartz64-a-rk3566/quartz64-a-rk3566.c # required empty file, not created from patch
     '';
+
+    buildInputs = with pkgs; [
+      ncurses # tools/kwboot
+      libuuid # tools/mkeficapsule
+      gnutls # tools/mkeficapsule
+      openssl # tools/imagetool
+    ];
 
     nativeBuildInputs = with pkgs; [
       ncurses # tools/kwboot

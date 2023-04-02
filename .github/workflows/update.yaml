@@ -18,12 +18,10 @@ jobs:
         extra_nix_config: |
           experimental-features = nix-command flakes
           extra-platforms = aarch64-linux
-
     - run: nix flake update
     - uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4.16.0
       with:
         commit_message: nix flake update
-
     - run: nix flake update
       working-directory: example
     - uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4.16.0

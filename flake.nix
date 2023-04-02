@@ -42,10 +42,10 @@
         "SoQuartzCM4"    = { uBoot = (uBoot system).uBootSoQuartzCM4IO;  kernel = (kernel system).linux_6_2_rockchip; };
         "SoQuartzBlade"  = { uBoot = (uBoot system).uBootSoQuartzBlade;  kernel = (kernel system).linux_6_2_rockchip; };
 
-        "Rock64"      = { uBoot = pkgs.ubootRock64;      kernel = kernel.linux_6_1_rockchip; };
-        "RockPro64"   = { uBoot = pkgs.ubootRockPro64;   kernel = kernel.linux_6_1_rockchip; };
-        "ROCPCRK3399" = { uBoot = pkgs.ubootROCPCRK3399; kernel = kernel.linux_6_1_rockchip; };
-        "PinebookPro" = { uBoot = pkgs.ubootPinebookPro; kernel = kernel.linux_6_1_rockchip; };
+        "Rock64"      = { uBoot = (pkgs system).ubootRock64;      kernel = (kernel system).linux_6_1_rockchip; };
+        "RockPro64"   = { uBoot = (pkgs system).ubootRockPro64;   kernel = (kernel system).linux_6_1_rockchip; };
+        "ROCPCRK3399" = { uBoot = (pkgs system).ubootROCPCRK3399; kernel = (kernel system).linux_6_1_rockchip; };
+        "PinebookPro" = { uBoot = (pkgs system).ubootPinebookPro; kernel = (kernel system).linux_6_1_rockchip; };
       };
 
       osConfigs = system: builtins.mapAttrs

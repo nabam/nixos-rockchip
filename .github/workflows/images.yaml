@@ -60,6 +60,7 @@ jobs:
       with:
         name: nabam-nixos-rockchip
         authToken: '${{ secrets.CACHIX_TOKEN }}'
+        pushFilter: '(-nixos-sd-image-.*)\.img$|-ext4-fs\.img$'
     - working-directory: ./example
       run: |
         nix build -L -j4

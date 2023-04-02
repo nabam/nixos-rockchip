@@ -45,7 +45,7 @@
             { rockchip.uBoot = value.uBoot; boot.kernelPackages = value.kernel; }
             { nixpkgs.overlays = [ (final: super: { zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; }); }) ]; } # ZFS is broken on linux 6.2 from unstable
             # Cross-compiling the whole system is hard, install from caches or compile with emulation instead
-            # { nixpkgs.crossSystem.system = "aarch64-linux"; }
+            # { nixpkgs.crossSystem.system = "aarch64-linux"; nixpkgs.system = system;}
           ];
         }) (boards system);
 

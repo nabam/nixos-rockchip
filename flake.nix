@@ -9,28 +9,19 @@
 
   outputs = { self, ... }@inputs:
     let
-      crossSystemConfig = system: if system != "aarch64-linux" then {
+      crossSystemConfig = {
         crossSystem = {
           system = "aarch64-linux";
-          config = "aarch64-unknown-linux-gnu";
         };
-      } else {};
+      };
 
       pkgs = system: import inputs.nixpkgsStable ({
         inherit system;
-
-        config = {
-          allowUnfree = true;
-        };
-      } // crossSystemConfig system);
+      } // crossSystemConfig);
 
       pkgsUnstable = system: import inputs.nixpkgsUnstable ({
         inherit system;
-
-        config = {
-          allowUnfree = true;
-        };
-      } // crossSystemConfig system);
+      } // crossSystemConfig);
 
       uBoot  = system: (pkgs system).callPackage ./pkgs/uboot-rockchip.nix {};
       kernel = system: (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix {};
@@ -57,9 +48,6 @@
             { rockchip.uBoot = value.uBoot; boot.kernelPackages = value.kernel; }
             { nixpkgs.overlays = [ (final: super: { zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; }); }) ]; } # ZFS is broken on linux 6.2 from unstable
           ];
-          specialArgs = {
-            inherit inputs;
-          };
         }) (boards system);
 
       images = system: builtins.mapAttrs

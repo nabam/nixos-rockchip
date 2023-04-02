@@ -28,9 +28,6 @@
             boot.kernelPackages = (inputs.rockchip.kernel system).linux_6_1_rockchip;
           }
         ];
-        specialArgs = {
-          inherit inputs;
-        };
       };
     in {
       nixosConfigurations.quartz64 = osConfig "aarch64-linux";

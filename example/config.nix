@@ -42,5 +42,7 @@
 
   # Automatically log in at the virtual consoles.
   services.getty.autologinUser = "console-user";
+
+  nixpkgs.config.allowUnfree = true;
 }
 

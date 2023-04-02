@@ -13,11 +13,13 @@
       pkgs = system: import inputs.nixpkgsStable {
         inherit system;
         crossSystem.system = "aarch64-linux";
+        config.allowUnfree = true; # for arm-trusted-firmware
       };
 
       pkgsUnstable = system: import inputs.nixpkgsUnstable {
         inherit system;
         crossSystem.system = "aarch64-linux";
+        config.allowUnfree = true; # for arm-trusted-firmware
       };
 
       uBoot  = system: (pkgs system).callPackage ./pkgs/uboot-rockchip.nix {};

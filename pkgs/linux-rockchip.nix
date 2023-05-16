@@ -45,5 +45,8 @@ with pkgs.linuxKernel;
 
   linux_6_2          = pkgs.linuxPackages_6_2;
   linux_6_2_rockchip = packagesFor (kernels.linux_6_2.override { structuredExtraConfig = kernelConfig; });
+
+  linux_6_3          = pkgs.linuxPackages_6_3;
+  linux_6_3_rockchip = packagesFor (kernels.linux_6_3.override { structuredExtraConfig = kernelConfig; });
 }
 

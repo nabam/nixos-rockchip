@@ -5,6 +5,7 @@ with (import (<nixpkgs/nixos/lib/eval-config.nix>) {
       <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
       ../modules/sd-card/sd-image-rockchip.nix
       ../modules/dt-overlay/quartz64a-sata.nix
+      ../modules/dt-overlay/pcie-fix.nix
       ./config.nix
       { 
         rockchip.uBoot = (pkgs.callPackage ../pkgs/uboot-rockchip.nix {}).uBootQuartz64A; 

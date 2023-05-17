@@ -7,7 +7,7 @@
       /plugin/;
 
       / {
-        compatible = "pine64,soquartz-model-a", "pine64,soquartz-cm4io", "pine64,soquartz-blade", "pine64,soquartz", "rockchip,rk3566";
+        compatible = "pine64,quartz64-a", "pine64,quartz64-b", "pine64,soquartz-model-a", "pine64,soquartz-cm4io", "pine64,soquartz-blade", "pine64,soquartz", "rockchip,rk3566";
       };
 
       &pcie2x1 {

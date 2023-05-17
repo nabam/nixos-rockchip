@@ -21,8 +21,9 @@
         modules = [
           inputs.rockchip.nixosModules.sdImageRockchip
           inputs.rockchip.nixosModules.dtOverlayQuartz64ASATA
+          inputs.rockchip.nixosModules.dtOverlayPCIeFix
           ./config.nix
-          { 
+          {
             # Use cross-compilation for uBoot and Kernel
             rockchip.uBoot = (inputs.rockchip.uBoot system).uBootQuartz64A;
             # boot.kernelPackages = (inputs.rockchip.kernel system).linux_6_1;

@@ -24,18 +24,22 @@
 
       uBoot  = system: (pkgs system).callPackage ./pkgs/uboot-rockchip.nix {};
       kernel = system: (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix {};
+      rk356xPatch = {
+        name = "fix-rk356x-pcie";
+        patch = ./fix-rk356x-pcie.patch;
+      };
 
       boards = system: {
-        "Quartz64A"      = { uBoot = (uBoot system).uBootQuartz64A;      kernel = (kernel system).linux_6_1_rockchip; };
-        "Quartz64B"      = { uBoot = (uBoot system).uBootQuartz64B;      kernel = (kernel system).linux_6_1_rockchip; };
-        "SoQuartzModelA" = { uBoot = (uBoot system).uBootSoQuartzModelA; kernel = (kernel system).linux_6_2_rockchip; };
-        "SoQuartzCM4"    = { uBoot = (uBoot system).uBootSoQuartzCM4IO;  kernel = (kernel system).linux_6_2_rockchip; };
-        "SoQuartzBlade"  = { uBoot = (uBoot system).uBootSoQuartzBlade;  kernel = (kernel system).linux_6_2_rockchip; };
+        "Quartz64A"      = { uBoot = (uBoot system).uBootQuartz64A;      kernel = (kernel system).linux_6_1_rockchip; patches = [];            };
+        "Quartz64B"      = { uBoot = (uBoot system).uBootQuartz64B;      kernel = (kernel system).linux_6_1_rockchip; patches = [];            };
+        "SoQuartzModelA" = { uBoot = (uBoot system).uBootSoQuartzModelA; kernel = (kernel system).linux_6_2_rockchip; patches = [rk356xPatch]; };
+        "SoQuartzCM4"    = { uBoot = (uBoot system).uBootSoQuartzCM4IO;  kernel = (kernel system).linux_6_2_rockchip; patches = [rk356xPatch]; };
+        "SoQuartzBlade"  = { uBoot = (uBoot system).uBootSoQuartzBlade;  kernel = (kernel system).linux_6_2_rockchip; patches = [rk356xPatch]; };
 
-        "Rock64"      = { uBoot = (pkgs system).ubootRock64;      kernel = (kernel system).linux_6_1_rockchip; };
-        "RockPro64"   = { uBoot = (pkgs system).ubootRockPro64;   kernel = (kernel system).linux_6_1_rockchip; };
-        "ROCPCRK3399" = { uBoot = (pkgs system).ubootROCPCRK3399; kernel = (kernel system).linux_6_1_rockchip; };
-        "PinebookPro" = { uBoot = (pkgs system).ubootPinebookPro; kernel = (kernel system).linux_6_1_rockchip; };
+        "Rock64"      = { uBoot = (pkgs system).ubootRock64;      kernel = (kernel system).linux_6_1_rockchip; patches = []; };
+        "RockPro64"   = { uBoot = (pkgs system).ubootRockPro64;   kernel = (kernel system).linux_6_1_rockchip; patches = []; };
+        "ROCPCRK3399" = { uBoot = (pkgs system).ubootROCPCRK3399; kernel = (kernel system).linux_6_1_rockchip; patches = []; };
+        "PinebookPro" = { uBoot = (pkgs system).ubootPinebookPro; kernel = (kernel system).linux_6_1_rockchip; patches = []; };
       };
 
       osConfigs = system: builtins.mapAttrs
@@ -44,7 +48,7 @@
 
           modules = [
             self.nixosModules.sdImageRockchipInstaller
-            { rockchip.uBoot = value.uBoot; boot.kernelPackages = value.kernel; }
+            { rockchip.uBoot = value.uBoot; boot.kernelPackages = value.kernel; boot.kernelPatches = value.patches; }
             { nixpkgs.overlays = [ (final: super: { zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; }); }) ]; } # ZFS is broken on linux 6.2 from unstable
             # Cross-compiling the whole system is hard, install from caches or compile with emulation instead
             # { nixpkgs.crossSystem.system = "aarch64-linux"; nixpkgs.system = system;}
@@ -61,6 +65,7 @@
         sdImageRockchipInstaller = import ./modules/sd-card/sd-image-rockchip-installer.nix;
         sdImageRockchip = import ./modules/sd-card/sd-image-rockchip.nix;
         dtOverlayQuartz64ASATA = import ./modules/dt-overlay/quartz64a-sata.nix;
+        rk356xPcieFix = { boot.kernelPatches = [rk356xPatch]; };
       };
     } // inputs.utils.lib.eachDefaultSystem
       (system:

@@ -15,7 +15,7 @@
 
     loader = {
       grub.enable = false;
-      generic-extlinux-compatible.enable = true;
+      generic-extlinux-compatible-patched.enable = true;
     };
   };
 
@@ -48,7 +48,7 @@
     # Fill the root partition with this nix configuration in /etc/nixos
     populateRootCommands = ''
       mkdir -p ./files/boot
-      ${config.boot.loader.generic-extlinux-compatible.populateCmd} -c ${config.system.build.toplevel} -d ./files/boot
+      ${config.boot.loader.generic-extlinux-compatible-patched.populateCmd} -c ${config.system.build.toplevel} -d ./files/boot
     '';
   };
 

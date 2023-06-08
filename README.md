@@ -10,7 +10,7 @@ firmware. Utilizes sd-card installer build infrastructure from nixpkgs.
 Check out `flake.nix` for the list of supported configurations. To build an
 installer sd-card image for desired platform using flake execute 
 `nix build github:nabam/nixos-rockchip#Quartz64A` or `nix build .#Quartz64A`
-(Quartz 64 A in this example). Without flakes: `nix-build -A Quartz64A`.
+(Quartz 64 A in this example).
 
 ``` console
 $ nix build github:nabam/nixos-rockchip#Quartz64A

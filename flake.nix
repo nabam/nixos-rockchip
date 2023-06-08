@@ -24,7 +24,6 @@
 
       uBoot  = system: (pkgsUnstable system).callPackage ./pkgs/uboot-rockchip.nix {};
       kernel = system: (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix {};
-      generic-extlinux-compatible = system: (pkgsUnstable system).callPackage ./pkgs/generic-extlinux-compatible {};
 
       noZFS = { nixpkgs.overlays = [ (final: super: { zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; }); }) ]; }; # ZFS is broken on linux 6.2 from unstable
 

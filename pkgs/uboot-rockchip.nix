@@ -20,7 +20,6 @@ let
     src = src;
     version = version;
     defconfig = defconfig;
-    # extraMakeFlags = [ "CROSS_BUILD_TOOLS=1"];
     filesToInstall = [ "u-boot.itb" "idbloader.img"];
 
     patches = [
@@ -30,10 +29,6 @@ let
         sha256 = "h3ymGxMF/GpwS8hARkdFrwuYbi1oUQNQkVHG5caBB84=";
       })
     ];
-
-    # preConfigure = ''
-    #   # touch board/pine64/quartz64-a-rk3566/quartz64-a-rk3566.c # required empty file, not created from patch
-    # '';
 
     buildInputs = with buildPackages; [
       ncurses # tools/kwboot
@@ -95,11 +90,6 @@ let
         sha256 = "tA0wuallJVoA585zpGWywQco/iBKQMBBKH4ReXme8Uc=";
       })
     ];
-
-    preConfigure = ''
-        ln -sf ${rkbin}/bin/rk35/rk3568_bl31_v1.34.elf ./bl31.elf
-        ln -sf ${rkbin}/bin/rk35/rk3566_ddr_1056MHz_v1.13.bin ./ram_init.bin
-    '';
 
     extraMeta = {
       platforms = [ "aarch64-linux" ];

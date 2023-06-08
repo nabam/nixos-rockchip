@@ -2,7 +2,7 @@
   description = "Build NixOS images for rockchip based single computer boards";
 
   inputs = {
-    nixpkgsStable.url   = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgsStable.url   = "github:NixOS/nixpkgs/nixos-23.05";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url           = "github:numtide/flake-utils";
   };
@@ -22,7 +22,7 @@
         config.allowUnfree = true; # for arm-trusted-firmware
       };
 
-      uBoot  = system: (pkgs system).callPackage ./pkgs/uboot-rockchip.nix {};
+      uBoot  = system: (pkgsUnstable system).callPackage ./pkgs/uboot-rockchip.nix {};
       kernel = system: (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix {};
 
       noZFS = { nixpkgs.overlays = [ (final: super: { zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; }); }) ]; }; # ZFS is broken on linux 6.2 from unstable
@@ -40,17 +40,22 @@
         };
         "SoQuartzModelA" = {
           uBoot = (uBoot system).uBootSoQuartzModelA;
-          kernel = (kernel system).linux_6_2_rockchip;
+          kernel = (kernel system).linux_6_3_rockchip;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix noZFS ];
         };
         "SoQuartzCM4"    = {
           uBoot = (uBoot system).uBootSoQuartzCM4IO;
-          kernel = (kernel system).linux_6_2_rockchip;
+          kernel = (kernel system).linux_6_3_rockchip;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix noZFS ];
         };
         "SoQuartzBlade"  = {
           uBoot = (uBoot system).uBootSoQuartzBlade;
-          kernel = (kernel system).linux_6_2_rockchip;
+          kernel = (kernel system).linux_6_3_rockchip;
+          extraModules = [ self.nixosModules.dtOverlayPCIeFix noZFS ];
+        };
+        "PineTab2"      = {
+          uBoot = (uBoot system).uBootPineTab2;
+          kernel = (kernel system).linux_6_3_pinetab;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix noZFS ];
         };
         "Rock64"      = { uBoot = (pkgs system).ubootRock64;      kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
@@ -64,6 +69,7 @@
           system = "aarch64-linux";
 
           modules = [
+            self.nixosModules.genericExtlinuxCompatiblePatched
             self.nixosModules.sdImageRockchipInstaller
             { rockchip.uBoot = value.uBoot; boot.kernelPackages = value.kernel; }
             # Cross-compiling the whole system is hard, install from caches or compile with emulation instead
@@ -78,6 +84,7 @@
       inherit uBoot kernel;
 
       nixosModules = {
+        genericExtlinuxCompatiblePatched = import ./modules/generic-extlinux-compatible;
         sdImageRockchipInstaller = import ./modules/sd-card/sd-image-rockchip-installer.nix;
         sdImageRockchip = import ./modules/sd-card/sd-image-rockchip.nix;
         dtOverlayQuartz64ASATA = import ./modules/dt-overlay/quartz64a-sata.nix;
@@ -88,10 +95,12 @@
         {
           packages = (images system) // {
             kernel_linux_6_1_rockchip = (kernel system).linux_6_1_rockchip.kernel;
-            kernel_linux_6_2_rockchip = (kernel system).linux_6_2_rockchip.kernel;
+            kernel_linux_6_3_rockchip = (kernel system).linux_6_3_rockchip.kernel;
+            kernel_linux_6_3_pinetab  = (kernel system).linux_6_3_pinetab.kernel;
 
             uBootQuartz64A = (uBoot system).uBootQuartz64A;
             uBootQuartz64B = (uBoot system).uBootQuartz64B;
+            uBootPineTab2  = (uBoot system).uBootPineTab2;
 
             uBootSoQuartzModelA = (uBoot system).uBootSoQuartzModelA;
             uBootSoQuartzCM4IO  = (uBoot system).uBootSoQuartzCM4IO;

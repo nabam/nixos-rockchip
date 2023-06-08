@@ -43,10 +43,21 @@ with pkgs.linuxKernel;
   linux_6_1          = pkgs.linuxPackages_6_1;
   linux_6_1_rockchip = packagesFor (kernels.linux_6_1.override { structuredExtraConfig = kernelConfig; });
 
-  linux_6_2          = pkgs.linuxPackages_6_2;
-  linux_6_2_rockchip = packagesFor (kernels.linux_6_2.override { structuredExtraConfig = kernelConfig; });
-
   linux_6_3          = pkgs.linuxPackages_6_3;
   linux_6_3_rockchip = packagesFor (kernels.linux_6_3.override { structuredExtraConfig = kernelConfig; });
+
+  linux_6_3_pinetab  = packagesFor (kernels.linux_6_3.override {
+    argsOverride = {
+      src = pkgs.fetchFromGitHub {
+        owner = "TuxThePenguin0";
+        repo = "linux";
+        rev = "e9acd1df352b33eb534b3cbfd8d7ef24b21d815a";
+        sha256 = "5ybsqbHXD+tARtTZ0NUMninwheh+xL7GrLOPitmwSPw=";
+      };
+      version = "6.3.0";
+      modDirVersion = "6.3.0";
+    };
+    structuredExtraConfig = kernelConfig;
+  });
 }
 

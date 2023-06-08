@@ -1,4 +1,4 @@
-{ pkgs, stdenv, lib, fetchpatch, fetchFromGitHub, buildUBoot }:
+{ pkgs, stdenv, lib, fetchpatch, fetchFromGitHub, buildUBoot, buildPackages }:
 
 let 
   buildRK3566UBoot = defconfig: let
@@ -12,44 +12,44 @@ let
     src = fetchFromGitHub {
       owner = "u-boot";
       repo = "u-boot";
-      rev = "v2023.04-rc1";
-      sha256 = "gwI8yrgf6gzRYA0pVQbNp9/GtEw40Yx7HZL6JYyle9M=";
+      rev = "v2023.07-rc3";
+      sha256 = "AVhrjwaBpWv3c/pSsODzzvb6fU8YRztQ6P1jfxw3utM=";
     };
-    version = "v2023.04-rc1-20-gbe645fef05";
+    version = "v2023.07-rc3-20-020520bbc1f";
   in buildUBoot {
     src = src;
     version = version;
     defconfig = defconfig;
-    extraMakeFlags = [ "CROSS_BUILD_TOOLS=1"];
+    # extraMakeFlags = [ "CROSS_BUILD_TOOLS=1"];
     filesToInstall = [ "u-boot.itb" "idbloader.img"];
 
     patches = [
       (fetchpatch {
         name = "quartz64.patch";
-        url = "https://github.com/CounterPillow/u-boot-quartz64/compare/v2023.04-rc1...be645fef058885e2fc9882e839dacd6941693ac6.diff";
-        sha256 = "yrieWMadb2I3mK7XCh+byeVUuxMg4JaPp5L7JxKyueA=";
+        url = "https://github.com/Kwiboo/u-boot-rockchip/compare/020520bbc1ff4a542e014f0873c13b4543aea0ea...c73c42740438d8c9113baeda6ab9c31a7e53620a.diff";
+        sha256 = "h3ymGxMF/GpwS8hARkdFrwuYbi1oUQNQkVHG5caBB84=";
       })
     ];
 
-    preConfigure = ''
-      touch board/pine64/quartz64-a-rk3566/quartz64-a-rk3566.c # required empty file, not created from patch
-    '';
+    # preConfigure = ''
+    #   # touch board/pine64/quartz64-a-rk3566/quartz64-a-rk3566.c # required empty file, not created from patch
+    # '';
 
-    buildInputs = with pkgs; [
+    buildInputs = with buildPackages; [
       ncurses # tools/kwboot
       libuuid # tools/mkeficapsule
       gnutls # tools/mkeficapsule
       openssl # tools/imagetool
     ];
 
-    nativeBuildInputs = with pkgs; [
+    nativeBuildInputs = with buildPackages; [
       ncurses # tools/kwboot
       bc
       bison
       dtc
       flex
       openssl
-      (buildPackages.python3.withPackages (p: [
+      (python3.withPackages (p: [
         p.libfdt
         p.setuptools # for pkg_resources
         p.pyelftools
@@ -110,8 +110,9 @@ in {
   uBootQuartz64A      = buildRK3566UBoot "quartz64-a-rk3566_defconfig";
   uBootQuartz64B      = buildRK3566UBoot "quartz64-b-rk3566_defconfig";
   uBootSoQuartzBlade  = buildRK3566UBoot "soquartz-blade-rk3566_defconfig";
-  uBootSoQuartzCM4IO  = buildRK3566UBoot "soquartz-cm4io-rk3566_defconfig";
+  uBootSoQuartzCM4IO  = buildRK3566UBoot "soquartz-cm4-rk3566_defconfig";
   uBootSoQuartzModelA = buildRK3566UBoot "soquartz-model-a-rk3566_defconfig";
+  uBootPineTab2       = buildRK3566UBoot "pinetab2-rk3566_defconfig";
 
   uBootQuartz64A_2022_04 = buildRK3566UBoot_2022_04 "quartz64-a-rk3566_defconfig";
   uBootQuartz64B_2022_04 = buildRK3566UBoot_2022_04 "quartz64-b-rk3566_defconfig";

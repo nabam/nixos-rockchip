@@ -26,8 +26,8 @@ let
     patches = [
       (fetchpatch {
         name = "quartz64.patch";
-        url = "https://github.com/Kwiboo/u-boot-rockchip/compare/020520bbc1ff4a542e014f0873c13b4543aea0ea...387dde782045b4065197e9b728fcfa69f9b3af3d.diff";
-        sha256 = "nje2DpoDr4VqUSzleu/n4UGi8mGuh5B9ioDe1XKfuUA=";
+        url = "https://github.com/Kwiboo/u-boot-rockchip/compare/020520bbc1ff4a542e014f0873c13b4543aea0ea...c73c42740438d8c9113baeda6ab9c31a7e53620a.diff";
+        sha256 = "h3ymGxMF/GpwS8hARkdFrwuYbi1oUQNQkVHG5caBB84=";
       })
     ];
 

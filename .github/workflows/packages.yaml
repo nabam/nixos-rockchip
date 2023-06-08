@@ -9,7 +9,8 @@ jobs:
       matrix:
         package:
         - kernel_linux_6_1_rockchip
-        - kernel_linux_6_2_rockchip
+        - kernel_linux_6_3_rockchip
+        - uBootPineTab2
         - uBootQuartz64A
         - uBootQuartz64B
         - uBootSoQuartzModelA

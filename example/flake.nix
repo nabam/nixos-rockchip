@@ -3,7 +3,7 @@
 
   inputs = {
     utils.url    = "github:numtide/flake-utils";
-    nixpkgs.url  = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs.url  = "github:NixOS/nixpkgs/nixos-23.05";
 
     rockchip = {
       url = "github:nabam/nixos-rockchip";

@@ -69,6 +69,7 @@
           system = "aarch64-linux";
 
           modules = [
+            self.nixosModules.genericExtlinuxCompatiblePatched
             self.nixosModules.sdImageRockchipInstaller
             { rockchip.uBoot = value.uBoot; boot.kernelPackages = value.kernel; }
             # Cross-compiling the whole system is hard, install from caches or compile with emulation instead
@@ -83,6 +84,7 @@
       inherit uBoot kernel;
 
       nixosModules = {
+        genericExtlinuxCompatiblePatched = import ./modules/generic-extlinux-compatible;
         sdImageRockchipInstaller = import ./modules/sd-card/sd-image-rockchip-installer.nix;
         sdImageRockchip = import ./modules/sd-card/sd-image-rockchip.nix;
         dtOverlayQuartz64ASATA = import ./modules/dt-overlay/quartz64a-sata.nix;

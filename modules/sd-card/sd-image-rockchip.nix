@@ -3,7 +3,7 @@
   imports = [
     (modulesPath + "/profiles/base.nix")
     (modulesPath + "/installer/sd-card/sd-image.nix")
-    "../generic-extlinux-compatible"
+    (modulesPath + "/generic-extlinux-compatible")
   ];
 
   options = {

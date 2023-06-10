@@ -43,11 +43,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1686314746,
-        "narHash": "sha256-QJPLe+ngh2GRlgbJlneBEq49i2Gt0YPROafS8k/LoE8=",
+        "lastModified": 1686365050,
+        "narHash": "sha256-nXp5jgRQdCB9RfyoJ4bxHi8a33VV04PyofL54RlNuzU=",
         "owner": "nabam",
         "repo": "nixos-rockchip",
-        "rev": "908a3fe22c26c3331ad580b36142f868214cd2ca",
+        "rev": "3060bbc2e76d0fa39865b5df992cda3ed034e47c",
         "type": "github"
       },
       "original": {

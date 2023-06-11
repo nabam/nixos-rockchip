@@ -6,8 +6,8 @@ let
     rkbin = fetchFromGitHub {
       owner = "rockchip-linux";
       repo = "rkbin";
-      rev = "b0c100f1a260d807df450019774993c761beb79d";
-      sha256 = "V7RcQj3BgB2q6Lgw5RfcPlOTZF8dbC9beZBUsTvaky0=";
+      rev = "d6ccfe401ca84a98ca3b85c12b9554a1a43a166c";
+      sha256 = "Wp2nP0fszFhXz8QJ9MjG+YdMmz7/OJp3oFHEOmfyIyE=";
     };
     src = fetchFromGitHub {
       owner = "u-boot";
@@ -53,8 +53,8 @@ let
       which # for scripts/dtc-version.sh
     ];
 
-    BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.34.elf");
-    ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.13.bin");
+    BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.42.elf");
+    ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.16.bin");
 
     extraMeta = {
       platforms = [ "aarch64-linux" ];

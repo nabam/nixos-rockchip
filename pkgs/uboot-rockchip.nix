@@ -13,7 +13,7 @@ let
       owner = "u-boot";
       repo = "u-boot";
       rev = "v2023.07-rc4";
-      sha256 = "AVhrjwaBpWv3c/pSsODzzvb6fU8YRztQ6P1jfxw3utM=";
+      sha256 = "0FT8r9P6VeV/b5pv8x6wOyjwpoNjZZ6AmVZLatAU1Co=";
     };
     version = "v2023.07-rc4-20-19b77d3d239";
   in buildUBoot {
@@ -26,7 +26,7 @@ let
       (fetchpatch {
         name = "quartz64.patch";
         url = "https://github.com/Kwiboo/u-boot-rockchip/compare/19b77d3d23966a0d6dbb3c86187765f11100fb6f...2e0e11b8e65c48a43270f4ec4a88b74c8a83e269.diff";
-        sha256 = "2a+z2u0Hk4eqLsUTwz2hpmVQjRx4YmXujAiYW1QRHEE=";
+        sha256 = "msNkAOFLfu0SX1ePPGpeQ3B+sfqDbpTjxBgT3uJw4kE=";
       })
     ];
 

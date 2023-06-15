@@ -12,10 +12,10 @@ let
     src = fetchFromGitHub {
       owner = "u-boot";
       repo = "u-boot";
-      rev = "v2023.07-rc3";
+      rev = "v2023.07-rc4";
       sha256 = "AVhrjwaBpWv3c/pSsODzzvb6fU8YRztQ6P1jfxw3utM=";
     };
-    version = "v2023.07-rc3-20-020520bbc1f";
+    version = "v2023.07-rc4-20-19b77d3d239";
   in buildUBoot {
     src = src;
     version = version;
@@ -25,7 +25,7 @@ let
     patches = [
       (fetchpatch {
         name = "quartz64.patch";
-        url = "https://github.com/Kwiboo/u-boot-rockchip/compare/020520bbc1ff4a542e014f0873c13b4543aea0ea...37d7e6f9a8318a1c8fef79a361409592ee1f2f8f.diff";
+        url = "https://github.com/Kwiboo/u-boot-rockchip/compare/19b77d3d23966a0d6dbb3c86187765f11100fb6f...2e0e11b8e65c48a43270f4ec4a88b74c8a83e269.diff";
         sha256 = "2a+z2u0Hk4eqLsUTwz2hpmVQjRx4YmXujAiYW1QRHEE=";
       })
     ];

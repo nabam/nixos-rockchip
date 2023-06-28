@@ -54,7 +54,7 @@ with pkgs.linuxKernel;
         rev = "232bc5235ef35038b966796f290c56f07ebf0322";
         sha256 = "0/56VmNBxu5aDf1bxRHa6XIZTkoLZQOfxHhpUyJwE/Q=";
       };
-      version = "6.3.9-danctnix1";
+      version = "6.3.9";
       modDirVersion = "6.3.9";
     };
     structuredExtraConfig = kernelConfig;

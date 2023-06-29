@@ -49,13 +49,13 @@ with pkgs.linuxKernel;
   linux_6_3_pinetab  = packagesFor (kernels.linux_6_3.override {
     argsOverride = {
       src = pkgs.fetchFromGitHub {
-        owner = "TuxThePenguin0";
-        repo = "linux";
-        rev = "e9acd1df352b33eb534b3cbfd8d7ef24b21d815a";
-        sha256 = "5ybsqbHXD+tARtTZ0NUMninwheh+xL7GrLOPitmwSPw=";
+        owner = "dreemurrs-embedded";
+        repo = "linux-pinetab2";
+        rev = "232bc5235ef35038b966796f290c56f07ebf0322";
+        sha256 = "0/56VmNBxu5aDf1bxRHa6XIZTkoLZQOfxHhpUyJwE/Q=";
       };
-      version = "6.3.0";
-      modDirVersion = "6.3.0";
+      version = "6.3.9-danctnix1";
+      modDirVersion = "6.3.9-danctnix1";
     };
     structuredExtraConfig = kernelConfig;
   });

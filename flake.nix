@@ -55,7 +55,7 @@
         };
         "PineTab2"      = {
           uBoot = (uBoot system).uBootPineTab2;
-          kernel = (kernel system).linux_6_3_pinetab;
+          kernel = (kernel system).linux_6_4_pinetab;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix noZFS ];
         };
         "Rock64"      = { uBoot = (pkgs system).ubootRock64;      kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
@@ -94,7 +94,9 @@
           packages = (images system) // {
             kernel_linux_6_1_rockchip = (kernel system).linux_6_1_rockchip.kernel;
             kernel_linux_6_3_rockchip = (kernel system).linux_6_3_rockchip.kernel;
+            kernel_linux_6_4_rockchip = (kernel system).linux_6_4_rockchip.kernel;
             kernel_linux_6_3_pinetab  = (kernel system).linux_6_3_pinetab.kernel;
+            kernel_linux_6_4_pinetab  = (kernel system).linux_6_4_pinetab.kernel;
 
             uBootQuartz64A = (uBoot system).uBootQuartz64A;
             uBootQuartz64B = (uBoot system).uBootQuartz64B;

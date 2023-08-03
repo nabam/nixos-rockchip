@@ -40,17 +40,17 @@
         };
         "SoQuartzModelA" = {
           uBoot = (uBoot system).uBootSoQuartzModelA;
-          kernel = (kernel system).linux_6_3_rockchip;
+          kernel = (kernel system).linux_6_4_rockchip;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix noZFS ];
         };
         "SoQuartzCM4"    = {
           uBoot = (uBoot system).uBootSoQuartzCM4IO;
-          kernel = (kernel system).linux_6_3_rockchip;
+          kernel = (kernel system).linux_6_4_rockchip;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix noZFS ];
         };
         "SoQuartzBlade"  = {
           uBoot = (uBoot system).uBootSoQuartzBlade;
-          kernel = (kernel system).linux_6_3_rockchip;
+          kernel = (kernel system).linux_6_4_rockchip;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix noZFS ];
         };
         "PineTab2"      = {
@@ -93,9 +93,7 @@
         {
           packages = (images system) // {
             kernel_linux_6_1_rockchip = (kernel system).linux_6_1_rockchip.kernel;
-            kernel_linux_6_3_rockchip = (kernel system).linux_6_3_rockchip.kernel;
             kernel_linux_6_4_rockchip = (kernel system).linux_6_4_rockchip.kernel;
-            kernel_linux_6_3_pinetab  = (kernel system).linux_6_3_pinetab.kernel;
             kernel_linux_6_4_pinetab  = (kernel system).linux_6_4_pinetab.kernel;
 
             uBootQuartz64A = (uBoot system).uBootQuartz64A;

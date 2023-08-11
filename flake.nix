@@ -22,8 +22,8 @@
         config.allowUnfree = true; # for arm-trusted-firmware
       };
 
-      uBoot  = system: (pkgsUnstable "aarch64-linux").callPackage ./pkgs/uboot-rockchip.nix {};
-      kernel = system: (pkgsUnstable "aarch64-linux").callPackage ./pkgs/linux-rockchip.nix {};
+      uBoot  = system: (pkgsUnstable system).callPackage ./pkgs/uboot-rockchip.nix {};
+      kernel = system: (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix {};
 
       noZFS = { nixpkgs.overlays = [ (final: super: { zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; }); }) ]; }; # ZFS is broken on linux 6.2 from unstable
 

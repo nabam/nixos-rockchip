@@ -43,7 +43,7 @@ this flake. To build the example run: `(cd example && nix flake update && nix bu
 
 ### Cache
 
-Build cache is vailable on Cachix: [nabam-nixos-rockchip](https://app.cachix.org/cache/nabam-nixos-rockchip).
+Build cache is available on Cachix: [nabam-nixos-rockchip](https://app.cachix.org/cache/nabam-nixos-rockchip).
 Use it to speed up builds.
 
 #### Exported Modules

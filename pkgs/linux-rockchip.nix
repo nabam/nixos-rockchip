@@ -43,25 +43,8 @@ with pkgs.linuxKernel;
   linux_6_1          = pkgs.linuxPackages_6_1;
   linux_6_1_rockchip = packagesFor (kernels.linux_6_1.override { structuredExtraConfig = kernelConfig; });
 
-  linux_6_4          = pkgs.linuxPackages_6_4;
-  linux_6_4_rockchip = packagesFor (kernels.linux_6_4.override { structuredExtraConfig = kernelConfig; });
-
   linux_6_5          = pkgs.linuxPackages_6_5;
   linux_6_5_rockchip = packagesFor (kernels.linux_6_5.override { structuredExtraConfig = kernelConfig; });
-
-  linux_6_4_pinetab  = packagesFor (kernels.linux_6_4.override {
-    argsOverride = {
-      src = pkgs.fetchFromGitHub {
-        owner = "dreemurrs-embedded";
-        repo = "linux-pinetab2";
-        rev = "7bf088c52c63ac80e1635f9edc5d3ca73619a254";
-        sha256 = "+jt4ni8I9dHVPyILGJkEdKgPK/C02e7cte6B1EyQRT8=";
-      };
-      version = "6.4.3-danctnix1";
-      modDirVersion = "6.4.3-danctnix1";
-    };
-    structuredExtraConfig = kernelConfig;
-  });
 
   linux_6_5_pinetab  = packagesFor (kernels.linux_6_5.override {
     argsOverride = {

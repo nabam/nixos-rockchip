@@ -94,7 +94,9 @@
           packages = (images system) // {
             kernel_linux_6_1_rockchip = (kernel system).linux_6_1_rockchip.kernel;
             kernel_linux_6_4_rockchip = (kernel system).linux_6_4_rockchip.kernel;
+            kernel_linux_6_5_rockchip = (kernel system).linux_6_5_rockchip.kernel;
             kernel_linux_6_4_pinetab  = (kernel system).linux_6_4_pinetab.kernel;
+            kernel_linux_6_5_pinetab  = (kernel system).linux_6_5_pinetab.kernel;
 
             uBootQuartz64A = (uBoot system).uBootQuartz64A;
             uBootQuartz64B = (uBoot system).uBootQuartz64B;

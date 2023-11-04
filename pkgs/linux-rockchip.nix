@@ -51,11 +51,11 @@ with pkgs.linuxKernel;
       src = pkgs.fetchFromGitHub {
         owner = "dreemurrs-embedded";
         repo = "linux-pinetab2";
-        rev = "10fc35d192953339cc6d28b9fa145f9716037c16";
-        sha256 = "977oXIFomlxoOYoVX4G+G5eW19rNwonMmfkLnNr+FUU=";
+        rev = "1148003fdea1f265c7bfef57f3bca9c8b29f62a1";
+        sha256 = "Liz2eMDjAz9EcwC8Gj3wI+xAuXP0qWb3Fq2u0t7VNDw=";
       };
-      version = "6.5.5-danctnix1";
-      modDirVersion = "6.5.5-danctnix1";
+      version = "6.5.8-danctnix1";
+      modDirVersion = "6.5.8-danctnix1";
     };
     structuredExtraConfig = kernelConfig;
   });

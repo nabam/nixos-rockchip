@@ -22,7 +22,7 @@
   config.sdImage = let
     uBoot = config.rockchip.uBoot;
 
-    idbloaderOffset = 64; # 0x40
+    uBootBinOffset = 64; # 0x40
     ubootOffset = 16384; # 0x4000
     # 1.7Mb at the moment; use very safe security margin of 8MB.
     ubootSize = 16384; # 8mb
@@ -41,8 +41,7 @@
     # Overwrite firmware partition with u-boot bootloader
     postBuildCommands = ''
       sfdisk --part-type "$img" 1 DA # mark partition as "Non-FS data"
-      dd if="${uBoot}/idbloader.img" of="$img" conv=fsync,notrunc bs=16M seek=${toString (idbloaderOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
-      dd if="${uBoot}/u-boot.itb" of="$img" conv=fsync,notrunc bs=16M seek=${toString (ubootOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+      dd if="${uBoot}/u-boot-rockchip.bin" of="$img" conv=fsync,notrunc bs=16M seek=${toString (uBootBinOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
       sfdisk -d "$img"
     '';
     # Fill the root partition with this nix configuration in /etc/nixos

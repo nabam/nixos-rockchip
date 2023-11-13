@@ -6,27 +6,27 @@ let
     rkbin = fetchFromGitHub {
       owner = "rockchip-linux";
       repo = "rkbin";
-      rev = "d6ccfe401ca84a98ca3b85c12b9554a1a43a166c";
-      sha256 = "Wp2nP0fszFhXz8QJ9MjG+YdMmz7/OJp3oFHEOmfyIyE=";
+      rev = "b4558da0860ca48bf1a571dd33ccba580b9abe23";
+      sha256 = "KUZQaQ+IZ0OynawlYGW99QGAOmOrGt2CZidI3NTxFw8=";
     };
     src = fetchFromGitHub {
       owner = "u-boot";
       repo = "u-boot";
-      rev = "v2023.07-rc4";
-      sha256 = "0FT8r9P6VeV/b5pv8x6wOyjwpoNjZZ6AmVZLatAU1Co=";
+      rev = "v2023.10";
+      sha256 = "f0xDGxTatRtCxwuDnmsqFLtYLIyjA5xzyQcwfOy3zEM=";
     };
-    version = "v2023.07-rc4-20-19b77d3d239";
+    version = "v2023.10-19b77d3d239";
   in buildUBoot {
     src = src;
     version = version;
     defconfig = defconfig;
-    filesToInstall = [ "u-boot.itb" "idbloader.img"];
+    filesToInstall = [ "u-boot-rockchip.bin" ];
 
     patches = [
       (fetchpatch {
         name = "quartz64.patch";
-        url = "https://github.com/Kwiboo/u-boot-rockchip/compare/19b77d3d23966a0d6dbb3c86187765f11100fb6f...2e0e11b8e65c48a43270f4ec4a88b74c8a83e269.diff";
-        sha256 = "msNkAOFLfu0SX1ePPGpeQ3B+sfqDbpTjxBgT3uJw4kE=";
+        url = "https://github.com/Kwiboo/u-boot-rockchip/compare/4459ed60cb1e0562bc5b40405e2b4b9bbf766d57...0bc339ffa6f804d51c5c5292d8ff69c4d79614d3.diff";
+        sha256 = "ui77Nm3IS6PUzaMagqyyZDitklot8MmeYg27mVPV7Pc=";
       })
     ];
 
@@ -53,8 +53,12 @@ let
       which # for scripts/dtc-version.sh
     ];
 
-    BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.42.elf");
-    ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.16.bin");
+    makeFlags = [
+      "CROSS_COMPILE=${stdenv.cc.targetPrefix}"
+    ];
+
+    BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.43.elf");
+    ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin");
 
     extraMeta = {
       platforms = [ "aarch64-linux" ];

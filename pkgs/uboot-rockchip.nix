@@ -15,7 +15,7 @@ let
       rev = "v2023.10";
       sha256 = "f0xDGxTatRtCxwuDnmsqFLtYLIyjA5xzyQcwfOy3zEM=";
     };
-    version = "v2023.10-4459ed60cb1";
+    version = "v2023.10-69-g0bc339ffa6"; # git describe --long
   in buildUBoot {
     src = src;
     version = version;

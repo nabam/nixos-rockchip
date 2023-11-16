@@ -41,8 +41,13 @@
     # Overwrite firmware partition with u-boot bootloader
     postBuildCommands = ''
       sfdisk --part-type "$img" 1 DA # mark partition as "Non-FS data"
-      # u-boot-rockchip.bin contains both idbloader and uboot
-      dd if="${uBoot}/u-boot-rockchip.bin" of="$img" conv=fsync,notrunc bs=16M seek=${toString (idbloaderOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+      if [ -e "${uBoot}/u-boot-rockchip.bin" ]; then
+        # u-boot-rockchip.bin contains both idbloader and uboot
+        dd if="${uBoot}/u-boot-rockchip.bin" of="$img" conv=fsync,notrunc bs=16M seek=${toString (idbloaderOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+      else
+        dd if="${uBoot}/idbloader.img" of="$img" conv=fsync,notrunc bs=16M seek=${toString (idbloaderOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+        dd if="${uBoot}/u-boot.itb" of="$img" conv=fsync,notrunc bs=16M seek=${toString (ubootOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+      fi
       sfdisk -d "$img"
     '';
     # Fill the root partition with this nix configuration in /etc/nixos

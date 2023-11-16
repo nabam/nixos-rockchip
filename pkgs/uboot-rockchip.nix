@@ -15,7 +15,7 @@ let
       rev = "v2023.10";
       sha256 = "f0xDGxTatRtCxwuDnmsqFLtYLIyjA5xzyQcwfOy3zEM=";
     };
-    version = "v2023.10-0bc339ffa6f";
+    version = "v2023.10-4459ed60cb1";
   in buildUBoot {
     src = src;
     version = version;

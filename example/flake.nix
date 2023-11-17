@@ -6,8 +6,8 @@
     nixpkgs.url  = "github:NixOS/nixpkgs/nixos-23.05";
 
     rockchip = {
-      # url = "github:nabam/nixos-rockchip";
-      url = "path:..";
+      url = "github:nabam/nixos-rockchip";
+      # url = "path:..";
 
       inputs.utils.follows         = "utils";
       inputs.nixpkgsStable.follows = "nixpkgs";

@@ -2,7 +2,7 @@
   description = "Build NixOS images for rockchip based single computer boards";
 
   inputs = {
-    nixpkgsStable.url   = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgsStable.url   = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url           = "github:numtide/flake-utils";
   };
@@ -40,28 +40,28 @@
         };
         "SoQuartzModelA" = {
           uBoot = (uBoot system).uBootSoQuartzModelA;
-          kernel = (kernel system).linux_6_5_rockchip;
+          kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ noZFS ];
         };
         "SoQuartzCM4"    = {
           uBoot = (uBoot system).uBootSoQuartzCM4IO;
-          kernel = (kernel system).linux_6_5_rockchip;
+          kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ noZFS ];
         };
         "SoQuartzBlade"  = {
           uBoot = (uBoot system).uBootSoQuartzBlade;
-          kernel = (kernel system).linux_6_5_rockchip;
+          kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ noZFS ];
         };
         "PineTab2"      = {
           uBoot = (uBoot system).uBootPineTab2;
-          kernel = (kernel system).linux_6_5_pinetab;
+          kernel = (kernel system).linux_6_6_pinetab;
           extraModules = [  noZFS ];
         };
-        "Rock64"      = { uBoot = (pkgs system).ubootRock64;      kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
-        "RockPro64"   = { uBoot = (pkgs system).ubootRockPro64;   kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
-        "ROCPCRK3399" = { uBoot = (pkgs system).ubootROCPCRK3399; kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
-        "PinebookPro" = { uBoot = (pkgs system).ubootPinebookPro; kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
+        "Rock64"      = { uBoot = (uBoot system).ubootRock64;      kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
+        "RockPro64"   = { uBoot = (uBoot system).ubootRockPro64;   kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
+        "ROCPCRK3399" = { uBoot = (uBoot system).ubootROCPCRK3399; kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
+        "PinebookPro" = { uBoot = (uBoot system).ubootPinebookPro; kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
       };
 
       osConfigs = system: builtins.mapAttrs
@@ -93,12 +93,16 @@
         {
           packages = (images system) // {
             kernel_linux_6_1_rockchip = (kernel system).linux_6_1_rockchip.kernel;
-            kernel_linux_6_5_rockchip = (kernel system).linux_6_5_rockchip.kernel;
-            kernel_linux_6_5_pinetab  = (kernel system).linux_6_5_pinetab.kernel;
+            kernel_linux_6_6_rockchip = (kernel system).linux_6_6_rockchip.kernel;
+            kernel_linux_6_6_pinetab  = (kernel system).linux_6_6_pinetab.kernel;
 
-            uBootQuartz64A = (uBoot system).uBootQuartz64A;
-            uBootQuartz64B = (uBoot system).uBootQuartz64B;
-            uBootPineTab2  = (uBoot system).uBootPineTab2;
+            uBootQuartz64A   = (uBoot system).uBootQuartz64A;
+            uBootQuartz64B   = (uBoot system).uBootQuartz64B;
+            uBootPineTab2    = (uBoot system).uBootPineTab2;
+            uBootPinebookPro = (uBoot system).uBootPinebookPro;
+            uBootRockPro64   = (uBoot system).uBootRockPro64;
+            uBootROCPCRK3399 = (uBoot system).uBootROCPCRK3399;
+            uBootRock64      = (uBoot system).uBootRock64;
 
             uBootSoQuartzModelA = (uBoot system).uBootSoQuartzModelA;
             uBootSoQuartzCM4IO  = (uBoot system).uBootSoQuartzCM4IO;

@@ -43,19 +43,19 @@ with pkgs.linuxKernel;
   linux_6_1          = pkgs.linuxPackages_6_1;
   linux_6_1_rockchip = packagesFor (kernels.linux_6_1.override { structuredExtraConfig = kernelConfig; });
 
-  linux_6_5          = pkgs.linuxPackages_6_5;
-  linux_6_5_rockchip = packagesFor (kernels.linux_6_5.override { structuredExtraConfig = kernelConfig; });
+  linux_6_6          = pkgs.linuxPackages_6_6;
+  linux_6_6_rockchip = packagesFor (kernels.linux_6_6.override { structuredExtraConfig = kernelConfig; });
 
-  linux_6_5_pinetab  = packagesFor (kernels.linux_6_5.override {
+  linux_6_6_pinetab  = packagesFor (kernels.linux_6_6.override {
     argsOverride = {
       src = pkgs.fetchFromGitHub {
         owner = "dreemurrs-embedded";
         repo = "linux-pinetab2";
-        rev = "1148003fdea1f265c7bfef57f3bca9c8b29f62a1";
-        sha256 = "Liz2eMDjAz9EcwC8Gj3wI+xAuXP0qWb3Fq2u0t7VNDw=";
+        rev = "81e3aa387e0dcb349e0d3f3c05f2f62742f814d7";
+        sha256 = "kkO54FbexUuuvZNFDuTtFMokBgKrCZXTQDCzsSRZNDE=";
       };
-      version = "6.5.8-danctnix1";
-      modDirVersion = "6.5.8-danctnix1";
+      version = "6.6.8-danctnix1";
+      modDirVersion = "6.6.8-danctnix1";
     };
     structuredExtraConfig = kernelConfig;
   });

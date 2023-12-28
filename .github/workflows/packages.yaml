@@ -11,6 +11,10 @@ jobs:
         - kernel_linux_6_1_rockchip
         - kernel_linux_6_6_rockchip
         - kernel_linux_6_6_pinetab
+        - uBootRock64
+        - uBootRockPro64
+        - uBootPinebookPro
+        - uBootROCPCRK3399
         - uBootPineTab2
         - uBootQuartz64A
         - uBootQuartz64B

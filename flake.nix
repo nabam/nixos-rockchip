@@ -58,10 +58,10 @@
           kernel = (kernel system).linux_6_6_pinetab;
           extraModules = [  noZFS ];
         };
-        "Rock64"      = { uBoot = (uBoot system).ubootRock64;      kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
-        "RockPro64"   = { uBoot = (uBoot system).ubootRockPro64;   kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
-        "ROCPCRK3399" = { uBoot = (uBoot system).ubootROCPCRK3399; kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
-        "PinebookPro" = { uBoot = (uBoot system).ubootPinebookPro; kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
+        "Rock64"      = { uBoot = (uBoot system).uBootRock64;      kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
+        "RockPro64"   = { uBoot = (uBoot system).uBootRockPro64;   kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
+        "ROCPCRK3399" = { uBoot = (uBoot system).uBootROCPCRK3399; kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
+        "PinebookPro" = { uBoot = (uBoot system).uBootPinebookPro; kernel = (kernel system).linux_6_1_rockchip; extraModules = []; };
       };
 
       osConfigs = system: builtins.mapAttrs

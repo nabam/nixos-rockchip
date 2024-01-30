@@ -1,17 +1,15 @@
-{ config, pkgs, lib, modulesPath, ... }:
-{
+{ config, pkgs, lib, modulesPath, ... }: {
   imports = [
     (modulesPath + "/profiles/base.nix")
     (modulesPath + "/installer/sd-card/sd-image.nix")
   ];
 
-  options = {
-    rockchip.uBoot = lib.mkOption {};
-  };
+  options = { rockchip.uBoot = lib.mkOption { }; };
 
   config.boot = {
     consoleLogLevel = lib.mkDefault 7;
-    kernelPackages = lib.mkDefault (pkgs.callPackage ../../pkgs/linux-rockchip.nix {}).linux_6_1;
+    kernelPackages = lib.mkDefault
+      (pkgs.callPackage ../../pkgs/linux-rockchip.nix { }).linux_6_1;
 
     loader = {
       grub.enable = false;
@@ -26,8 +24,7 @@
     ubootOffset = 16384; # 0x4000
     # 1.7Mb at the moment; use very safe security margin of 8MB.
     ubootSize = 16384; # 8mb
-  in
-  {
+  in {
     compressImage = false;
 
     # Override expansion script built into sd-image.nix module as it fails to identify partition number correctly
@@ -43,10 +40,16 @@
       sfdisk --part-type "$img" 1 DA # mark partition as "Non-FS data"
       if [ -e "${uBoot}/u-boot-rockchip.bin" ]; then
         # u-boot-rockchip.bin contains both idbloader and uboot
-        dd if="${uBoot}/u-boot-rockchip.bin" of="$img" conv=fsync,notrunc bs=16M seek=${toString (idbloaderOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+        dd if="${uBoot}/u-boot-rockchip.bin" of="$img" conv=fsync,notrunc bs=16M seek=${
+          toString (idbloaderOffset * 512)
+        } iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
       else
-        dd if="${uBoot}/idbloader.img" of="$img" conv=fsync,notrunc bs=16M seek=${toString (idbloaderOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
-        dd if="${uBoot}/u-boot.itb" of="$img" conv=fsync,notrunc bs=16M seek=${toString (ubootOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+        dd if="${uBoot}/idbloader.img" of="$img" conv=fsync,notrunc bs=16M seek=${
+          toString (idbloaderOffset * 512)
+        } iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+        dd if="${uBoot}/u-boot.itb" of="$img" conv=fsync,notrunc bs=16M seek=${
+          toString (ubootOffset * 512)
+        } iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
       fi
       sfdisk -d "$img"
     '';

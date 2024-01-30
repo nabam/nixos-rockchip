@@ -37,16 +37,16 @@ let
     STMMAC_ETH = yes;
     VIDEO_HANTRO_ROCKCHIP = yes;
   };
-in
-with pkgs.linuxKernel;
-{
-  linux_6_1          = pkgs.linuxPackages_6_1;
-  linux_6_1_rockchip = packagesFor (kernels.linux_6_1.override { structuredExtraConfig = kernelConfig; });
+in with pkgs.linuxKernel; {
+  linux_6_1 = pkgs.linuxPackages_6_1;
+  linux_6_1_rockchip = packagesFor
+    (kernels.linux_6_1.override { structuredExtraConfig = kernelConfig; });
 
-  linux_6_6          = pkgs.linuxPackages_6_6;
-  linux_6_6_rockchip = packagesFor (kernels.linux_6_6.override { structuredExtraConfig = kernelConfig; });
+  linux_6_6 = pkgs.linuxPackages_6_6;
+  linux_6_6_rockchip = packagesFor
+    (kernels.linux_6_6.override { structuredExtraConfig = kernelConfig; });
 
-  linux_6_6_pinetab  = packagesFor (kernels.linux_6_6.override {
+  linux_6_6_pinetab = packagesFor (kernels.linux_6_6.override {
     argsOverride = {
       src = pkgs.fetchFromGitHub {
         owner = "dreemurrs-embedded";

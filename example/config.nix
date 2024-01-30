@@ -1,5 +1,4 @@
-{ config, pkgs, lib, ... }:
-{
+{ config, pkgs, lib, ... }: {
   system.stateVersion = "22.11";
 
   networking.hostName = "quartz64";
@@ -8,11 +7,11 @@
   networking.wireless = {
     enable = true;
     userControlled.enable = true;
-#    networks = {
-#      XXX = {
-#        psk = "XXX";
-#      };
-#    };
+    #    networks = {
+    #      XXX = {
+    #        psk = "XXX";
+    #      };
+    #    };
   };
 
   services.openssh.enable = true;
@@ -30,8 +29,8 @@
     home = "/home/ssh-user";
     description = "SSH user";
     extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = [ 
-#      "XXX"
+    openssh.authorizedKeys.keys = [
+      #      "XXX"
     ];
   };
 

@@ -1,7 +1,6 @@
-{ config, pkgs, lib, modulesPath, ... }:
-{
-  hardware.deviceTree.overlays = [ { 
-    name = "sata"; 
+{ config, pkgs, lib, modulesPath, ... }: {
+  hardware.deviceTree.overlays = [{
+    name = "sata";
     dtsText = ''
       /dts-v1/;
       /plugin/;
@@ -17,5 +16,5 @@
         status = "okay";
       };
     '';
-  } ];
+  }];
 }

@@ -1,6 +1,5 @@
-{ config, pkgs, lib, modulesPath, ... }:
-{
-  hardware.deviceTree.overlays = [ {
+{ config, pkgs, lib, modulesPath, ... }: {
+  hardware.deviceTree.overlays = [{
     name = "pcie-fix";
     dtsText = ''
       /dts-v1/;
@@ -19,5 +18,5 @@
                  <0x03000000 0x0 0x40000000 0x3 0x00000000 0x0 0x40000000>;
       };
     '';
-  } ];
+  }];
 }

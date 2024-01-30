@@ -1,5 +1,5 @@
 {
-  description = "Build NixOS images for rockchip based single computer boards";
+  description = "Build NixOS images for rockchip based single board computers";
 
   inputs = {
     nixpkgsStable.url   = "github:NixOS/nixpkgs/nixos-23.11";

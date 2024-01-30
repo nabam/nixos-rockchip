@@ -28,7 +28,8 @@
             ./config.nix
             {
               # Use cross-compilation for uBoot and Kernel.
-              rockchip.uBoot = (inputs.rockchip.uBoot buildPlatform).uBootQuartz64A;
+              rockchip.uBoot =
+                (inputs.rockchip.uBoot buildPlatform).uBootQuartz64A;
               boot.kernelPackages =
                 (inputs.rockchip.kernel buildPlatform).linux_6_6_rockchip;
             }

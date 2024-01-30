@@ -25,7 +25,7 @@
       uBoot  = system: (pkgsUnstable system).callPackage ./pkgs/uboot-rockchip.nix {};
       kernel = system: (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix {};
 
-      noZFS = { nixpkgs.overlays = [ (final: super: { zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; }); }) ]; }; # ZFS is broken on linux 6.2 from unstable
+      noZFS = { nixpkgs.overlays = [ (final: super: { zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; }); }) ]; }; # ZFS is broken on kernel from unstable
 
       boards = system: {
         "Quartz64A"      = {
@@ -80,7 +80,7 @@
         (name: value: value.config.system.build.sdImage) (osConfigs system);
     in
     {
-      inherit uBoot kernel;
+      inherit uBoot kernel noZFS;
 
       nixosModules = {
         sdImageRockchipInstaller = import ./modules/sd-card/sd-image-rockchip-installer.nix;

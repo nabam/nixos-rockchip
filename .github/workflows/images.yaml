@@ -75,7 +75,7 @@ jobs:
         pushFilter: '(-nixos-sd-image-.*)\.img$|-ext4-fs\.img$'
     - working-directory: ./example
       run: |
-        nix build -L -j4 --override-input rockchip ..
+        nix build -L -j4 --accept-flake-config --override-input rockchip ..
 
   create_release:
     runs-on: ubuntu-latest

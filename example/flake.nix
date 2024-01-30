@@ -32,6 +32,8 @@
             rockchip.uBoot = (inputs.rockchip.uBoot system).uBootQuartz64A;
             boot.kernelPackages = (inputs.rockchip.kernel system).linux_6_6_rockchip;
           }
+
+          inputs.rockchip.noZFS # ZFS is broken on kernel from unstable
         ];
       };
     in {

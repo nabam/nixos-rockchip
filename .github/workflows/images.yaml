@@ -16,9 +16,9 @@ jobs:
     strategy:
       matrix:
         package:
-        - kernel_linux_6_1_rockchip
-        - kernel_linux_6_6_rockchip
-        - kernel_linux_6_6_pinetab
+        - kernel_linux_6_1_rockchip.kernel
+        - kernel_linux_6_6_rockchip.kernel
+        - kernel_linux_6_6_pinetab.kernel
         - uBootRock64
         - uBootRockPro64
         - uBootPinebookPro

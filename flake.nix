@@ -99,6 +99,8 @@
             modules = [
               self.nixosModules.sdImageRockchipInstaller
               {
+                system.stateVersion = "23.11";
+
                 rockchip.uBoot = value.uBoot;
                 boot.kernelPackages = value.kernel;
               }
@@ -111,9 +113,10 @@
         builtins.mapAttrs (name: value: value.config.system.build.sdImage)
         (osConfigs system);
     in {
-      inherit uBoot kernel noZFS;
+      inherit uBoot kernel;
 
       nixosModules = {
+        inherit noZFS;
         sdImageRockchipInstaller =
           import ./modules/sd-card/sd-image-rockchip-installer.nix;
         sdImageRockchip = import ./modules/sd-card/sd-image-rockchip.nix;
@@ -121,11 +124,12 @@
         dtOverlayPCIeFix = import ./modules/dt-overlay/pcie-fix.nix;
       };
     } // inputs.utils.lib.eachDefaultSystem (system: {
+      legacyPackages = {
+        kernel_linux_6_1_rockchip = (kernel system).linux_6_1_rockchip;
+        kernel_linux_6_6_rockchip = (kernel system).linux_6_6_rockchip;
+        kernel_linux_6_6_pinetab = (kernel system).linux_6_6_pinetab;
+      };
       packages = (images system) // {
-        kernel_linux_6_1_rockchip = (kernel system).linux_6_1_rockchip.kernel;
-        kernel_linux_6_6_rockchip = (kernel system).linux_6_6_rockchip.kernel;
-        kernel_linux_6_6_pinetab = (kernel system).linux_6_6_pinetab.kernel;
-
         uBootQuartz64A = (uBoot system).uBootQuartz64A;
         uBootQuartz64B = (uBoot system).uBootQuartz64B;
         uBootPineTab2 = (uBoot system).uBootPineTab2;

@@ -29,12 +29,12 @@
             {
               # Use cross-compilation for uBoot and Kernel.
               rockchip.uBoot =
-                (inputs.rockchip.uBoot buildPlatform).uBootQuartz64A;
+                inputs.rockchip.packages.${buildPlatform}.uBootQuartz64A;
               boot.kernelPackages =
-                (inputs.rockchip.kernel buildPlatform).linux_6_6_rockchip;
+                inputs.rockchip.legacyPackages.${buildPlatform}.kernel_linux_6_6_rockchip;
             }
 
-            inputs.rockchip.noZFS # ZFS is broken on kernel from unstable
+            inputs.rockchip.nixosModules.noZFS # ZFS is broken on kernel from unstable
           ];
         };
     in {
@@ -50,6 +50,6 @@
       # Or use configuration below to cross-compile kernel and uBoot on the current platform.
       # packages.image = (osConfig system).config.system.build.sdImage;
 
-      defaultPackage = self.packages."${system}".image;
+      packages.default = self.packages.${system}.image;
     });
 }

@@ -6,7 +6,7 @@ on:
     - main
 
 jobs:
-  lint:
+  fmt:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -19,10 +19,59 @@ jobs:
     - run: |
         nix fmt .
         git diff-files --quiet || (git -P diff; echo -e "\nNOT FORMATTED: run 'nix fmt .'"; false)
-  build_example:
-    needs: lint
+
+  build_packages:
+    needs: fmt
+    strategy:
+      matrix:
+        package:
+        - kernel_linux_6_1_rockchip.kernel
+        - kernel_linux_6_6_rockchip.kernel
+        - kernel_linux_6_6_pinetab.kernel
+        - uBootRock64
+        - uBootRockPro64
+        - uBootPinebookPro
+        - uBootROCPCRK3399
+        - uBootPineTab2
+        - uBootQuartz64A
+        - uBootQuartz64B
+        - uBootSoQuartzModelA
+        - uBootSoQuartzCM4IO
+        - uBootSoQuartzBlade
     runs-on: ubuntu-latest
     steps:
+    - name: Free disk space
+      run: |
+        df -h
+        sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /usr/local/lib/android $AGENT_TOOLSDIRECTORY
+        sudo docker image prune --all --force
+        df -h
+    - uses: actions/checkout@v3
+    - run: |
+        DEBIAN_FRONTEND=noninteractive
+        sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
+    - uses: cachix/install-nix-action@v20
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+          extra-platforms = aarch64-linux
+    - uses: cachix/cachix-action@v12
+      with:
+        name: nabam-nixos-rockchip
+    - run: |
+        nix build -L -j4 .#${{ matrix.package }}
+
+  build_example:
+    needs: fmt
+    runs-on: ubuntu-latest
+    steps:
+    - name: Free disk space
+      run: |
+        df -h
+        sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /usr/local/lib/android $AGENT_TOOLSDIRECTORY
+        sudo docker image prune --all --force
+        df -h
     - uses: actions/checkout@v3
     - run: |
         DEBIAN_FRONTEND=noninteractive
@@ -39,38 +88,3 @@ jobs:
     - working-directory: ./example
       run: |
         nix build -L -j4 --accept-flake-config --override-input rockchip ..
-  build_packages:
-    needs: lint
-    strategy:
-      matrix:
-        package:
-        - kernel_linux_6_1_rockchip
-        - kernel_linux_6_6_rockchip
-        - kernel_linux_6_6_pinetab
-        - uBootRock64
-        - uBootRockPro64
-        - uBootPinebookPro
-        - uBootROCPCRK3399
-        - uBootPineTab2
-        - uBootQuartz64A
-        - uBootQuartz64B
-        - uBootSoQuartzModelA
-        - uBootSoQuartzCM4IO
-        - uBootSoQuartzBlade
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - run: |
-        DEBIAN_FRONTEND=noninteractive
-        sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
-    - uses: cachix/install-nix-action@v20
-      with:
-        nix_path: nixpkgs=channel:nixos-unstable
-        extra_nix_config: |
-          experimental-features = nix-command flakes
-          extra-platforms = aarch64-linux
-    - uses: cachix/cachix-action@v12
-      with:
-        name: nabam-nixos-rockchip
-    - run: |
-        nix build -L -j4 .#${{ matrix.package }}

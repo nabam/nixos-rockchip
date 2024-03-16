@@ -29,6 +29,7 @@ jobs:
         - uBootSoQuartzModelA
         - uBootSoQuartzCM4IO
         - uBootSoQuartzBlade
+        - uBootOrangePiCM4
     runs-on: ubuntu-latest
     steps:
     - name: Free disk space
@@ -127,6 +128,7 @@ jobs:
         - ROCPCRK3399
         - PinebookPro
         - PineTab2
+        - OrangePiCM4
     runs-on: ubuntu-latest
     steps:
     - name: Free disk space

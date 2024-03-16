@@ -38,6 +38,7 @@ jobs:
         - uBootSoQuartzModelA
         - uBootSoQuartzCM4IO
         - uBootSoQuartzBlade
+        - uBootOrangePiCM4
     runs-on: ubuntu-latest
     steps:
     - name: Free disk space

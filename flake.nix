@@ -28,6 +28,8 @@
         (pkgsUnstable system).callPackage ./pkgs/uboot-rockchip.nix { };
       kernel = system:
         (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix { };
+      bes2600Firmware = system:
+        (pkgsUnstable system).callPackage ./pkgs/bes2600-firmware.nix { };
 
       # ZFS is broken on kernel from unstable.
       noZFS = {
@@ -36,6 +38,11 @@
             zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; });
           })
         ];
+      };
+
+      bes2600 = system: {
+        nixpkgs.config.allowUnfree = true;
+        hardware.firmware = [ (bes2600Firmware system) ];
       };
 
       boards = system: {
@@ -66,8 +73,8 @@
         };
         "PineTab2" = {
           uBoot = (uBoot system).uBootPineTab2;
-          kernel = (kernel system).linux_6_6_pinetab;
-          extraModules = [ noZFS ];
+          kernel = (kernel system).linux_6_8_pinetab;
+          extraModules = [ (bes2600 system) noZFS ];
         };
         "Rock64" = {
           uBoot = (uBoot system).uBootRock64;
@@ -127,7 +134,8 @@
       legacyPackages = {
         kernel_linux_6_1_rockchip = (kernel system).linux_6_1_rockchip;
         kernel_linux_6_6_rockchip = (kernel system).linux_6_6_rockchip;
-        kernel_linux_6_6_pinetab = (kernel system).linux_6_6_pinetab;
+        kernel_linux_6_8_rockchip = (kernel system).linux_6_8_rockchip;
+        kernel_linux_6_8_pinetab = (kernel system).linux_6_8_pinetab;
       };
       packages = (images system) // {
         uBootQuartz64A = (uBoot system).uBootQuartz64A;
@@ -141,6 +149,8 @@
         uBootSoQuartzModelA = (uBoot system).uBootSoQuartzModelA;
         uBootSoQuartzCM4IO = (uBoot system).uBootSoQuartzCM4IO;
         uBootSoQuartzBlade = (uBoot system).uBootSoQuartzBlade;
+
+        bes2600 = (bes2600Firmware system);
       };
       formatter = (import inputs.nixpkgsStable { inherit system; }).nixfmt;
     });

@@ -29,6 +29,7 @@ jobs:
         - uBootSoQuartzModelA
         - uBootSoQuartzCM4IO
         - uBootSoQuartzBlade
+        - uBootOrangePiCM4
     runs-on: ubuntu-latest
     steps:
     - name: Free disk space
@@ -127,8 +128,15 @@ jobs:
         - ROCPCRK3399
         - PinebookPro
         - PineTab2
+        - OrangePiCM4
     runs-on: ubuntu-latest
     steps:
+    - name: Free disk space
+      run: |
+        df -h
+        sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /usr/local/lib/android $AGENT_TOOLSDIRECTORY
+        sudo docker image prune --all --force
+        df -h
     - uses: actions/checkout@v3
     - run: |
         DEBIAN_FRONTEND=noninteractive

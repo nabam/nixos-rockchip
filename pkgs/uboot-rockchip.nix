@@ -60,7 +60,7 @@ let
         license = lib.licenses.unfreeRedistributableFirmware;
       };
     };
-  buildRk3328UBoot = defconfig:
+  buildRK3328UBoot = defconfig:
     buildPatchedUBoot {
       inherit defconfig;
       BL31 = "${pkgs.armTrustedFirmwareRK3328}/bl31.elf";
@@ -93,5 +93,6 @@ in {
   uBootPinebookPro = buildRK3399UBoot "pinebook-pro-rk3399_defconfig";
   uBootRockPro64 = buildRK3399UBoot "rockpro64-rk3399_defconfig";
   uBootROCPCRK3399 = buildRK3399UBoot "roc-pc-rk3399_defconfig";
-  uBootRock64 = buildRk3328UBoot "rock64-rk3328_defconfig";
+  uBootRock64 = buildRK3328UBoot "rock64-rk3328_defconfig";
+  uBootOrangePiCM4 = buildRK3566UBoot "orangepi-3b-rk3566_defconfig";
 }

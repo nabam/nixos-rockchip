@@ -96,6 +96,11 @@
           kernel = (kernel system).linux_6_1_rockchip;
           extraModules = [ ];
         };
+        "OrangePiCM4" = {
+          uBoot = (uBoot system).uBootOrangePiCM4;
+          kernel = (kernel system).linux_6_1_rockchip;
+          extraModules = [ ];
+        };
       };
 
       osConfigs = system:
@@ -149,6 +154,8 @@
         uBootSoQuartzModelA = (uBoot system).uBootSoQuartzModelA;
         uBootSoQuartzCM4IO = (uBoot system).uBootSoQuartzCM4IO;
         uBootSoQuartzBlade = (uBoot system).uBootSoQuartzBlade;
+
+        uBootOrangePiCM4 = (uBoot system).uBootOrangePiCM4;
 
         bes2600 = (bes2600Firmware system);
       };

@@ -16,7 +16,6 @@ jobs:
     strategy:
       matrix:
         package:
-        - kernel_linux_6_1_rockchip.kernel
         - kernel_linux_6_6_rockchip.kernel
         - kernel_linux_6_8_rockchip.kernel
         - kernel_linux_6_8_pinetab.kernel

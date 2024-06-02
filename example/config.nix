@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  system.stateVersion = "22.11";
+  system.stateVersion = "24.05";
 
   networking.hostName = "quartz64";
   zramSwap.enable = true;

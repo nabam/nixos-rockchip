@@ -2,7 +2,7 @@
   description = "Build NixOS images for rockchip based computers";
 
   inputs = {
-    nixpkgsStable.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgsStable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
   };
@@ -41,12 +41,12 @@
       boards = system: {
         "Quartz64A" = {
           uBoot = (uBoot system).uBootQuartz64A;
-          kernel = (kernel system).linux_6_1_rockchip;
+          kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
         };
         "Quartz64B" = {
           uBoot = (uBoot system).uBootQuartz64B;
-          kernel = (kernel system).linux_6_1_rockchip;
+          kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
         };
         "SoQuartzModelA" = {
@@ -71,27 +71,27 @@
         };
         "Rock64" = {
           uBoot = (uBoot system).uBootRock64;
-          kernel = (kernel system).linux_6_1_rockchip;
+          kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ ];
         };
         "RockPro64" = {
           uBoot = (uBoot system).uBootRockPro64;
-          kernel = (kernel system).linux_6_1_rockchip;
+          kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ ];
         };
         "ROCPCRK3399" = {
           uBoot = (uBoot system).uBootROCPCRK3399;
-          kernel = (kernel system).linux_6_1_rockchip;
+          kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ ];
         };
         "PinebookPro" = {
           uBoot = (uBoot system).uBootPinebookPro;
-          kernel = (kernel system).linux_6_1_rockchip;
+          kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ ];
         };
         "OrangePiCM4" = {
           uBoot = (uBoot system).uBootOrangePiCM4;
-          kernel = (kernel system).linux_6_1_rockchip;
+          kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ ];
         };
       };
@@ -104,7 +104,7 @@
             modules = [
               self.nixosModules.sdImageRockchipInstaller
               {
-                system.stateVersion = "23.11";
+                system.stateVersion = "24.05";
 
                 rockchip.uBoot = value.uBoot;
                 boot.kernelPackages = value.kernel;
@@ -118,8 +118,6 @@
         builtins.mapAttrs (name: value: value.config.system.build.sdImage)
         (osConfigs system);
     in {
-      inherit uBoot kernel;
-
       nixosModules = {
         inherit noZFS;
         sdImageRockchipInstaller =
@@ -130,7 +128,6 @@
       };
     } // inputs.utils.lib.eachDefaultSystem (system: {
       legacyPackages = {
-        kernel_linux_6_1_rockchip = (kernel system).linux_6_1_rockchip;
         kernel_linux_6_6_rockchip = (kernel system).linux_6_6_rockchip;
         kernel_linux_6_6_pinetab = (kernel system).linux_6_6_pinetab;
       };

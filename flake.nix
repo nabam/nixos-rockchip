@@ -59,17 +59,17 @@
         "SoQuartzModelA" = {
           uBoot = (uBoot system).uBootSoQuartzModelA;
           kernel = (kernel system).linux_6_6_rockchip;
-          extraModules = [ noZFS ];
+          extraModules = [ ];
         };
         "SoQuartzCM4" = {
           uBoot = (uBoot system).uBootSoQuartzCM4IO;
           kernel = (kernel system).linux_6_6_rockchip;
-          extraModules = [ noZFS ];
+          extraModules = [ ];
         };
         "SoQuartzBlade" = {
           uBoot = (uBoot system).uBootSoQuartzBlade;
           kernel = (kernel system).linux_6_6_rockchip;
-          extraModules = [ noZFS ];
+          extraModules = [ ];
         };
         "PineTab2" = {
           uBoot = (uBoot system).uBootPineTab2;

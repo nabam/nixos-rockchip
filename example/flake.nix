@@ -33,8 +33,6 @@
               boot.kernelPackages =
                 inputs.rockchip.legacyPackages.${buildPlatform}.kernel_linux_6_6_rockchip;
             }
-
-            inputs.rockchip.nixosModules.noZFS # ZFS is broken on kernel from unstable
           ];
         };
     in {

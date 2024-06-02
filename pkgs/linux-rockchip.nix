@@ -37,23 +37,32 @@ let
     STMMAC_ETH = yes;
     VIDEO_HANTRO_ROCKCHIP = yes;
   };
+  pinetabKernelConfig = with lib.kernel; {
+    BES2600 = module;
+    BES2600_WLAN_STDIO = yes;
+    BES2600_DEBUGFS = yes;
+  };
 in with pkgs.linuxKernel; {
   linux_6_6 = pkgs.linuxPackages_6_6;
   linux_6_6_rockchip = packagesFor
     (kernels.linux_6_6.override { structuredExtraConfig = kernelConfig; });
 
-  linux_6_6_pinetab = packagesFor (kernels.linux_6_6.override {
+  linux_6_8 = pkgs.linuxPackages_6_8;
+  linux_6_8_rockchip = packagesFor
+    (kernels.linux_6_8.override { structuredExtraConfig = kernelConfig; });
+
+  linux_6_8_pinetab = packagesFor (kernels.linux_6_8.override {
     argsOverride = {
       src = pkgs.fetchFromGitHub {
         owner = "dreemurrs-embedded";
         repo = "linux-pinetab2";
-        rev = "81e3aa387e0dcb349e0d3f3c05f2f62742f814d7";
-        sha256 = "kkO54FbexUuuvZNFDuTtFMokBgKrCZXTQDCzsSRZNDE=";
+        rev = "b8c008ccf5a0d49bb783d94ebb14e6b1808e055b";
+        sha256 = "1F4GB1U+RSRjTSE8yCFL+Psq21viu+nRxDizPX9vTRc=";
       };
-      version = "6.6.8-danctnix1";
-      modDirVersion = "6.6.8-danctnix1";
+      version = "6.8.0-danctnix1";
+      modDirVersion = "6.8.0-danctnix1";
     };
-    structuredExtraConfig = kernelConfig;
+    structuredExtraConfig = kernelConfig // pinetabKernelConfig;
   });
 }
 

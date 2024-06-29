@@ -73,7 +73,7 @@
         };
         "PineTab2" = {
           uBoot = (uBoot system).uBootPineTab2;
-          kernel = (kernel system).linux_6_8_pinetab;
+          kernel = (kernel system).linux_6_9_pinetab;
           extraModules = [ (bes2600 system) noZFS ];
         };
         "Rock64" = {
@@ -136,8 +136,8 @@
     } // inputs.utils.lib.eachDefaultSystem (system: {
       legacyPackages = {
         kernel_linux_6_6_rockchip = (kernel system).linux_6_6_rockchip;
-        kernel_linux_6_8_rockchip = (kernel system).linux_6_8_rockchip;
-        kernel_linux_6_8_pinetab = (kernel system).linux_6_8_pinetab;
+        kernel_linux_6_9_rockchip = (kernel system).linux_6_9_rockchip;
+        kernel_linux_6_9_pinetab = (kernel system).linux_6_9_pinetab;
       };
       packages = (images system) // {
         uBootQuartz64A = (uBoot system).uBootQuartz64A;

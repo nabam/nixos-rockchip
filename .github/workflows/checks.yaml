@@ -26,7 +26,7 @@ jobs:
       matrix:
         package:
         - kernel_linux_6_6_rockchip.kernel
-        - kernel_linux_6_8_pinetab.kernel
+        - kernel_linux_6_9_pinetab.kernel
         - uBootRock64
         - uBootRockPro64
         - uBootPinebookPro

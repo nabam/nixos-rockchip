@@ -6,6 +6,7 @@ let
     CHARGER_RK817 = yes;
     COMMON_CLK_RK808 = yes;
     COMMON_CLK_ROCKCHIP = yes;
+    DRM_ROCKCHIP = yes;
     GPIO_ROCKCHIP = yes;
     MFD_RK808 = yes;
     MMC_DW = yes;
@@ -41,6 +42,8 @@ let
     BES2600 = module;
     BES2600_5GHZ_SUPPORT = yes;
     BES2600_DEBUGFS = yes;
+
+    DRM_PANEL_BOE_TH101MB31UIG002_28A = yes;
   };
 in with pkgs.linuxKernel; {
   linux_6_6 = pkgs.linuxPackages_6_6;
@@ -62,6 +65,10 @@ in with pkgs.linuxKernel; {
       version = "6.9.6-danctnix1";
       modDirVersion = "6.9.6-danctnix1";
     };
+    kernelPatches = [{
+      name = "Enable backlight in defconfig";
+      patch = ./backlight.patch;
+    }];
     structuredExtraConfig = kernelConfig // pinetabKernelConfig;
   });
 }

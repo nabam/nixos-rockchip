@@ -44,9 +44,6 @@
         nixpkgs.config.allowUnfree = true;
         hardware.firmware = [ (bes2600Firmware system) ];
       };
-      pinetabPanel = {
-        boot.kernelModules = [ "panel_boe_th101mb31ig002_28a" ];
-      };
 
       boards = system: {
         "Quartz64A" = {
@@ -77,7 +74,7 @@
         "PineTab2" = {
           uBoot = (uBoot system).uBootPineTab2;
           kernel = (kernel system).linux_6_9_pinetab;
-          extraModules = [ (bes2600 system) noZFS pinetabPanel ];
+          extraModules = [ (bes2600 system) noZFS ];
         };
         "Rock64" = {
           uBoot = (uBoot system).uBootRock64;

@@ -1,7 +1,8 @@
 { pkgs, stdenv, lib, fetchpatch, fetchFromGitHub, buildUBoot, buildPackages }:
 
 let
-  buildPatchedUBoot = { defconfig, BL31, ROCKCHIP_TPL ? "", extraPatches ? [] }:
+  buildPatchedUBoot =
+    { defconfig, BL31, ROCKCHIP_TPL ? "", extraPatches ? [ ] }:
     let
       inherit defconfig BL31 ROCKCHIP_TPL extraPatches;
       src = fetchFromGitHub {

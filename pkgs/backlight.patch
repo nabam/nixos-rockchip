@@ -1,0 +1,14 @@
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 57a9abe78ee4..46db96bb88ff 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -923,7 +923,8 @@ CONFIG_DRM_POWERVR=m
+ CONFIG_FB=y
+ CONFIG_FB_EFI=y
+ CONFIG_FB_MODE_HELPERS=y
+-CONFIG_BACKLIGHT_PWM=m
++CONFIG_BACKLIGHT_CLASS_DEVICE=y
++CONFIG_BACKLIGHT_PWM=y
+ CONFIG_BACKLIGHT_LP855X=m
+ CONFIG_LOGO=y
+ # CONFIG_LOGO_LINUX_MONO is not set

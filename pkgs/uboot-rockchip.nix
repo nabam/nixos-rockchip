@@ -71,4 +71,5 @@ in {
   uBootROCPCRK3399 = buildRK3399UBoot "roc-pc-rk3399_defconfig";
   uBootRock64 = buildRK3328UBoot "rock64-rk3328_defconfig";
   uBootOrangePiCM4 = buildRK3566UBoot "orangepi-3b-rk3566_defconfig";
+  uBootRadxaRock4 = buildRK3399UBoot "rock-pi-4-rk3399_defconfig";
 }

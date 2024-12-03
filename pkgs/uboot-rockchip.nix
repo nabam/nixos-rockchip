@@ -73,4 +73,5 @@ in {
   uBootOrangePiCM4 = buildRK3566UBoot "orangepi-3b-rk3566_defconfig";
   uBootRadxaCM3IO = buildRK3566UBoot "radxa-cm3-io-rk3566_defconfig";
   uBootRadxaRock4 = buildRK3399UBoot "rock-pi-4-rk3399_defconfig";
+  uBootRadxaRock4SE = buildRK3399UBoot "rock-4se-rk3399_defconfig";
 }

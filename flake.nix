@@ -2,7 +2,7 @@
   description = "Build NixOS images for rockchip based computers";
 
   inputs = {
-    nixpkgsStable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgsStable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
   };
@@ -73,7 +73,7 @@
         };
         "PineTab2" = {
           uBoot = (uBoot system).uBootPineTab2;
-          kernel = (kernel system).linux_6_9_pinetab;
+          kernel = (kernel system).linux_6_12_pinetab;
           extraModules = [ (bes2600 system) noZFS ];
         };
         "Rock64" = {
@@ -141,8 +141,8 @@
     } // inputs.utils.lib.eachDefaultSystem (system: {
       legacyPackages = {
         kernel_linux_6_6_rockchip = (kernel system).linux_6_6_rockchip;
-        kernel_linux_6_9_rockchip = (kernel system).linux_6_9_rockchip;
-        kernel_linux_6_9_pinetab = (kernel system).linux_6_9_pinetab;
+        kernel_linux_6_12_rockchip = (kernel system).linux_6_12_rockchip;
+        kernel_linux_6_12_pinetab = (kernel system).linux_6_12_pinetab;
       };
       packages = (images system) // {
         uBootQuartz64A = (uBoot system).uBootQuartz64A;

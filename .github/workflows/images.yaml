@@ -30,6 +30,7 @@ jobs:
         - uBootSoQuartzCM4IO
         - uBootSoQuartzBlade
         - uBootOrangePiCM4
+        - uBootRadxaCM3IO
         - uBootRadxaRock4
     runs-on: ubuntu-latest
     steps:
@@ -130,6 +131,7 @@ jobs:
         - PinebookPro
         - PineTab2
         - OrangePiCM4
+        - RadxaCM3IO
         - RadxaRock4
     runs-on: ubuntu-latest
     steps:

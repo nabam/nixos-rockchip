@@ -6,7 +6,7 @@ on:
     - completed
   push:
     branches:
-    - main
+    - msgilligan-main
 
 permissions:
   contents: write

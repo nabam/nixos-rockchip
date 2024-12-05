@@ -40,6 +40,7 @@ jobs:
         - uBootOrangePiCM4
         - uBootRadxaCM3IO
         - uBootRadxaRock4
+        - uBootRadxaRock4SE
     runs-on: ubuntu-latest
     steps:
     - name: Free disk space

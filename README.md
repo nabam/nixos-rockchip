@@ -73,8 +73,14 @@ Applies device tree overlay to enable SATA port on Quartz64A.
 | [RockPro64][]        | RockPro64      | Untested        |
 | [ROC PC RK3399][]    | ROCPCRK3399    | Untested        |
 | [Pinebook Pro][]     | PinebookPro    | Untested        |
+| Orange Pi CM4        | OrangePiCM4    | Untested        |
+| Radxa CM3/CM3 I/O    | RadxaCM3IO     | Untested        |
+| [Radxa Rock 4][]     | RadxaRock4     | Tested & Works  |
+| [Radxa Rock4 SE][]   | RadxaRock4SE   | Tested & Works  |
 
 [Rock64]: https://nixos.wiki/wiki/NixOS_on_ARM/PINE64_ROCK64
 [RockPro64]: https://nixos.wiki/wiki/NixOS_on_ARM/PINE64_ROCKPro64
 [ROC PC RK3399]: https://nixos.wiki/wiki/NixOS_on_ARM/Libre_Computer_ROC-RK3399-PC
 [Pinebook Pro]: https://nixos.wiki/wiki/NixOS_on_ARM/PINE64_Pinebook_Pro
+[Radxa Rock 4]: https://wiki.nixos.org/wiki/NixOS_on_ARM/Radxa_ROCK_4
+[Radxa Rock4 SE]: https://wiki.nixos.org/wiki/NixOS_on_ARM/Radxa_ROCK_4

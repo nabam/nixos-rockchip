@@ -22,8 +22,10 @@ jobs:
     - uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4.16.0
       with:
         commit_message: nix flake update
+        commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
     - run: nix flake update
       working-directory: example
     - uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4.16.0
       with:
         commit_message: "example: nix flake update"
+        commit_author: "github-actions[bot] 41898282+github-actions[bot]@users.noreply.github.com"

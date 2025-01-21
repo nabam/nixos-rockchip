@@ -7,10 +7,10 @@ on:
 
 jobs:
   fmt:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     steps:
-    - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v20
+    - uses: actions/checkout@v4
+    - uses: cachix/install-nix-action@v30
       with:
         nix_path: nixpkgs=channel:nixos-unstable
         extra_nix_config: |
@@ -23,6 +23,7 @@ jobs:
   build_packages:
     needs: fmt
     strategy:
+      fail-fast: false
       matrix:
         package:
         - kernel_linux_6_6_rockchip.kernel
@@ -41,19 +42,19 @@ jobs:
         - uBootRadxaCM3IO
         - uBootRadxaRock4
         - uBootRadxaRock4SE
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     steps:
     - name: Free disk space
       run: |
         df -h
         sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /usr/local/lib/android $AGENT_TOOLSDIRECTORY
-        sudo docker image prune --all --force
+        #sudo docker image prune --all --force
         df -h
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: |
         DEBIAN_FRONTEND=noninteractive
         sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi-aarch64 binfmt-support qemu-user-static
-    - uses: cachix/install-nix-action@v20
+    - uses: cachix/install-nix-action@v30
       with:
         nix_path: nixpkgs=channel:nixos-unstable
         extra_nix_config: |
@@ -67,19 +68,19 @@ jobs:
 
   build_example:
     needs: fmt
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     steps:
     - name: Free disk space
       run: |
         df -h
         sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /usr/local/lib/android $AGENT_TOOLSDIRECTORY
-        sudo docker image prune --all --force
+        #sudo docker image prune --all --force
         df -h
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: |
         DEBIAN_FRONTEND=noninteractive
         sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi-aarch64 binfmt-support qemu-user-static
-    - uses: cachix/install-nix-action@v20
+    - uses: cachix/install-nix-action@v30
       with:
         nix_path: nixpkgs=channel:nixos-unstable
         extra_nix_config: |

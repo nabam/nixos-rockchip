@@ -8,7 +8,6 @@ let
     COMMON_CLK_ROCKCHIP = yes;
     DRM_ROCKCHIP = yes;
     GPIO_ROCKCHIP = yes;
-    MFD_RK808 = yes;
     MMC_DW = yes;
     MMC_DW_ROCKCHIP = yes;
     MMC_SDHCI_OF_DWCMSHC = yes;
@@ -59,11 +58,11 @@ in with pkgs.linuxKernel; {
       src = pkgs.fetchFromGitHub {
         owner = "dreemurrs-embedded";
         repo = "linux-pinetab2";
-        rev = "233885b11b547b33b0a03055ac90ce1cce781f75";
-        sha256 = "htJnKRwbawddObzSShECm+W9/Ifn6GMovwludkVjVKM=";
+        rev = "c20c98ab973a6042508dea01c152d7e4a486adea";
+        sha256 = "nOhz8IVhsc3MNdSBgdrAANWUzfYodiR6QIo5WfKmrMM=";
       };
-      version = "6.12.1-danctnix1";
-      modDirVersion = "6.12.1-danctnix1";
+      version = "6.12.9-danctnix2";
+      modDirVersion = "6.12.9-danctnix2";
     };
     kernelPatches = [{
       name = "Enable backlight in defconfig";

@@ -23,6 +23,7 @@ jobs:
   build_packages:
     needs: fmt
     strategy:
+      fail-fast: false
       matrix:
         package:
         - kernel_linux_6_6_rockchip.kernel

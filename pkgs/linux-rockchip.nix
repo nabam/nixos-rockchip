@@ -48,19 +48,11 @@ in with pkgs.linuxKernel; {
   linux_6_6 = pkgs.linuxPackages_6_6;
   linux_6_6_rockchip = packagesFor (kernels.linux_6_6.override {
     structuredExtraConfig = kernelConfig;
-    kernelPatches = [{
-      name = "Fix nvme on rk3566";
-      patch = ./fix-nvme.patch;
-    }];
   });
 
   linux_6_12 = pkgs.linuxPackages_6_12;
   linux_6_12_rockchip = packagesFor (kernels.linux_6_12.override {
     structuredExtraConfig = kernelConfig;
-    kernelPatches = [{
-      name = "Fix nvme on rk3566";
-      patch = ./fix-nvme.patch;
-    }];
   });
 
   linux_6_12_pinetab = packagesFor (kernels.linux_6_12.override {

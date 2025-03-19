@@ -64,9 +64,8 @@ in with pkgs.linuxKernel; {
   });
 
   linux_6_13 = pkgs.linuxPackages_6_13;
-  linux_6_13_rockchip = packagesFor (kernels.linux_6_13.override {
-    structuredExtraConfig = kernelConfig;
-  });
+  linux_6_13_rockchip = packagesFor
+    (kernels.linux_6_13.override { structuredExtraConfig = kernelConfig; });
 
   linux_6_13_pinetab = packagesFor (kernels.linux_6_13.override {
     argsOverride = {

@@ -152,7 +152,8 @@
       legacyPackages = {
         kernel_linux_6_6_rockchip = (kernel system).linux_6_6_rockchip;
         kernel_linux_6_12_rockchip = (kernel system).linux_6_12_rockchip;
-        kernel_linux_6_12_pinetab = (kernel system).linux_6_12_pinetab;
+        kernel_linux_6_13_rockchip = (kernel system).linux_6_13_rockchip;
+        kernel_linux_6_13_pinetab = (kernel system).linux_6_13_pinetab;
       };
       packages = (images system) // {
         uBootQuartz64A = (uBoot system).uBootQuartz64A;

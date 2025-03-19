@@ -18,7 +18,8 @@ jobs:
         package:
         - kernel_linux_6_6_rockchip.kernel
         - kernel_linux_6_12_rockchip.kernel
-        - kernel_linux_6_12_pinetab.kernel
+        - kernel_linux_6_13_rockchip.kernel
+        - kernel_linux_6_13_pinetab.kernel
         - uBootRock64
         - uBootRockPro64
         - uBootPinebookPro

@@ -30,6 +30,10 @@
         (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix { };
       bes2600Firmware = system:
         (pkgsUnstable system).callPackage ./pkgs/bes2600-firmware.nix { };
+      armbian-firmware = system:
+        (pkgsUnstable system).callPackage ./pkgs/armbian-firmware.nix { };
+      brcm43752pcieFirmware = system:
+        (armbian-firmware system).brcm-43752-pcie;
 
       # ZFS is broken on kernel from unstable.
       noZFS = {
@@ -43,6 +47,11 @@
       bes2600 = system: {
         nixpkgs.config.allowUnfree = true;
         hardware.firmware = [ (bes2600Firmware system) ];
+      };
+
+      brcm43752 = system: {
+        nixpkgs.config.allowUnfree = true;
+        hardware.firmware = [ (brcm43752pcieFirmware system) ];
       };
 
       boards = system: {
@@ -101,6 +110,15 @@
           kernel = (kernel system).linux_6_6_rockchip;
           extraModules = [ ];
         };
+        "OrangePi5B" = {
+          uBoot = (uBoot system).uBootOrangePi5B;
+          kernel = (kernel system).linux_6_13_orangepi5b;
+          extraModules = [
+            (brcm43752 system)
+            noZFS
+            self.nixosModules.dtOrangePi5B
+          ];
+        };
         "RadxaCM3IO" = {
           uBoot = (uBoot system).uBootRadxaCM3IO;
           kernel = (kernel system).linux_6_12_rockchip;
@@ -147,6 +165,7 @@
         sdImageRockchip = import ./modules/sd-card/sd-image-rockchip.nix;
         dtOverlayQuartz64ASATA = import ./modules/dt-overlay/quartz64a-sata.nix;
         dtOverlayPCIeFix = import ./modules/dt-overlay/pcie-fix.nix;
+        dtOrangePi5B = import ./modules/dt-overlay/rk3588s-orangepi5b.nix;
       };
     } // inputs.utils.lib.eachDefaultSystem (system: {
       legacyPackages = {
@@ -154,6 +173,7 @@
         kernel_linux_6_12_rockchip = (kernel system).linux_6_12_rockchip;
         kernel_linux_6_13_rockchip = (kernel system).linux_6_13_rockchip;
         kernel_linux_6_13_pinetab = (kernel system).linux_6_13_pinetab;
+        kernel_linux_6_13_orangepi5b = (kernel system).linux_6_13_orangepi5b;
       };
       packages = (images system) // {
         uBootQuartz64A = (uBoot system).uBootQuartz64A;

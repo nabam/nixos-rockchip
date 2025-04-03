@@ -59,6 +59,29 @@ let
       BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.43.elf");
       ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin");
     };
+  buildRK3588UBoot = defconfig:
+    let
+      src = fetchFromGitHub {
+        owner = "u-boot";
+        repo = "u-boot";
+        rev = "v2025.01";
+        sha256 = "n63E3AHzbkn/SAfq+DHYDsBMY8qob+cbcoKgPKgE4ps=";
+      };
+    in
+      buildUBoot {
+        inherit defconfig src;
+        version = "v2025.01-1-ga79ebd4e16";
+        BL31 = "${pkgs.armTrustedFirmwareRK3588}/bl31.elf";
+        ROCKCHIP_TPL = pkgs.rkbin.TPL_RK3588;
+        filesToInstall = [ "u-boot-rockchip.bin" ];
+        extraPatches = [
+          ./patches/u-boot/2025.01/0001-Add-config-for-the-orangepi-5b-board.patch
+        ];
+        extraMeta = {
+          platforms = [ "aarch64-linux" ];
+          license = lib.licenses.unfreeRedistributableFirmware;
+        };
+      };
 in {
   uBootQuartz64A = buildRK3566UBoot "quartz64-a-rk3566_defconfig";
   uBootQuartz64B = buildRK3566UBoot "quartz64-b-rk3566_defconfig";
@@ -71,6 +94,7 @@ in {
   uBootROCPCRK3399 = buildRK3399UBoot "roc-pc-rk3399_defconfig";
   uBootRock64 = buildRK3328UBoot "rock64-rk3328_defconfig";
   uBootOrangePiCM4 = buildRK3566UBoot "orangepi-3b-rk3566_defconfig";
+  uBootOrangePi5B = buildRK3588UBoot "orangepi-5b-rk3588s_defconfig";
   uBootRadxaCM3IO = buildRK3566UBoot "radxa-cm3-io-rk3566_defconfig";
   uBootRadxaRock4 = buildRK3399UBoot "rock-pi-4-rk3399_defconfig";
   uBootRadxaRock4SE = buildRK3399UBoot "rock-4se-rk3399_defconfig";

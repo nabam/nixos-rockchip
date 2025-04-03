@@ -46,12 +46,10 @@
           		bus-range = <0x40 0x4f>;
           
           		wifi: wifi@0,0 {
-                status = "okay";
           			compatible = "pci14e4,449d";
           			reg = <0x410000 0 0 0 0>;
           			clocks = <&hym8563>;
           			clock-names = "32k";
-                reset-gpios = <0xb7 24 0x0>;
           		};
           	};
           };

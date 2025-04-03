@@ -71,21 +71,21 @@ in
           src = "brcm/brcmfmac43752-pcie.txt";
           dests = [
             "brcm/brcmfmac43752-pcie.txt"
-            "brcm/brcmfmac43752-pcie.xunlong,orangepi-5.txt"
+            "brcm/brcmfmac43752-pcie.xunlong,orangepi-5b.txt"
           ];
         }
         {
           src = "brcm/brcmfmac43752-pcie.clm_blob";
           dests = [
             "brcm/brcmfmac43752-pcie.clm_blob"
-            "brcm/brcmfmac43752-pcie.xunlong,orangepi-5.clm_blob"
+            "brcm/brcmfmac43752-pcie.xunlong,orangepi-5b.clm_blob"
           ];
         }
         {
           src = "brcm/brcmfmac43752-pcie.bin";
           dests = [
             "brcm/brcmfmac43752-pcie.bin"
-            "brcm/brcmfmac43752-pcie.xunlong,orangepi-5.bin"
+            "brcm/brcmfmac43752-pcie.xunlong,orangepi-5b.bin"
           ];
         }
       ];

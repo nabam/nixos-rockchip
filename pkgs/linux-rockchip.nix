@@ -74,5 +74,14 @@ in with pkgs.linuxKernel; {
     }];
     structuredExtraConfig = kernelConfig // pinetabKernelConfig;
   });
+
+  linux_6_13_orangepi5b = packagesFor (kernels.linux_6_13.override {
+    structuredExtraConfig = kernelConfig;
+    kernelPatches = [{
+      name =
+        "Set the clock of the bcrm driver to 32khz as required by bcm43752.";
+      patch = ./patches/linux/6.13/rk3588-0802-wireless-add-clk-property.patch;
+    }];
+  });
 }
 

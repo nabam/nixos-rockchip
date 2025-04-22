@@ -67,21 +67,20 @@ let
         rev = "v2025.01";
         sha256 = "n63E3AHzbkn/SAfq+DHYDsBMY8qob+cbcoKgPKgE4ps=";
       };
-    in
-      buildUBoot {
-        inherit defconfig src;
-        version = "v2025.01-1-ga79ebd4e16";
-        BL31 = "${pkgs.armTrustedFirmwareRK3588}/bl31.elf";
-        ROCKCHIP_TPL = pkgs.rkbin.TPL_RK3588;
-        filesToInstall = [ "u-boot-rockchip.bin" ];
-        extraPatches = [
-          ./patches/u-boot/2025.01/0001-Add-config-for-the-orangepi-5b-board.patch
-        ];
-        extraMeta = {
-          platforms = [ "aarch64-linux" ];
-          license = lib.licenses.unfreeRedistributableFirmware;
-        };
+    in buildUBoot {
+      inherit defconfig src;
+      version = "v2025.01-1-ga79ebd4e16";
+      BL31 = "${pkgs.armTrustedFirmwareRK3588}/bl31.elf";
+      ROCKCHIP_TPL = pkgs.rkbin.TPL_RK3588;
+      filesToInstall = [ "u-boot-rockchip.bin" ];
+      extraPatches = [
+        ./patches/u-boot/2025.01/0001-Add-config-for-the-orangepi-5b-board.patch
+      ];
+      extraMeta = {
+        platforms = [ "aarch64-linux" ];
+        license = lib.licenses.unfreeRedistributableFirmware;
       };
+    };
 in {
   uBootQuartz64A = buildRK3566UBoot "quartz64-a-rk3566_defconfig";
   uBootQuartz64B = buildRK3566UBoot "quartz64-b-rk3566_defconfig";

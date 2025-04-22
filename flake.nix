@@ -32,8 +32,7 @@
         (pkgsUnstable system).callPackage ./pkgs/bes2600-firmware.nix { };
       armbian-firmware = system:
         (pkgsUnstable system).callPackage ./pkgs/armbian-firmware.nix { };
-      brcm43752pcieFirmware = system:
-        (armbian-firmware system).brcm-43752-pcie;
+      brcm43752pcieFirmware = system: (armbian-firmware system).brcm-43752-pcie;
 
       # ZFS is broken on kernel from unstable.
       noZFS = {
@@ -113,11 +112,8 @@
         "OrangePi5B" = {
           uBoot = (uBoot system).uBootOrangePi5B;
           kernel = (kernel system).linux_6_13_orangepi5b;
-          extraModules = [
-            (brcm43752 system)
-            noZFS
-            self.nixosModules.dtOrangePi5B
-          ];
+          extraModules =
+            [ (brcm43752 system) noZFS self.nixosModules.dtOrangePi5B ];
         };
         "RadxaCM3IO" = {
           uBoot = (uBoot system).uBootRadxaCM3IO;

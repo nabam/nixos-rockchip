@@ -53,20 +53,20 @@ in with pkgs.linuxKernel; {
   linux_6_12_rockchip = packagesFor
     (kernels.linux_6_12.override { structuredExtraConfig = kernelConfig; });
 
-  linux_6_13 = pkgs.linuxPackages_6_13;
-  linux_6_13_rockchip = packagesFor
-    (kernels.linux_6_13.override { structuredExtraConfig = kernelConfig; });
+  linux_6_16 = pkgs.linuxPackages_6_16;
+  linux_6_16_rockchip = packagesFor
+    (kernels.linux_6_16.override { structuredExtraConfig = kernelConfig; });
 
-  linux_6_13_pinetab = packagesFor (kernels.linux_6_13.override {
+  linux_6_15_pinetab = packagesFor (kernels.linux_6_15.override {
     argsOverride = {
       src = pkgs.fetchFromGitHub {
         owner = "dreemurrs-embedded";
         repo = "linux-pinetab2";
-        rev = "99c89e3980f92dd8f9e0a6a8efe95b50f6d9fb9f";
-        sha256 = "i3kgjIpWUMhKYfMP/NIEFIiLb8DOMd6+Rqz9FCvfYKk=";
+        rev = "ad1cf6651663ef9208cb62f473a859dd3dc1c7f3";
+        sha256 = "pk9fwmqWV3fFtr/ddL9x4dENLGFmsJnzQYFzi7NIJYE=";
       };
-      version = "6.13.6-danctnix1";
-      modDirVersion = "6.13.6-danctnix1";
+      version = "6.15.2-danctnix2";
+      modDirVersion = "6.15.2-danctnix2";
     };
     kernelPatches = [{
       name = "Enable backlight in defconfig";

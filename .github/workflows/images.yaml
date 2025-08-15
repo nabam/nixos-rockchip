@@ -96,7 +96,7 @@ jobs:
       id: version
       run: |
         set -Eeuo pipefail
-        echo "version=$(nix eval .#Quartz64A.imageName | cut -f4 -d-)" >> $GITHUB_OUTPUT
+        echo "version=$(nix eval .#Quartz64A.name | cut -f5 -d-)" >> $GITHUB_OUTPUT
     - uses: mukunku/tag-exists-action@9298fbcc409758ba624a0ae16b83df86637cb8ce # v1.2.0
       id: checkTag
       with:

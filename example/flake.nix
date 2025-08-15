@@ -36,18 +36,9 @@
           ];
         };
     in {
-      # Set buildPlatform to "x86_64-linux" to benefit from cross-compiled packages in the cache.
-      nixosConfigurations.quartz64 = osConfig "x86_64-linux";
-
-      # Or use configuration below to compile kernel and uBoot on device.
-      # nixosConfigurations.quartz64 = osConfig "aarch64-linux";
+      nixosConfigurations.quartz64 = osConfig "aarch64-linux";
     } // inputs.utils.lib.eachDefaultSystem (system: {
-      # Set buildPlatform to "x86_64-linux" to benefit from cross-compiled packages in the cache.
-      packages.image = (osConfig "x86_64-linux").config.system.build.sdImage;
-
-      # Or use configuration below to cross-compile kernel and uBoot on the current platform.
-      # packages.image = (osConfig system).config.system.build.sdImage;
-
+      packages.image = (osConfig system).config.system.build.sdImage;
       packages.default = self.packages.${system}.image;
     });
 }

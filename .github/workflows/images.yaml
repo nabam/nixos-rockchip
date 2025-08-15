@@ -160,7 +160,6 @@ jobs:
         pushFilter: '(-nixos-image-.*)\.img$|-ext4-fs\.img$'
     - run: |
         nix build -L -j4 .#${{ matrix.board }}
-        "nixos-image-sd-card-25.05.20250813.3385ca0-aarch64-linux.img"
     - name: Compress with zstd
       id: zstd
       run: |

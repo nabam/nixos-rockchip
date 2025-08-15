@@ -14,21 +14,21 @@ installer sd-card image for desired platform using flake execute
 
 ``` console
 $ nix build github:nabam/nixos-rockchip#Quartz64A
-$ sfdisk --dump result/sd-image/nixos-sd-image-*.img
+$ sfdisk --dump result/sd-image/nixos-image-sd-card-*.img
 label: dos
 label-id: 0x2178694e
-device: result/sd-image/nixos-sd-image-22.11.20230302.96e1871-aarch64-linux.img
+device: result/sd-image/nixos-image-sd-card-XXX-aarch64-linux.img
 unit: sectors
 sector-size: 512
 
-result/sd-image/nixos-sd-image-22.11.20230302.96e1871-aarch64-linux.img1 : start=       16384, size=       16384, type=da
-result/sd-image/nixos-sd-image-22.11.20230302.96e1871-aarch64-linux.img2 : start=       32768, size=     5585984, type=83, bootable
+result/sd-image/nixos-image-sd-card-XXX-aarch64-linux.img1 : start=       16384, size=       16384, type=da
+result/sd-image/nixos-image-sd-card-XXX-aarch64-linux.img2 : start=       32768, size=     5585984, type=83, bootable
 ```
 
 Built image then can be copied to sdcard or other memory:
 
 ``` console
-$ sudo dd if=./result/sd-image/nixos-sd-image-*.img of=/dev/mmcblk0 iflag=direct oflag=direct bs=16M status=progress
+$ sudo dd if=./result/sd-image/nixos-image-sd-card-*.img of=/dev/mmcblk0 iflag=direct oflag=direct bs=16M status=progress
 ```
 
 To build all images run:

@@ -7,38 +7,39 @@
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, ... }@inputs:
+  outputs =
+    { self, ... }@inputs:
     let
       # Use cross-compilation for uBoot and Kernel.
-      pkgs = system:
+      pkgs =
+        system:
         import inputs.nixpkgsStable {
           inherit system;
           crossSystem.system = "aarch64-linux";
           config.allowUnfree = true; # for arm-trusted-firmware
         };
 
-      pkgsUnstable = system:
+      pkgsUnstable =
+        system:
         import inputs.nixpkgsUnstable {
           inherit system;
           crossSystem.system = "aarch64-linux";
           config.allowUnfree = true; # for arm-trusted-firmware
         };
 
-      uBoot = system:
-        (pkgsUnstable system).callPackage ./pkgs/uboot-rockchip.nix { };
-      kernel = system:
-        (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix { };
-      bes2600Firmware = system:
-        (pkgsUnstable system).callPackage ./pkgs/bes2600-firmware.nix { };
-      armbian-firmware = system:
-        (pkgsUnstable system).callPackage ./pkgs/armbian-firmware.nix { };
+      uBoot = system: (pkgsUnstable system).callPackage ./pkgs/uboot-rockchip.nix { };
+      kernel = system: (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix { };
+      bes2600Firmware = system: (pkgsUnstable system).callPackage ./pkgs/bes2600-firmware.nix { };
+      armbian-firmware = system: (pkgsUnstable system).callPackage ./pkgs/armbian-firmware.nix { };
       brcm43752pcieFirmware = system: (armbian-firmware system).brcm-43752-pcie;
 
       # ZFS is broken on kernel from unstable.
       noZFS = {
         nixpkgs.overlays = [
           (final: super: {
-            zfs = super.zfs.overrideAttrs (_: { meta.platforms = [ ]; });
+            zfs = super.zfs.overrideAttrs (_: {
+              meta.platforms = [ ];
+            });
           })
         ];
       };
@@ -56,64 +57,70 @@
       boards = system: {
         "Quartz64A" = {
           uBoot = (uBoot system).uBootQuartz64A;
-          kernel = (kernel system).linux_6_6_rockchip;
+          kernel = (kernel system).linux_6_12_rockchip;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
         };
         "Quartz64B" = {
           uBoot = (uBoot system).uBootQuartz64B;
-          kernel = (kernel system).linux_6_6_rockchip;
+          kernel = (kernel system).linux_6_12_rockchip;
           extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
         };
         "SoQuartzModelA" = {
           uBoot = (uBoot system).uBootSoQuartzModelA;
-          kernel = (kernel system).linux_6_6_rockchip;
+          kernel = (kernel system).linux_6_12_rockchip;
           extraModules = [ ];
         };
         "SoQuartzCM4" = {
           uBoot = (uBoot system).uBootSoQuartzCM4IO;
-          kernel = (kernel system).linux_6_6_rockchip;
+          kernel = (kernel system).linux_6_12_rockchip;
           extraModules = [ ];
         };
         "SoQuartzBlade" = {
           uBoot = (uBoot system).uBootSoQuartzBlade;
-          kernel = (kernel system).linux_6_6_rockchip;
+          kernel = (kernel system).linux_6_12_rockchip;
           extraModules = [ ];
         };
         "PineTab2" = {
           uBoot = (uBoot system).uBootPineTab2;
           kernel = (kernel system).linux_6_15_pinetab;
-          extraModules = [ (bes2600 system) noZFS ];
+          extraModules = [
+            (bes2600 system)
+            noZFS
+          ];
         };
         "Rock64" = {
           uBoot = (uBoot system).uBootRock64;
-          kernel = (kernel system).linux_6_6_rockchip;
+          kernel = (kernel system).linux_6_12_rockchip;
           extraModules = [ ];
         };
         "RockPro64" = {
           uBoot = (uBoot system).uBootRockPro64;
-          kernel = (kernel system).linux_6_6_rockchip;
+          kernel = (kernel system).linux_6_12_rockchip;
           extraModules = [ ];
         };
         "ROCPCRK3399" = {
           uBoot = (uBoot system).uBootROCPCRK3399;
-          kernel = (kernel system).linux_6_6_rockchip;
+          kernel = (kernel system).linux_6_12_rockchip;
           extraModules = [ ];
         };
         "PinebookPro" = {
           uBoot = (uBoot system).uBootPinebookPro;
-          kernel = (kernel system).linux_6_6_rockchip;
+          kernel = (kernel system).linux_6_12_rockchip;
           extraModules = [ ];
         };
         "OrangePiCM4" = {
           uBoot = (uBoot system).uBootOrangePiCM4;
-          kernel = (kernel system).linux_6_6_rockchip;
+          kernel = (kernel system).linux_6_12_rockchip;
           extraModules = [ ];
         };
         "OrangePi5B" = {
           uBoot = (uBoot system).uBootOrangePi5B;
           kernel = (kernel system).linux_6_13_orangepi5b;
-          extraModules =
-            [ (brcm43752 system) noZFS self.nixosModules.dtOrangePi5B ];
+          extraModules = [
+            (brcm43752 system)
+            noZFS
+            self.nixosModules.dtOrangePi5B
+          ];
         };
         "RadxaCM3IO" = {
           uBoot = (uBoot system).uBootRadxaCM3IO;
@@ -132,8 +139,10 @@
         };
       };
 
-      osConfigs = system:
-        builtins.mapAttrs (name: value:
+      osConfigs =
+        system:
+        builtins.mapAttrs (
+          name: value:
           inputs.nixpkgsStable.lib.nixosSystem {
             system = "aarch64-linux";
 
@@ -147,25 +156,26 @@
               }
               # Cross-compiling the whole system is hard, install from caches or compile with emulation instead.
               # { nixpkgs.crossSystem.system = "aarch64-linux"; nixpkgs.system = system;}
-            ] ++ value.extraModules;
-          }) (boards system);
+            ]
+            ++ value.extraModules;
+          }
+        ) (boards system);
 
-      images = system:
-        builtins.mapAttrs (name: value: value.config.system.build.sdImage)
-        (osConfigs system);
-    in {
+      images =
+        system: builtins.mapAttrs (name: value: value.config.system.build.sdImage) (osConfigs system);
+    in
+    {
       nixosModules = {
         inherit noZFS;
-        sdImageRockchipInstaller =
-          import ./modules/sd-card/sd-image-rockchip-installer.nix;
+        sdImageRockchipInstaller = import ./modules/sd-card/sd-image-rockchip-installer.nix;
         sdImageRockchip = import ./modules/sd-card/sd-image-rockchip.nix;
         dtOverlayQuartz64ASATA = import ./modules/dt-overlay/quartz64a-sata.nix;
         dtOverlayPCIeFix = import ./modules/dt-overlay/pcie-fix.nix;
         dtOrangePi5B = import ./modules/dt-overlay/rk3588s-orangepi5b.nix;
       };
-    } // inputs.utils.lib.eachDefaultSystem (system: {
+    }
+    // inputs.utils.lib.eachDefaultSystem (system: {
       legacyPackages = {
-        kernel_linux_6_6_rockchip = (kernel system).linux_6_6_rockchip;
         kernel_linux_6_12_rockchip = (kernel system).linux_6_12_rockchip;
         kernel_linux_6_16_rockchip = (kernel system).linux_6_16_rockchip;
         kernel_linux_6_15_pinetab = (kernel system).linux_6_15_pinetab;
@@ -192,6 +202,6 @@
 
         bes2600 = (bes2600Firmware system);
       };
-      formatter = (import inputs.nixpkgsStable { inherit system; }).nixfmt;
+      formatter = (import inputs.nixpkgsStable { inherit system; }).nixfmt-tree;
     });
 }

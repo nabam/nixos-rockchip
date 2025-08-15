@@ -1,4 +1,8 @@
-{ fetchFromGitLab, lib, stdenv }:
+{
+  fetchFromGitLab,
+  lib,
+  stdenv,
+}:
 
 stdenv.mkDerivation {
   pname = "bes2600-firmware";

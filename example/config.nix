@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   system.stateVersion = "24.05";
 
   networking.hostName = "quartz64";
@@ -44,4 +50,3 @@
 
   nixpkgs.config.allowUnfree = true;
 }
-

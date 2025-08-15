@@ -1,4 +1,11 @@
-{ config, pkgs, lib, modulesPath, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
+{
   imports = [
     (modulesPath + "/profiles/installation-device.nix")
     ./sd-image-rockchip.nix

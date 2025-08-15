@@ -5,7 +5,9 @@
     utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
-    rockchip = { url = "github:nabam/nixos-rockchip"; };
+    rockchip = {
+      url = "github:nabam/nixos-rockchip";
+    };
   };
 
   # Use cache with packages from nabam/nixos-rockchip CI.
@@ -16,9 +18,11 @@
     ];
   };
 
-  outputs = { self, ... }@inputs:
+  outputs =
+    { self, ... }@inputs:
     let
-      osConfig = buildPlatform:
+      osConfig =
+        buildPlatform:
         inputs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = [
@@ -28,16 +32,16 @@
             ./config.nix
             {
               # Use cross-compilation for uBoot and Kernel.
-              rockchip.uBoot =
-                inputs.rockchip.packages.${buildPlatform}.uBootQuartz64A;
-              boot.kernelPackages =
-                inputs.rockchip.legacyPackages.${buildPlatform}.kernel_linux_6_6_rockchip;
+              rockchip.uBoot = inputs.rockchip.packages.${buildPlatform}.uBootQuartz64A;
+              boot.kernelPackages = inputs.rockchip.legacyPackages.${buildPlatform}.kernel_linux_6_12_rockchip;
             }
           ];
         };
-    in {
+    in
+    {
       nixosConfigurations.quartz64 = osConfig "aarch64-linux";
-    } // inputs.utils.lib.eachDefaultSystem (system: {
+    }
+    // inputs.utils.lib.eachDefaultSystem (system: {
       packages.image = (osConfig system).config.system.build.sdImage;
       packages.default = self.packages.${system}.image;
     });

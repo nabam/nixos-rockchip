@@ -44,44 +44,50 @@ let
 
     DRM_PANEL_BOE_TH101MB31UIG002_28A = yes;
   };
-in with pkgs.linuxKernel; {
-  linux_6_6 = pkgs.linuxPackages_6_6;
-  linux_6_6_rockchip = packagesFor
-    (kernels.linux_6_6.override { structuredExtraConfig = kernelConfig; });
-
+in
+with pkgs.linuxKernel;
+{
   linux_6_12 = pkgs.linuxPackages_6_12;
-  linux_6_12_rockchip = packagesFor
-    (kernels.linux_6_12.override { structuredExtraConfig = kernelConfig; });
+  linux_6_12_rockchip = packagesFor (
+    kernels.linux_6_12.override { structuredExtraConfig = kernelConfig; }
+  );
 
   linux_6_16 = pkgs.linuxPackages_6_16;
-  linux_6_16_rockchip = packagesFor
-    (kernels.linux_6_16.override { structuredExtraConfig = kernelConfig; });
+  linux_6_16_rockchip = packagesFor (
+    kernels.linux_6_16.override { structuredExtraConfig = kernelConfig; }
+  );
 
-  linux_6_15_pinetab = packagesFor (kernels.linux_6_15.override {
-    argsOverride = {
-      src = pkgs.fetchFromGitHub {
-        owner = "dreemurrs-embedded";
-        repo = "linux-pinetab2";
-        rev = "ad1cf6651663ef9208cb62f473a859dd3dc1c7f3";
-        sha256 = "pk9fwmqWV3fFtr/ddL9x4dENLGFmsJnzQYFzi7NIJYE=";
+  linux_6_15_pinetab = packagesFor (
+    kernels.linux_6_15.override {
+      argsOverride = {
+        src = pkgs.fetchFromGitHub {
+          owner = "dreemurrs-embedded";
+          repo = "linux-pinetab2";
+          rev = "ad1cf6651663ef9208cb62f473a859dd3dc1c7f3";
+          sha256 = "pk9fwmqWV3fFtr/ddL9x4dENLGFmsJnzQYFzi7NIJYE=";
+        };
+        version = "6.15.2-danctnix2";
+        modDirVersion = "6.15.2-danctnix2";
       };
-      version = "6.15.2-danctnix2";
-      modDirVersion = "6.15.2-danctnix2";
-    };
-    kernelPatches = [{
-      name = "Enable backlight in defconfig";
-      patch = ./backlight.patch;
-    }];
-    structuredExtraConfig = kernelConfig // pinetabKernelConfig;
-  });
+      kernelPatches = [
+        {
+          name = "Enable backlight in defconfig";
+          patch = ./backlight.patch;
+        }
+      ];
+      structuredExtraConfig = kernelConfig // pinetabKernelConfig;
+    }
+  );
 
-  linux_6_13_orangepi5b = packagesFor (kernels.linux_6_13.override {
-    structuredExtraConfig = kernelConfig;
-    kernelPatches = [{
-      name =
-        "Set the clock of the bcrm driver to 32khz as required by bcm43752.";
-      patch = ./patches/linux/6.13/rk3588-0802-wireless-add-clk-property.patch;
-    }];
-  });
+  linux_6_13_orangepi5b = packagesFor (
+    kernels.linux_6_13.override {
+      structuredExtraConfig = kernelConfig;
+      kernelPatches = [
+        {
+          name = "Set the clock of the bcrm driver to 32khz as required by bcm43752.";
+          patch = ./patches/linux/6.13/rk3588-0802-wireless-add-clk-property.patch;
+        }
+      ];
+    }
+  );
 }
-

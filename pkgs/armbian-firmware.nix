@@ -1,4 +1,10 @@
-{ pkgs, lib, fetchFromGitHub, runCommand, stdenv }:
+{
+  pkgs,
+  lib,
+  fetchFromGitHub,
+  runCommand,
+  stdenv,
+}:
 let
   armbian-firmware-src = fetchFromGitHub {
     owner = "armbian";
@@ -6,26 +12,29 @@ let
     rev = "7d04f88c37b7c6b9f88b01b0ceb51fea642ece40";
     sha256 = "4R8We7U7GD2rw4w37bdmAUnRS9O1iS5QXop33a8w/qI=";
   };
-  to-firmware-pkg = { pname, description, paths, config }:
+  to-firmware-pkg =
+    {
+      pname,
+      description,
+      paths,
+      config,
+    }:
     let
       copy-cmd = src: dest: ''
         dest_dir=$(dirname ${dest})
         mkdir -p "$out/lib/firmware/$dest_dir"
         cp -r $src/${src} "$out/lib/firmware/${dest}"
       '';
-      copy-cmd-set = { src, dests, ... }:
-        lib.concatLines (map (copy-cmd src) dests);
-      copy-cmd-spec = spec:
-        if builtins.typeOf spec == "string" then
-          copy-cmd spec spec
-        else
-          copy-cmd-set spec;
+      copy-cmd-set = { src, dests, ... }: lib.concatLines (map (copy-cmd src) dests);
+      copy-cmd-spec =
+        spec: if builtins.typeOf spec == "string" then copy-cmd spec spec else copy-cmd-set spec;
       copy-cmds = lib.concatLines (map copy-cmd-spec paths);
       config-file = pkgs.writeTextFile {
         name = "config.txt";
         text = config;
       };
-    in stdenv.mkDerivation rec {
+    in
+    stdenv.mkDerivation rec {
       inherit pname;
       version = "1.0";
       meta = with lib; {
@@ -41,7 +50,8 @@ let
         cp ${config-file} $out/lib/firmware/brcm/config.txt
       '';
     };
-in {
+in
+{
   armbian-firmware = stdenv.mkDerivation rec {
     pname = "armbian-firmware";
     description = "Propietary firmwares included with armbian";

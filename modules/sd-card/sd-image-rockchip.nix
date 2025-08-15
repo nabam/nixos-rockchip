@@ -1,15 +1,25 @@
-{ config, pkgs, lib, modulesPath, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
+{
   imports = [
     (modulesPath + "/profiles/base.nix")
     (modulesPath + "/installer/sd-card/sd-image.nix")
   ];
 
-  options = { rockchip.uBoot = lib.mkOption { }; };
+  options = {
+    rockchip.uBoot = lib.mkOption { };
+  };
 
   config.boot = {
     consoleLogLevel = lib.mkDefault 7;
-    kernelPackages = lib.mkDefault
-      (pkgs.callPackage ../../pkgs/linux-rockchip.nix { }).linux_6_6;
+    kernelPackages =
+      lib.mkDefault
+        (pkgs.callPackage ../../pkgs/linux-rockchip.nix { }).linux_6_12_rockchip;
 
     loader = {
       grub.enable = false;
@@ -17,48 +27,48 @@
     };
   };
 
-  config.sdImage = let
-    uBoot = config.rockchip.uBoot;
+  config.sdImage =
+    let
+      uBoot = config.rockchip.uBoot;
 
-    idbloaderOffset = 64; # 0x40
-    ubootOffset = 16384; # 0x4000
-    # 1.7Mb at the moment; use very safe security margin of 8MB.
-    ubootSize = 16384; # 8mb
-  in {
-    compressImage = false;
+      idbloaderOffset = 64; # 0x40
+      ubootOffset = 16384; # 0x4000
+      # 1.7Mb at the moment; use very safe security margin of 8MB.
+      ubootSize = 16384; # 8mb
+    in
+    {
+      compressImage = false;
 
-    # Override expansion script built into sd-image.nix module as it fails to identify partition number correctly
-    expandOnBoot = false;
+      # Override expansion script built into sd-image.nix module as it fails to identify partition number correctly
+      expandOnBoot = false;
 
-    # Module sd-image.nix always creates special firmware partition for RPi,
-    # replace firmware partition with U-Boot after the image is ready.
-    firmwarePartitionOffset = ubootOffset / 2048;
-    firmwareSize = ubootSize / 2048;
-    populateFirmwareCommands = "";
-    # Overwrite firmware partition with u-boot bootloader
-    postBuildCommands = ''
-      sfdisk --part-type "$img" 1 DA # mark partition as "Non-FS data"
-      if [ -e "${uBoot}/u-boot-rockchip.bin" ]; then
-        # u-boot-rockchip.bin contains both idbloader and uboot
-        dd if="${uBoot}/u-boot-rockchip.bin" of="$img" conv=fsync,notrunc bs=16M seek=${
-          toString (idbloaderOffset * 512)
-        } iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
-      else
-        dd if="${uBoot}/idbloader.img" of="$img" conv=fsync,notrunc bs=16M seek=${
-          toString (idbloaderOffset * 512)
-        } iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
-        dd if="${uBoot}/u-boot.itb" of="$img" conv=fsync,notrunc bs=16M seek=${
-          toString (ubootOffset * 512)
-        } iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
-      fi
-      sfdisk -d "$img"
-    '';
-    # Fill the root partition with this nix configuration in /etc/nixos
-    populateRootCommands = ''
-      mkdir -p ./files/boot
-      ${config.boot.loader.generic-extlinux-compatible.populateCmd} -c ${config.system.build.toplevel} -d ./files/boot
-    '';
-  };
+      # Module sd-image.nix always creates special firmware partition for RPi,
+      # replace firmware partition with U-Boot after the image is ready.
+      firmwarePartitionOffset = ubootOffset / 2048;
+      firmwareSize = ubootSize / 2048;
+      populateFirmwareCommands = "";
+      # Overwrite firmware partition with u-boot bootloader
+      postBuildCommands = ''
+        sfdisk --part-type "$img" 1 DA # mark partition as "Non-FS data"
+        if [ -e "${uBoot}/u-boot-rockchip.bin" ]; then
+          # u-boot-rockchip.bin contains both idbloader and uboot
+          dd if="${uBoot}/u-boot-rockchip.bin" of="$img" conv=fsync,notrunc bs=16M seek=${
+            toString (idbloaderOffset * 512)
+          } iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+        else
+          dd if="${uBoot}/idbloader.img" of="$img" conv=fsync,notrunc bs=16M seek=${
+            toString (idbloaderOffset * 512)
+          } iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+          dd if="${uBoot}/u-boot.itb" of="$img" conv=fsync,notrunc bs=16M seek=${toString (ubootOffset * 512)} iflag=direct,count_bytes,skip_bytes oflag=direct,seek_bytes
+        fi
+        sfdisk -d "$img"
+      '';
+      # Fill the root partition with this nix configuration in /etc/nixos
+      populateRootCommands = ''
+        mkdir -p ./files/boot
+        ${config.boot.loader.generic-extlinux-compatible.populateCmd} -c ${config.system.build.toplevel} -d ./files/boot
+      '';
+    };
 
   # Override commands from sd-image.nix module as it fails to identify partition number correctly
   config.boot.postBootCommands = lib.mkBefore ''
@@ -88,4 +98,3 @@
     fi
   '';
 }
-

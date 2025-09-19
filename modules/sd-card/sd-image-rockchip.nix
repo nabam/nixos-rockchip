@@ -15,15 +15,6 @@
     rockchip.uBoot = lib.mkOption { };
   };
 
-  # Fix missing modules
-  # https://github.com/NixOS/nixpkgs/issues/154163
-  config.nixpkgs.overlays = [
-    (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
-    })
-  ];
-
   config.boot = {
     consoleLogLevel = lib.mkDefault 7;
     kernelPackages =

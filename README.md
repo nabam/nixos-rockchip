@@ -3,6 +3,13 @@
 Flake to build images for Rockhip based computers that require custom uboot
 firmware. Utilizes sd-card installer build infrastructure from nixpkgs.
 
+## Keep in Mind
+
+- **Automatic PineTab 2 builds are temporarily disabled due to lack of a patch for kernel 6.16.** Latest release for the Pinetab 2 is
+  [v25.05.20250817.48f4c98](https://github.com/nabam/nixos-rockchip/releases/tag/v25.05.20250817.48f4c98)
+- Flakes are automaticaly updated every Monday. Because of that latest comming in maim brunch may be broken. 
+  Check out a tag associated with the latest [release](https://github.com/nabam/nixos-rockchip/releases) if you are looking for a tested revision of the flake.
+
 ## Image Building
 
 ### Installer

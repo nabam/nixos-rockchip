@@ -7,7 +7,7 @@ firmware. Utilizes sd-card installer build infrastructure from nixpkgs.
 
 - **Automatic PineTab 2 builds are temporarily disabled due to lack of a patch for kernel 6.16.** Latest release for the Pinetab 2 is
   [v25.05.20250817.48f4c98](https://github.com/nabam/nixos-rockchip/releases/tag/v25.05.20250817.48f4c98)
-- Flakes are automaticaly updated every Monday. Because of that latest commit in main brunch may be broken. 
+- Flakes are automaticaly updated every Monday. Because of that latest commit in the main branch may fail to build. 
   Check out a tag associated with the latest [release](https://github.com/nabam/nixos-rockchip/releases) if you are looking for a tested revision of the flake.
 
 ## Image Building

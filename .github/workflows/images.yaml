@@ -18,12 +18,12 @@ jobs:
         package:
         - kernel_linux_6_12_rockchip.kernel
         - kernel_linux_6_16_rockchip.kernel
-        - kernel_linux_6_15_pinetab.kernel
+#        - kernel_linux_6_15_pinetab.kernel
         - uBootRock64
         - uBootRockPro64
         - uBootPinebookPro
         - uBootROCPCRK3399
-        - uBootPineTab2
+#        - uBootPineTab2
         - uBootQuartz64A
         - uBootQuartz64B
         - uBootSoQuartzModelA
@@ -130,7 +130,7 @@ jobs:
         - RockPro64
         - ROCPCRK3399
         - PinebookPro
-        - PineTab2
+#        - PineTab2
         - OrangePiCM4
         - RadxaCM3IO
         - RadxaRock4

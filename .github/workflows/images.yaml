@@ -19,7 +19,7 @@ jobs:
         - kernel_linux_6_12_rockchip.kernel
         - kernel_linux_6_16_rockchip.kernel
 #        - kernel_linux_6_15_pinetab.kernel
-#        - uBootRock64
+        - uBootRock64
 #        - uBootRockPro64
 #        - uBootPinebookPro
 #        - uBootROCPCRK3399
@@ -31,8 +31,8 @@ jobs:
         - uBootSoQuartzBlade
         - uBootOrangePiCM4
         - uBootRadxaCM3IO
-        - uBootRadxaRock4
-        - uBootRadxaRock4SE
+#        - uBootRadxaRock4
+#        - uBootRadxaRock4SE
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Free disk space
@@ -127,14 +127,14 @@ jobs:
         - SoQuartzCM4
         - SoQuartzBlade
 #        - Rock64
-#        - RockPro64
+        - RockPro64
 #        - ROCPCRK3399
 #        - PinebookPro
 #        - PineTab2
         - OrangePiCM4
         - RadxaCM3IO
-        - RadxaRock4
-        - RadxaRock4SE
+#        - RadxaRock4
+#        - RadxaRock4SE
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Free disk space

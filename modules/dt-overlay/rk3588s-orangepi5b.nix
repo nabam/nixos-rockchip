@@ -20,7 +20,7 @@
             vcc3v3_pcie20: regulator-vcc3v3-pcie20 {
               compatible = "regulator-fixed";
               enable-active-high;
-              gpios = <0xb7 21 0x0>;
+              gpios = < &gpio0 21 0x0 >;
               regulator-name = "vcc3v3_pcie20";
               regulator-boot-on;
               regulator-min-microvolt = <1800000>;
@@ -37,7 +37,7 @@
           &pcie2x1l2 {
             status = "okay";
             vpcie3v3-supply = <&vcc3v3_pcie20>;
-            reset-gpios = <0x84 25 0x0>;
+            reset-gpios = < &gpio3 25 0 >;
             pcie@0,0 {
             reg = <0x400000 0 0 0 0>;
               #address-cells = <3>;

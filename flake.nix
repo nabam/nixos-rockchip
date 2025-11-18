@@ -27,11 +27,17 @@
           config.allowUnfree = true; # for arm-trusted-firmware
         };
 
-      uBoot = system: (pkgsUnstable system).callPackage ./pkgs/uboot-rockchip.nix { };
-      kernel = system: (pkgsUnstable system).callPackage ./pkgs/linux-rockchip.nix { };
-      bes2600Firmware = system: (pkgsUnstable system).callPackage ./pkgs/bes2600-firmware.nix { };
-      armbian-firmware = system: (pkgsUnstable system).callPackage ./pkgs/armbian-firmware.nix { };
-      brcm43752pcieFirmware = system: (armbian-firmware system).brcm-43752-pcie;
+      scope =
+        system:
+        with (pkgsUnstable system);
+        lib.makeScope newScope (self-scope: {
+          pkgs-stable = pkgs system;
+          uBoot = self-scope.callPackage ./pkgs/uboot-rockchip.nix { };
+          kernel = self-scope.callPackage ./pkgs/linux-rockchip.nix { };
+          bes2600Firmware = self-scope.callPackage ./pkgs/bes2600-firmware.nix { };
+          armbian-firmware = self-scope.callPackage ./pkgs/armbian-firmware.nix { };
+          brcm43752pcieFirmware = self-scope.armbian-firmware.brcm-43752-pcie;
+        });
 
       # ZFS is broken on kernel from unstable.
       noZFS = {
@@ -44,105 +50,108 @@
         ];
       };
 
-      bes2600 = system: {
-        nixpkgs.config.allowUnfree = true;
-        hardware.firmware = [ (bes2600Firmware system) ];
-      };
+      bes2600 =
+        system: with (scope system); {
+          nixpkgs.config.allowUnfree = true;
+          hardware.firmware = [ bes2600Firmware ];
+        };
 
-      brcm43752 = system: {
-        nixpkgs.config.allowUnfree = true;
-        hardware.firmware = [ (brcm43752pcieFirmware system) ];
-      };
+      brcm43752 =
+        system: with (scope system); {
+          nixpkgs.config.allowUnfree = true;
+          hardware.firmware = [ brcm43752pcieFirmware ];
+        };
 
-      boards = system: {
-        "Quartz64A" = {
-          uBoot = (uBoot system).uBootQuartz64A;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
+      boards =
+        system: with (scope system); {
+          "Quartz64A" = {
+            uBoot = (uBoot system).uBootQuartz64A;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
+          };
+          "Quartz64B" = {
+            uBoot = uBoot.uBootQuartz64B;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
+          };
+          "SoQuartzModelA" = {
+            uBoot = uBoot.uBootSoQuartzModelA;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ ];
+          };
+          "SoQuartzCM4" = {
+            uBoot = uBoot.uBootSoQuartzCM4IO;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ ];
+          };
+          "SoQuartzBlade" = {
+            uBoot = uBoot.uBootSoQuartzBlade;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ ];
+          };
+          "PineTab2" = {
+            uBoot = uBoot.uBootPineTab2;
+            kernel = kernel.linux_6_15_pinetab;
+            extraModules = [
+              (bes2600 system)
+              noZFS
+            ];
+          };
+          "Rock64" = {
+            uBoot = uBoot.uBootRock64;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ ];
+          };
+          "RockPro64" = {
+            uBoot = uBoot.uBootRockPro64;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ ];
+          };
+          "ROCPCRK3399" = {
+            uBoot = uBoot.uBootROCPCRK3399;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ ];
+          };
+          "PinebookPro" = {
+            uBoot = uBoot.uBootPinebookPro;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ ];
+          };
+          "OrangePiCM4" = {
+            uBoot = uBoot.uBootOrangePiCM4;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ ];
+          };
+          "OrangePi5B" = {
+            uBoot = uBoot.uBootOrangePi5B;
+            kernel = kernel.linux_6_17_orangepi5b;
+            extraModules = [
+              (brcm43752 system)
+              noZFS
+              self.nixosModules.dtOrangePi5B
+            ];
+          };
+          "RadxaCM3IO" = {
+            uBoot = uBoot.uBootRadxaCM3IO;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ noZFS ];
+          };
+          "RadxaRock4" = {
+            uBoot = uBoot.uBootRadxaRock4;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ noZFS ];
+          };
+          "RadxaRock4SE" = {
+            uBoot = uBoot.uBootRadxaRock4SE;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ noZFS ];
+          };
+          "RadxaRock4CPlus" = {
+            uBoot = uBoot.uBootRadxaRock4CPlus;
+            kernel = kernel.linux_6_12_rockchip;
+            extraModules = [ noZFS ];
+          };
         };
-        "Quartz64B" = {
-          uBoot = (uBoot system).uBootQuartz64B;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
-        };
-        "SoQuartzModelA" = {
-          uBoot = (uBoot system).uBootSoQuartzModelA;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ ];
-        };
-        "SoQuartzCM4" = {
-          uBoot = (uBoot system).uBootSoQuartzCM4IO;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ ];
-        };
-        "SoQuartzBlade" = {
-          uBoot = (uBoot system).uBootSoQuartzBlade;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ ];
-        };
-        "PineTab2" = {
-          uBoot = (uBoot system).uBootPineTab2;
-          kernel = (kernel system).linux_6_15_pinetab;
-          extraModules = [
-            (bes2600 system)
-            noZFS
-          ];
-        };
-        "Rock64" = {
-          uBoot = (uBoot system).uBootRock64;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ ];
-        };
-        "RockPro64" = {
-          uBoot = (uBoot system).uBootRockPro64;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ ];
-        };
-        "ROCPCRK3399" = {
-          uBoot = (uBoot system).uBootROCPCRK3399;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ ];
-        };
-        "PinebookPro" = {
-          uBoot = (uBoot system).uBootPinebookPro;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ ];
-        };
-        "OrangePiCM4" = {
-          uBoot = (uBoot system).uBootOrangePiCM4;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ ];
-        };
-        "OrangePi5B" = {
-          uBoot = (uBoot system).uBootOrangePi5B;
-          kernel = (kernel system).linux_6_13_orangepi5b;
-          extraModules = [
-            (brcm43752 system)
-            noZFS
-            self.nixosModules.dtOrangePi5B
-          ];
-        };
-        "RadxaCM3IO" = {
-          uBoot = (uBoot system).uBootRadxaCM3IO;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ noZFS ];
-        };
-        "RadxaRock4" = {
-          uBoot = (uBoot system).uBootRadxaRock4;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ noZFS ];
-        };
-        "RadxaRock4SE" = {
-          uBoot = (uBoot system).uBootRadxaRock4SE;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ noZFS ];
-        };
-        "RadxaRock4CPlus" = {
-          uBoot = (uBoot system).uBootRadxaRock4CPlus;
-          kernel = (kernel system).linux_6_12_rockchip;
-          extraModules = [ noZFS ];
-        };
-      };
 
       osConfigs =
         system:
@@ -179,35 +188,39 @@
         dtOrangePi5B = import ./modules/dt-overlay/rk3588s-orangepi5b.nix;
       };
     }
-    // inputs.utils.lib.eachDefaultSystem (system: {
-      legacyPackages = {
-        kernel_linux_6_12_rockchip = (kernel system).linux_6_12_rockchip;
-        kernel_linux_6_16_rockchip = (kernel system).linux_6_16_rockchip;
-        kernel_linux_6_15_pinetab = (kernel system).linux_6_15_pinetab;
-        kernel_linux_6_13_orangepi5b = (kernel system).linux_6_13_orangepi5b;
-      };
-      packages = (images system) // {
-        uBootQuartz64A = (uBoot system).uBootQuartz64A;
-        uBootQuartz64B = (uBoot system).uBootQuartz64B;
-        uBootPineTab2 = (uBoot system).uBootPineTab2;
-        uBootPinebookPro = (uBoot system).uBootPinebookPro;
-        uBootRockPro64 = (uBoot system).uBootRockPro64;
-        uBootROCPCRK3399 = (uBoot system).uBootROCPCRK3399;
-        uBootRock64 = (uBoot system).uBootRock64;
+    // inputs.utils.lib.eachDefaultSystem (
+      system: with (scope system); {
+        legacyPackages = {
+          kernel_linux_6_12_rockchip = kernel.linux_6_12_rockchip;
+          kernel_linux_6_16_rockchip = kernel.linux_6_16_rockchip;
+          kernel_linux_6_15_pinetab = kernel.linux_6_15_pinetab;
+          kernel_linux_6_13_orangepi5b = kernel.linux_6_13_orangepi5b;
+        };
+        packages = (images system) // {
+          uBootQuartz64A = uBoot.uBootQuartz64A;
+          uBootQuartz64B = uBoot.uBootQuartz64B;
+          uBootPineTab2 = uBoot.uBootPineTab2;
+          uBootPinebookPro = uBoot.uBootPinebookPro;
+          uBootRockPro64 = uBoot.uBootRockPro64;
+          uBootROCPCRK3399 = uBoot.uBootROCPCRK3399;
+          uBootRock64 = uBoot.uBootRock64;
 
-        uBootSoQuartzModelA = (uBoot system).uBootSoQuartzModelA;
-        uBootSoQuartzCM4IO = (uBoot system).uBootSoQuartzCM4IO;
-        uBootSoQuartzBlade = (uBoot system).uBootSoQuartzBlade;
+          uBootSoQuartzModelA = uBoot.uBootSoQuartzModelA;
+          uBootSoQuartzCM4IO = uBoot.uBootSoQuartzCM4IO;
+          uBootSoQuartzBlade = uBoot.uBootSoQuartzBlade;
 
-        uBootOrangePiCM4 = (uBoot system).uBootOrangePiCM4;
+          uBootOrangePiCM4 = uBoot.uBootOrangePiCM4;
+          uBootOrangePi5B = uBoot.uBootOrangePi5B;
 
-        uBootRadxaCM3IO = (uBoot system).uBootRadxaCM3IO;
-        uBootRadxaRock4 = (uBoot system).uBootRadxaRock4;
-        uBootRadxaRock4SE = (uBoot system).uBootRadxaRock4SE;
-        uBootRadxaRock4CPlus = (uBoot system).uBootRadxaRock4CPlus;
+          uBootRadxaCM3IO = uBoot.uBootRadxaCM3IO;
+          uBootRadxaRock4 = uBoot.uBootRadxaRock4;
+          uBootRadxaRock4SE = uBoot.uBootRadxaRock4SE;
+          uBootRadxaRock4CPlus = uBoot.uBootRadxaRock4CPlus;
 
-        bes2600 = (bes2600Firmware system);
-      };
-      formatter = (import inputs.nixpkgsStable { inherit system; }).nixfmt-tree;
-    });
+          bes2600 = bes2600Firmware;
+          brcm43752 = brcm43752pcieFirmware;
+        };
+        formatter = (import inputs.nixpkgsStable { inherit system; }).nixfmt-tree;
+      }
+    );
 }

@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-stable,
   stdenv,
   lib,
   fetchpatch,
@@ -84,25 +85,25 @@ let
   buildRK3588UBoot =
     defconfig:
     let
-      src = fetchFromGitHub {
+      src = pkgs-stable.fetchFromGitHub {
         owner = "u-boot";
         repo = "u-boot";
         rev = "v2025.01";
         sha256 = "n63E3AHzbkn/SAfq+DHYDsBMY8qob+cbcoKgPKgE4ps=";
       };
     in
-    buildUBoot {
+    pkgs-stable.buildUBoot {
       inherit defconfig src;
       version = "v2025.01-1-ga79ebd4e16";
-      BL31 = "${pkgs.armTrustedFirmwareRK3588}/bl31.elf";
-      ROCKCHIP_TPL = pkgs.rkbin.TPL_RK3588;
+      BL31 = "${pkgs-stable.armTrustedFirmwareRK3588}/bl31.elf";
+      ROCKCHIP_TPL = pkgs-stable.rkbin.TPL_RK3588;
       filesToInstall = [ "u-boot-rockchip.bin" ];
       extraPatches = [
         ./patches/u-boot/2025.01/0001-Add-config-for-the-orangepi-5b-board.patch
       ];
       extraMeta = {
         platforms = [ "aarch64-linux" ];
-        license = lib.licenses.unfreeRedistributableFirmware;
+        license = pkgs-stable.lib.licenses.unfreeRedistributableFirmware;
       };
     };
 in

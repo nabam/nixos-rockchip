@@ -1,4 +1,4 @@
-{ pkgs, lib }:
+{ pkgs, pkgs-stable, lib }:
 
 let
   kernelConfig = with lib.kernel; {
@@ -79,13 +79,19 @@ with pkgs.linuxKernel;
     }
   );
 
-  linux_6_13_orangepi5b = packagesFor (
-    kernels.linux_6_13.override {
-      structuredExtraConfig = kernelConfig;
+  linux_6_17_orangepi5b = pkgs-stable.linuxKernel.packagesFor (
+    pkgs-stable.linuxKernel.kernels.linux_6_17.override {
+      structuredExtraConfig = with pkgs-stable.lib.kernel;
+        builtins.removeAttrs kernelConfig [ "SND_SOC_ROCKCHIP" ] //
+        {
+          SND_SOC_RK817 = module;
+          SND_SOC_ROCKCHIP_I2S_TDM = module;
+        }
+      ;
       kernelPatches = [
         {
           name = "Set the clock of the bcrm driver to 32khz as required by bcm43752.";
-          patch = ./patches/linux/6.13/rk3588-0802-wireless-add-clk-property.patch;
+          patch = ./patches/linux/6.17/rk3588-0802-wireless-add-clk-property.patch;
         }
       ];
     }

@@ -226,7 +226,6 @@
           uBootRadxaRock4 = uBoot.uBootRadxaRock4;
           uBootRadxaRock4SE = uBoot.uBootRadxaRock4SE;
           uBootRadxaRock4CPlus = uBoot.uBootRadxaRock4CPlus;
-
           bes2600 = bes2600Firmware;
           brcm43752 = brcm43752pcieFirmware;
         };

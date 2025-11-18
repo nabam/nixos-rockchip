@@ -56,7 +56,7 @@ with pkgs.linuxKernel;
     kernels.linux_6_12.override { structuredExtraConfig = kernelConfig; }
   );
 
-  linux_6_16 = pkgs.linuxPackages_6_16;
+  linux_6_17 = pkgs.linuxPackages_6_17;
   linux_6_16_rockchip = packagesFor (
     kernels.linux_6_16.override { structuredExtraConfig = kernelConfig; }
   );

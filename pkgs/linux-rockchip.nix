@@ -39,6 +39,8 @@ let
     SPI_ROCKCHIP = yes;
     STMMAC_ETH = yes;
     VIDEO_HANTRO_ROCKCHIP = yes;
+    # Keep for compatibility
+    EXT2_FS = module;
   };
   pinetabKernelConfig = with lib.kernel; {
     BES2600 = module;
@@ -83,14 +85,7 @@ with pkgs.linuxKernel;
   );
 
   linux_6_17_orangepi5b = pkgs-stable.linuxKernel.packagesFor (
-    pkgs-stable.linuxKernel.kernels.linux_6_17.override {
-      structuredExtraConfig =
-        with pkgs-stable.lib.kernel;
-        builtins.removeAttrs kernelConfig [ "SND_SOC_ROCKCHIP" ]
-        // {
-          SND_SOC_RK817 = module;
-          SND_SOC_ROCKCHIP_I2S_TDM = module;
-        };
+    pkgs-stable.linuxKernel.kernels.linux_6_17.override { structuredExtraConfig = kernelConfig; };
       kernelPatches = [
         {
           name = "Set the clock of the bcrm driver to 32khz as required by bcm43752.";

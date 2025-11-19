@@ -35,7 +35,6 @@ let
     ROCKCHIP_VOP2 = yes;
     RTC_DRV_RK808 = yes;
     SND_SOC_RK817 = module;
-    SND_SOC_ROCKCHIP = yes;
     SND_SOC_ROCKCHIP_I2S_TDM = module;
     SPI_ROCKCHIP = yes;
     STMMAC_ETH = yes;

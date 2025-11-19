@@ -39,8 +39,6 @@ let
     SPI_ROCKCHIP = yes;
     STMMAC_ETH = yes;
     VIDEO_HANTRO_ROCKCHIP = yes;
-    # Keep for compatibility
-    EXT2_FS = module;
   };
   pinetabKernelConfig = with lib.kernel; {
     BES2600 = module;

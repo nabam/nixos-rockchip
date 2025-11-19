@@ -85,7 +85,8 @@ with pkgs.linuxKernel;
   );
 
   linux_6_17_orangepi5b = pkgs-stable.linuxKernel.packagesFor (
-    pkgs-stable.linuxKernel.kernels.linux_6_17.override { structuredExtraConfig = kernelConfig; };
+    pkgs-stable.linuxKernel.kernels.linux_6_17.override { 
+      structuredExtraConfig = kernelConfig;
       kernelPatches = [
         {
           name = "Set the clock of the bcrm driver to 32khz as required by bcm43752.";

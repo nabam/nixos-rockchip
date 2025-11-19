@@ -29,6 +29,7 @@
             inputs.rockchip.nixosModules.sdImageRockchip
             inputs.rockchip.nixosModules.dtOverlayQuartz64ASATA
             inputs.rockchip.nixosModules.dtOverlayPCIeFix
+            inputs.rockchip.nixosModules.noZFS
             ./config.nix
             {
               # Use cross-compilation for uBoot and Kernel.

@@ -52,7 +52,7 @@ with pkgs.linuxKernel;
 {
   linux_6_12 = pkgs-stable.linuxPackages_6_12;
   linux_6_12_rockchip = pkgs-stable.linuxKernel.packagesFor (
-    kernels.linux_6_12.override { structuredExtraConfig = kernelConfig; }
+    pkgs-stable.linuxKernel.kernels.linux_6_12.override { structuredExtraConfig = kernelConfig; }
   );
 
   linux_6_17 = pkgs.linuxPackages_6_17;

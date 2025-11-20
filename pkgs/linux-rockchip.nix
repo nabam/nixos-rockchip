@@ -83,7 +83,7 @@ with pkgs.linuxKernel;
   );
 
   linux_6_17_orangepi5b = pkgs-stable.linuxKernel.packagesFor (
-    pkgs-stable.linuxKernel.kernels.linux_6_17.override { 
+    pkgs-stable.linuxKernel.kernels.linux_6_17.override {
       structuredExtraConfig = kernelConfig;
       kernelPatches = [
         {

@@ -65,7 +65,7 @@
       boards =
         system: with (scope system); {
           "Quartz64A" = {
-            uBoot = (uBoot system).uBootQuartz64A;
+            uBoot = uBoot.uBootQuartz64A;
             kernel = kernel.linux_6_12_rockchip;
             extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
           };

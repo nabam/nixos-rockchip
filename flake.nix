@@ -66,32 +66,32 @@
         system: with (scope system); {
           "Quartz64A" = {
             uBoot = uBoot.uBootQuartz64A;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
           };
           "Quartz64B" = {
             uBoot = uBoot.uBootQuartz64B;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
           };
           "SoQuartzModelA" = {
             uBoot = uBoot.uBootSoQuartzModelA;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ ];
           };
           "SoQuartzCM4" = {
             uBoot = uBoot.uBootSoQuartzCM4IO;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ ];
           };
           "SoQuartzBlade" = {
             uBoot = uBoot.uBootSoQuartzBlade;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ ];
           };
           "PineTab2" = {
             uBoot = uBoot.uBootPineTab2;
-            kernel = kernel.linux_6_17_pinetab;
+            kernel = kernel.linux_6_17_stable_pinetab;
             extraModules = [
               (bes2600 system)
               noZFS
@@ -99,32 +99,32 @@
           };
           "Rock64" = {
             uBoot = uBoot.uBootRock64;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ ];
           };
           "RockPro64" = {
             uBoot = uBoot.uBootRockPro64;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ ];
           };
           "ROCPCRK3399" = {
             uBoot = uBoot.uBootROCPCRK3399;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ ];
           };
           "PinebookPro" = {
             uBoot = uBoot.uBootPinebookPro;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ ];
           };
           "OrangePiCM4" = {
             uBoot = uBoot.uBootOrangePiCM4;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_6_17_stable_orangepi5b;
             extraModules = [ ];
           };
           "OrangePi5B" = {
             uBoot = uBoot.uBootOrangePi5B;
-            kernel = kernel.linux_6_17_orangepi5b;
+            kernel = kernel.linux_6_17_stable_orangepi5b;
             extraModules = [
               (brcm43752 system)
               noZFS
@@ -133,22 +133,22 @@
           };
           "RadxaCM3IO" = {
             uBoot = uBoot.uBootRadxaCM3IO;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ noZFS ];
           };
           "RadxaRock4" = {
             uBoot = uBoot.uBootRadxaRock4;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ noZFS ];
           };
           "RadxaRock4SE" = {
             uBoot = uBoot.uBootRadxaRock4SE;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ noZFS ];
           };
           "RadxaRock4CPlus" = {
             uBoot = uBoot.uBootRadxaRock4CPlus;
-            kernel = kernel.linux_6_12_rockchip;
+            kernel = kernel.linux_latest_stable_rockchip;
             extraModules = [ noZFS ];
           };
         };
@@ -191,10 +191,14 @@
     // inputs.utils.lib.eachDefaultSystem (
       system: with (scope system); {
         legacyPackages = {
-          kernel_linux_6_12_rockchip = kernel.linux_6_12_rockchip;
-          kernel_linux_6_17_rockchip = kernel.linux_6_17_rockchip;
-          kernel_linux_6_17_pinetab = kernel.linux_6_17_pinetab;
-          kernel_linux_6_13_orangepi5b = kernel.linux_6_13_orangepi5b;
+          kernel_linux_latest_rockchip_stable = kernel.linux_latest_rockchip_stable;
+          kernel_linux_latest_rockchip_unstable = kernel.linux_latest_rockchip_unstable;
+
+          kernel_linux_6_17_pinetab_stable = kernel.linux_6_17_pinetab_stable;
+          kernel_linux_6_17_pinetab_unstable = kernel.linux_6_17_pinetab_unstable;
+
+          kernel_linux_6_17_orangepi5b_stable = kernel.linux_6_17_orangepi5b_stable;
+          kernel_linux_6_17_orangepi5b_unstable = kernel.linux_6_17_orangepi5b_unstable;
         };
         packages = (images system) // {
           uBootQuartz64A = uBoot.uBootQuartz64A;

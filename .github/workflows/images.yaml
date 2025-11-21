@@ -16,9 +16,12 @@ jobs:
     strategy:
       matrix:
         package:
-        - kernel_linux_6_12_rockchip.kernel
-        - kernel_linux_6_17_rockchip.kernel
-        - kernel_linux_6_17_pinetab.kernel
+        - kernel_linux_latest_stable_rockchip.kernel
+        - kernel_linux_latest_unstable_rockchip.kernel
+        - kernel_linux_6_17_pinetab_stable.kernel
+        - kernel_linux_6_17_pinetab_unstable.kernel
+        - kernel_linux_6_17_orangepi5b_stable.kernel
+        - kernel_linux_6_17_orangepi5b_unstable.kernel
         - uBootRock64
 #        - uBootRockPro64
 #        - uBootPinebookPro
@@ -128,8 +131,8 @@ jobs:
         - SoQuartzBlade
         - PineTab2
         - RockPro64
-        - OrangePiCM4
         - RadxaCM3IO
+        - OrangePi5B
 #        - Rock64
 #        - ROCPCRK3399
 #        - PinebookPro

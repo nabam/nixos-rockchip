@@ -64,10 +64,10 @@ with pkgs.linuxKernel;
     let
       version = "6.17.8-danctnix1";
     in
-    packagesFor (
-      kernels.linux_6_17.override {
+    pkgs-stable.linuxKernel.packagesFor (
+      pkgs-stable.linuxKernel.kernels.linux_6_17.override {
         argsOverride = {
-          src = pkgs.fetchFromGitea {
+          src = pkgs-stable.linuxKernel.packagesFor {
             domain = "codeberg.org";
             owner = "DanctNIX";
             repo = "linux-pinetab2";

@@ -67,7 +67,7 @@ with pkgs.linuxKernel;
     pkgs-stable.linuxKernel.packagesFor (
       pkgs-stable.linuxKernel.kernels.linux_6_17.override {
         argsOverride = {
-          src = pkgs-stable.linuxKernel.packagesFor {
+          src = pkgs.fetchFromGitea {
             domain = "codeberg.org";
             owner = "DanctNIX";
             repo = "linux-pinetab2";

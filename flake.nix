@@ -91,7 +91,7 @@
           };
           "PineTab2" = {
             uBoot = uBoot.uBootPineTab2;
-            kernel = kernel.linux_6_15_pinetab;
+            kernel = kernel.linux_6_17_pinetab;
             extraModules = [
               (bes2600 system)
               noZFS
@@ -193,7 +193,7 @@
         legacyPackages = {
           kernel_linux_6_12_rockchip = kernel.linux_6_12_rockchip;
           kernel_linux_6_17_rockchip = kernel.linux_6_17_rockchip;
-          kernel_linux_6_15_pinetab = kernel.linux_6_15_pinetab;
+          kernel_linux_6_17_pinetab = kernel.linux_6_17_pinetab;
           kernel_linux_6_13_orangepi5b = kernel.linux_6_13_orangepi5b;
         };
         packages = (images system) // {

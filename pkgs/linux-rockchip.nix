@@ -60,27 +60,32 @@ with pkgs.linuxKernel;
     kernels.linux_6_17.override { structuredExtraConfig = kernelConfig; }
   );
 
-  linux_6_15_pinetab = packagesFor (
-    kernels.linux_6_15.override {
-      argsOverride = {
-        src = pkgs.fetchFromGitHub {
-          owner = "dreemurrs-embedded";
-          repo = "linux-pinetab2";
-          rev = "ad1cf6651663ef9208cb62f473a859dd3dc1c7f3";
-          sha256 = "pk9fwmqWV3fFtr/ddL9x4dENLGFmsJnzQYFzi7NIJYE=";
+  linux_6_17_pinetab =
+    let
+      version = "6.17.8-danctnix1";
+    in
+    packagesFor (
+      kernels.linux_6_17.override {
+        argsOverride = {
+          src = pkgs.fetchFromGitea {
+            domain = "codeberg.org";
+            owner = "DanctNIX";
+            repo = "linux-pinetab2";
+            rev = "v${version}";
+            hash = "sha256-32u5vmwyY/p92ecD4ve0lnYIm1o2Pabj65+dIt1EQI4=";
+          };
+          inherit version;
+          modDirVersion = version;
         };
-        version = "6.15.2-danctnix2";
-        modDirVersion = "6.15.2-danctnix2";
-      };
-      kernelPatches = [
-        {
-          name = "Enable backlight in defconfig";
-          patch = ./backlight.patch;
-        }
-      ];
-      structuredExtraConfig = kernelConfig // pinetabKernelConfig;
-    }
-  );
+        kernelPatches = [
+          {
+            name = "Enable backlight in defconfig";
+            patch = ./backlight.patch;
+          }
+        ];
+        structuredExtraConfig = kernelConfig // pinetabKernelConfig;
+      }
+    );
 
   linux_6_17_orangepi5b = pkgs-stable.linuxKernel.packagesFor (
     pkgs-stable.linuxKernel.kernels.linux_6_17.override {

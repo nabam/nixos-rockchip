@@ -53,10 +53,10 @@ with pkgs.linuxKernel;
   linux_stable_latest = pkgs-stable.linuxPackages_latest;
   linux_unstable_latest = pkgs.linuxPackages_latest;
 
-  linux_stable_rockchip = pkgs-stable.linuxKernel.packagesFor (
+  linux_stable_latest_rockchip = pkgs-stable.linuxKernel.packagesFor (
     pkgs-stable.linuxKernel.kernels.linux_latest.override { structuredExtraConfig = kernelConfig; }
   );
-  linux_unstable_rockchip = pkgs.linuxKernel.packagesFor (
+  linux_unstable_latest_rockchip = pkgs.linuxKernel.packagesFor (
     pkgs.linuxKernel.kernels.linux_latest.override { structuredExtraConfig = kernelConfig; }
   );
 

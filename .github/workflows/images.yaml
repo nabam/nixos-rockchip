@@ -18,7 +18,7 @@ jobs:
         package:
         - kernel_linux_6_12_rockchip.kernel
         - kernel_linux_6_17_rockchip.kernel
-#        - kernel_linux_6_15_pinetab.kernel
+        - kernel_linux_6_17_pinetab.kernel
         - uBootRock64
 #        - uBootRockPro64
 #        - uBootPinebookPro
@@ -126,13 +126,13 @@ jobs:
         - SoQuartzModelA
         - SoQuartzCM4
         - SoQuartzBlade
-#        - Rock64
+        - PineTab2
         - RockPro64
-#        - ROCPCRK3399
-#        - PinebookPro
-#        - PineTab2
         - OrangePiCM4
         - RadxaCM3IO
+#        - Rock64
+#        - ROCPCRK3399
+#        - PinebookPro
 #        - RadxaRock4
 #        - RadxaRock4SE
     runs-on: ubuntu-24.04-arm

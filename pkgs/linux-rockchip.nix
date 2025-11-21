@@ -50,6 +50,20 @@ let
 in
 with pkgs.linuxKernel;
 {
+  linux_stable_latest = pkgs-stable.linuxPackages_latest;
+  linux_unstable_latest = pkgs.linuxPackages_latest;
+
+  linux_stable_rockchip = pkgs-stable.linuxKernel.packagesFor (
+    pkgs-stable.linuxKernel.kernels.linux_latest.override { structuredExtraConfig = kernelConfig; }
+  );
+  linux_unstable_rockchip = pkgs.linuxKernel.packagesFor (
+    pkgs.linuxKernel.kernels.linux_latest.override { structuredExtraConfig = kernelConfig; }
+  );
+
+  linux_6_12_rockchip = pkgs-stable.linuxKernel.packagesFor (
+    pkgs-stable.linuxKernel.kernels.linux_6_12.override { structuredExtraConfig = kernelConfig; }
+  );
+
   linux_6_12 = pkgs-stable.linuxPackages_6_12;
   linux_6_12_rockchip = pkgs-stable.linuxKernel.packagesFor (
     pkgs-stable.linuxKernel.kernels.linux_6_12.override { structuredExtraConfig = kernelConfig; }

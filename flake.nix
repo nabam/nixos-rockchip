@@ -67,12 +67,18 @@
           "Quartz64A" = {
             uBoot = uBoot.uBootQuartz64A;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
+            extraModules = [
+              self.nixosModules.dtOverlayPCIeFix
+              noZFS
+            ];
           };
           "Quartz64B" = {
             uBoot = uBoot.uBootQuartz64B;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
+            extraModules = [
+              self.nixosModules.dtOverlayPCIeFix
+              noZFS
+            ];
           };
           "SoQuartzModelA" = {
             uBoot = uBoot.uBootSoQuartzModelA;

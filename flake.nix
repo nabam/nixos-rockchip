@@ -67,27 +67,33 @@
           "Quartz64A" = {
             uBoot = uBoot.uBootQuartz64A;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
+            extraModules = [
+              self.nixosModules.dtOverlayPCIeFix
+              noZFS
+            ];
           };
           "Quartz64B" = {
             uBoot = uBoot.uBootQuartz64B;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ self.nixosModules.dtOverlayPCIeFix ];
+            extraModules = [
+              self.nixosModules.dtOverlayPCIeFix
+              noZFS
+            ];
           };
           "SoQuartzModelA" = {
             uBoot = uBoot.uBootSoQuartzModelA;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ ];
+            extraModules = [ noZFS ];
           };
           "SoQuartzCM4" = {
             uBoot = uBoot.uBootSoQuartzCM4IO;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ ];
+            extraModules = [ noZFS ];
           };
           "SoQuartzBlade" = {
             uBoot = uBoot.uBootSoQuartzBlade;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ ];
+            extraModules = [ noZFS ];
           };
           "PineTab2" = {
             uBoot = uBoot.uBootPineTab2;
@@ -100,27 +106,27 @@
           "Rock64" = {
             uBoot = uBoot.uBootRock64;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ ];
+            extraModules = [ noZFS ];
           };
           "RockPro64" = {
             uBoot = uBoot.uBootRockPro64;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ ];
+            extraModules = [ noZFS ];
           };
           "ROCPCRK3399" = {
             uBoot = uBoot.uBootROCPCRK3399;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ ];
+            extraModules = [ noZFS ];
           };
           "PinebookPro" = {
             uBoot = uBoot.uBootPinebookPro;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ ];
+            extraModules = [ noZFS ];
           };
           "OrangePiCM4" = {
             uBoot = uBoot.uBootOrangePiCM4;
             kernel = kernel.linux_6_17_rockchip_stable;
-            extraModules = [ ];
+            extraModules = [ noZFS ];
           };
           "OrangePi5B" = {
             uBoot = uBoot.uBootOrangePi5B;

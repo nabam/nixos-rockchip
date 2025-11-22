@@ -5,8 +5,6 @@ firmware. Utilizes sd-card installer build infrastructure from nixpkgs.
 
 ## IMPORTANT
 
-- **Automatic PineTab 2 builds are temporarily disabled due to lack of a patch for kernel 6.16.** Latest release for the Pinetab 2 is
-  [v25.05.20250817.48f4c98](https://github.com/nabam/nixos-rockchip/releases/tag/v25.05.20250817.48f4c98)
 - Flakes are automaticaly updated every Monday. Because of that latest commit in the main branch may fail to build. 
   Check out a tag associated with the latest [release](https://github.com/nabam/nixos-rockchip/releases) if you are looking for a tested revision of the flake.
 
@@ -38,9 +36,10 @@ Built image then can be copied to sdcard or other memory:
 $ sudo dd if=./result/sd-image/nixos-image-sd-card-*.img of=/dev/mmcblk0 iflag=direct oflag=direct bs=16M status=progress
 ```
 
-To build all images run:
-``` console
-nix build .#Quartz64A .#Quartz64B .#SoQuartzModelA .#SoQuartzCM4 .#SoQuartzBlade .#Rock64 .#RockPro64 .#ROCPCRK3399 .#PinebookPro .#PineTab2
+When using installer run `sudo NIX_CONFIG="experimental-features = nix-command flakes" nixos-install` to get flakes based ocnfiguration. Folloeing error will appear otherwise:
+
+```
+error: experimental Nix feature 'flakes' is disabled; use '--extra-experimental-features flakes' to override
 ```
 
 ### Custom Image
@@ -66,6 +65,10 @@ Configures installer image build.
 
 Applies device tree overlay to enable SATA port on Quartz64A.
 
+#### nixosModules.dtOrangePi5B
+
+Applies device tree overlay for OrangePI5B
+
 ## Supported Boards
 
 | Board                | Attribute       | Status          |
@@ -81,6 +84,7 @@ Applies device tree overlay to enable SATA port on Quartz64A.
 | [ROC PC RK3399][]    | ROCPCRK3399     | Untested        |
 | [Pinebook Pro][]     | PinebookPro     | Untested        |
 | Orange Pi CM4        | OrangePiCM4     | Untested        |
+| Orange Pi 5B         | OrangePi5B      | Tested & Works  |
 | Radxa CM3/CM3 I/O    | RadxaCM3IO      | Untested        |
 | [Radxa Rock 4][]     | RadxaRock4      | Tested & Works  |
 | [Radxa Rock4 SE][]   | RadxaRock4SE    | Tested & Works  |

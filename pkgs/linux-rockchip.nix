@@ -48,19 +48,15 @@ let
     DRM_PANEL_BOE_TH101MB31UIG002_28A = yes;
   };
 in
-with pkgs.linuxKernel;
 {
-  linux_6_12 = pkgs-stable.linuxPackages_6_12;
-  linux_6_12_rockchip = pkgs-stable.linuxKernel.packagesFor (
-    pkgs-stable.linuxKernel.kernels.linux_6_12.override { structuredExtraConfig = kernelConfig; }
+  linux_latest_rockchip_stable = pkgs-stable.linuxKernel.packagesFor (
+    pkgs-stable.linuxKernel.kernels.linux_latest.override { structuredExtraConfig = kernelConfig; }
+  );
+  linux_latest_rockchip_unstable = pkgs.linuxKernel.packagesFor (
+    pkgs.linuxKernel.kernels.linux_latest.override { structuredExtraConfig = kernelConfig; }
   );
 
-  linux_6_17 = pkgs.linuxPackages_6_17;
-  linux_6_17_rockchip = packagesFor (
-    kernels.linux_6_17.override { structuredExtraConfig = kernelConfig; }
-  );
-
-  linux_6_17_pinetab =
+  linux_6_17_pinetab_stable =
     let
       version = "6.17.8-danctnix1";
     in
@@ -87,8 +83,47 @@ with pkgs.linuxKernel;
       }
     );
 
-  linux_6_17_orangepi5b = pkgs-stable.linuxKernel.packagesFor (
+  linux_6_17_pinetab_unstable =
+    let
+      version = "6.17.8-danctnix1";
+    in
+    pkgs.linuxKernel.packagesFor (
+      pkgs.linuxKernel.kernels.linux_6_17.override {
+        argsOverride = {
+          src = pkgs.fetchFromGitea {
+            domain = "codeberg.org";
+            owner = "DanctNIX";
+            repo = "linux-pinetab2";
+            rev = "v${version}";
+            hash = "sha256-32u5vmwyY/p92ecD4ve0lnYIm1o2Pabj65+dIt1EQI4=";
+          };
+          inherit version;
+          modDirVersion = version;
+        };
+        kernelPatches = [
+          {
+            name = "Enable backlight in defconfig";
+            patch = ./backlight.patch;
+          }
+        ];
+        structuredExtraConfig = kernelConfig // pinetabKernelConfig;
+      }
+    );
+
+  linux_6_17_orangepi5b_stable = pkgs-stable.linuxKernel.packagesFor (
     pkgs-stable.linuxKernel.kernels.linux_6_17.override {
+      structuredExtraConfig = kernelConfig;
+      kernelPatches = [
+        {
+          name = "Set the clock of the bcrm driver to 32khz as required by bcm43752.";
+          patch = ./patches/linux/6.17/rk3588-0802-wireless-add-clk-property.patch;
+        }
+      ];
+    }
+  );
+
+  linux_6_17_orangepi5b_unstable = pkgs.linuxKernel.packagesFor (
+    pkgs.linuxKernel.kernels.linux_6_17.override {
       structuredExtraConfig = kernelConfig;
       kernelPatches = [
         {

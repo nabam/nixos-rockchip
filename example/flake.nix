@@ -34,7 +34,8 @@
             {
               # Use cross-compilation for uBoot and Kernel.
               rockchip.uBoot = inputs.rockchip.packages.${buildPlatform}.uBootQuartz64A;
-              boot.kernelPackages = inputs.rockchip.legacyPackages.${buildPlatform}.kernel_linux_6_12_rockchip;
+              boot.kernelPackages =
+                inputs.rockchip.legacyPackages.${buildPlatform}.kernel_linux_latest_rockchip_stable;
             }
           ];
         };

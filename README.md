@@ -36,7 +36,7 @@ Built image then can be copied to sdcard or other memory:
 $ sudo dd if=./result/sd-image/nixos-image-sd-card-*.img of=/dev/mmcblk0 iflag=direct oflag=direct bs=16M status=progress
 ```
 
-When using installer run `sudo NIX_CONFIG="experimental-features = nix-command flakes" nixos-install` to get flakes based ocnfiguration. Folloeing error will appear otherwise:
+When using installer run `sudo NIX_CONFIG="experimental-features = nix-command flakes" nixos-install` to get flakes based configuration. Following error will appear otherwise:
 
 ```
 error: experimental Nix feature 'flakes' is disabled; use '--extra-experimental-features flakes' to override

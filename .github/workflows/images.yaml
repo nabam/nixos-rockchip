@@ -23,10 +23,10 @@ jobs:
         - kernel_linux_6_17_orangepi5b_stable.kernel
         - kernel_linux_6_17_orangepi5b_unstable.kernel
         - uBootRock64
-#        - uBootRockPro64
-#        - uBootPinebookPro
-#        - uBootROCPCRK3399
-#        - uBootPineTab2
+        - uBootRockPro64
+        - uBootPinebookPro
+        - uBootROCPCRK3399
+        - uBootPineTab2
         - uBootQuartz64A
         - uBootQuartz64B
         - uBootSoQuartzModelA
@@ -34,8 +34,8 @@ jobs:
         - uBootSoQuartzBlade
         - uBootOrangePiCM4
         - uBootRadxaCM3IO
-#        - uBootRadxaRock4
-#        - uBootRadxaRock4SE
+        - uBootRadxaRock4
+        - uBootRadxaRock4SE
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Free disk space
@@ -133,11 +133,11 @@ jobs:
         - RockPro64
         - RadxaCM3IO
         - OrangePi5B
-#        - Rock64
-#        - ROCPCRK3399
-#        - PinebookPro
-#        - RadxaRock4
-#        - RadxaRock4SE
+        - Rock64
+        - ROCPCRK3399
+        - PinebookPro
+        - RadxaRock4
+        - RadxaRock4SE
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Free disk space

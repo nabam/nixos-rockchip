@@ -49,9 +49,6 @@ let
   };
 in
 {
-  linux_latest_stable = pkgs-stable.linuxPackages_latest;
-  linux_latest_unstable = pkgs.linuxPackages_latest;
-
   linux_latest_rockchip_stable = pkgs-stable.linuxKernel.packagesFor (
     pkgs-stable.linuxKernel.kernels.linux_latest.override { structuredExtraConfig = kernelConfig; }
   );

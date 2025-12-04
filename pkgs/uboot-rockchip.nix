@@ -124,4 +124,5 @@ in
   uBootRadxaRock4 = buildRK3399UBoot "rock-pi-4-rk3399_defconfig";
   uBootRadxaRock4SE = buildRK3399UBoot "rock-4se-rk3399_defconfig";
   uBootRadxaRock4CPlus = buildRK3399UBoot "rock-4c-plus-rk3399_defconfig";
+  uBootNanoPCT6 = buildRK3588UBoot "nanopc-t6-rk3588_defconfig";
 }

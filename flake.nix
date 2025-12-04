@@ -157,6 +157,11 @@
             kernel = kernel.linux_latest_rockchip_stable;
             extraModules = [ noZFS ];
           };
+          "NanoPC-T6" = {
+            uBoot = uBoot.uBootNanoPCT6;
+            kernel = kernel.linux_latest_rockchip_stable;
+            extraModules = [ noZFS ];
+          };
         };
 
       osConfigs =
@@ -226,6 +231,8 @@
           uBootRadxaRock4 = uBoot.uBootRadxaRock4;
           uBootRadxaRock4SE = uBoot.uBootRadxaRock4SE;
           uBootRadxaRock4CPlus = uBoot.uBootRadxaRock4CPlus;
+
+          uBootNanoPCT6 = uBoot.uBootNanoPCT6;
 
           bes2600 = bes2600Firmware;
           brcm43752 = brcm43752pcieFirmware;

@@ -27,7 +27,10 @@ let
     in
     buildUBoot {
       defconfig = defconfig;
-      filesToInstall = [ "u-boot-rockchip.bin" "u-boot-rockchip-spi.bin" ];
+      filesToInstall = [
+        "u-boot-rockchip.bin"
+        "u-boot-rockchip-spi.bin"
+      ];
 
       extraPatches = [ ./ramdisk_addr_r.patch ] ++ extraPatches;
       extraConfiG = [
@@ -59,7 +62,10 @@ let
       BL31 = "${pkgs.armTrustedFirmwareRK3399}/bl31.elf";
     };
   buildRK3566UBoot =
-    { defconfig, spi ? true }:
+    {
+      defconfig,
+      spi ? true,
+    }:
     let
       version = "v2024.04-0-g25049ad5608";
       src = fetchFromGitHub {
@@ -77,7 +83,14 @@ let
     in
     buildUBoot {
       inherit defconfig src version;
-      filesToInstall = if spi then [ "u-boot-rockchip.bin" "u-boot-rockchip-spi.bin" ] else [ "u-boot-rockchip.bin" ];
+      filesToInstall =
+        if spi then
+          [
+            "u-boot-rockchip.bin"
+            "u-boot-rockchip-spi.bin"
+          ]
+        else
+          [ "u-boot-rockchip.bin" ];
       extraPatches = [
         (fetchpatch {
           name = "quartz64.patch";
@@ -116,9 +129,18 @@ in
 {
   uBootQuartz64A = buildRK3566UBoot { defconfig = "quartz64-a-rk3566_defconfig"; };
   uBootQuartz64B = buildRK3566UBoot { defconfig = "quartz64-b-rk3566_defconfig"; };
-  uBootSoQuartzBlade = buildRK3566UBoot { defconfig = "soquartz-blade-rk3566_defconfig"; spi = false; };
-  uBootSoQuartzCM4IO = buildRK3566UBoot { defconfig = "soquartz-cm4-rk3566_defconfig"; spi = false; };
-  uBootSoQuartzModelA = buildRK3566UBoot { defconfig = "soquartz-model-a-rk3566_defconfig"; spi = false; };
+  uBootSoQuartzBlade = buildRK3566UBoot {
+    defconfig = "soquartz-blade-rk3566_defconfig";
+    spi = false;
+  };
+  uBootSoQuartzCM4IO = buildRK3566UBoot {
+    defconfig = "soquartz-cm4-rk3566_defconfig";
+    spi = false;
+  };
+  uBootSoQuartzModelA = buildRK3566UBoot {
+    defconfig = "soquartz-model-a-rk3566_defconfig";
+    spi = false;
+  };
   uBootPineTab2 = buildRK3566UBoot { defconfig = "pinetab2-rk3566_defconfig"; };
   uBootPinebookPro = buildRK3399UBoot "pinebook-pro-rk3399_defconfig";
   uBootRockPro64 = buildRK3399UBoot "rockpro64-rk3399_defconfig";
@@ -126,7 +148,10 @@ in
   uBootRock64 = buildRK3328UBoot "rock64-rk3328_defconfig";
   uBootOrangePiCM4 = buildRK3566UBoot { defconfig = "orangepi-3b-rk3566_defconfig"; };
   uBootOrangePi5B = buildRK3588UBoot "orangepi-5b-rk3588s_defconfig";
-  uBootRadxaCM3IO = buildRK3566UBoot { defconfig = "radxa-cm3-io-rk3566_defconfig"; spi = false; };
+  uBootRadxaCM3IO = buildRK3566UBoot {
+    defconfig = "radxa-cm3-io-rk3566_defconfig";
+    spi = false;
+  };
   uBootRadxaRock4 = buildRK3399UBoot "rock-pi-4-rk3399_defconfig";
   uBootRadxaRock4SE = buildRK3399UBoot "rock-4se-rk3399_defconfig";
   uBootRadxaRock4CPlus = buildRK3399UBoot "rock-4c-plus-rk3399_defconfig";

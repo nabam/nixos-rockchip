@@ -61,7 +61,7 @@ in
       version = "6.18.1-danctnix1";
     in
     pkgs-stable.linuxKernel.packagesFor (
-      pkgs-stable.linuxKernel.kernels.linux_6_17.override {
+      pkgs-stable.linuxKernel.kernels.linux_6_18.override {
         argsOverride = {
           src = pkgs.fetchFromGitea {
             domain = "codeberg.org";
@@ -88,7 +88,7 @@ in
       version = "6.18.1-danctnix1";
     in
     pkgs.linuxKernel.packagesFor (
-      pkgs.linuxKernel.kernels.linux_6_17.override {
+      pkgs.linuxKernel.kernels.linux_6_18.override {
         argsOverride = {
           src = pkgs.fetchFromGitea {
             domain = "codeberg.org";

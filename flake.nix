@@ -97,7 +97,7 @@
           };
           "PineTab2" = {
             uBoot = uBoot.uBootPineTab2;
-            kernel = kernel.linux_6_17_pinetab_stable;
+            kernel = kernel.linux_6_18_pinetab_stable;
             extraModules = [
               (bes2600 system)
               noZFS
@@ -205,8 +205,8 @@
           kernel_linux_latest_rockchip_stable = kernel.linux_latest_rockchip_stable;
           kernel_linux_latest_rockchip_unstable = kernel.linux_latest_rockchip_unstable;
 
-          kernel_linux_6_17_pinetab_stable = kernel.linux_6_17_pinetab_stable;
-          kernel_linux_6_17_pinetab_unstable = kernel.linux_6_17_pinetab_unstable;
+          kernel_linux_6_18_pinetab_stable = kernel.linux_6_18_pinetab_stable;
+          kernel_linux_6_18_pinetab_unstable = kernel.linux_6_18_pinetab_unstable;
 
           kernel_linux_6_17_orangepi5b_stable = kernel.linux_6_17_orangepi5b_stable;
           kernel_linux_6_17_orangepi5b_unstable = kernel.linux_6_17_orangepi5b_unstable;

@@ -35,6 +35,7 @@ jobs:
         - uBootOrangePiCM4
         - uBootRadxaCM3IO
         - uBootRadxaRock4
+        - uBootRadxaRock4CPlus
         - uBootRadxaRock4SE
     runs-on: ubuntu-24.04-arm
     steps:
@@ -137,6 +138,7 @@ jobs:
         - ROCPCRK3399
         - PinebookPro
         - RadxaRock4
+        - RadxaRock4CPlus
         - RadxaRock4SE
     runs-on: ubuntu-24.04-arm
     steps:

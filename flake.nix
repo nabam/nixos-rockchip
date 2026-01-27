@@ -37,6 +37,7 @@
           bes2600Firmware = self-scope.callPackage ./pkgs/bes2600-firmware.nix { };
           armbian-firmware = self-scope.callPackage ./pkgs/armbian-firmware.nix { };
           brcm43752pcieFirmware = self-scope.armbian-firmware.brcm-43752-pcie;
+          brcm43456wifiFirmware = self-scope.armbian-firmware.brcm-43456-wifi;
         });
 
       # ZFS is broken on kernel from unstable.
@@ -60,6 +61,12 @@
         system: with (scope system); {
           nixpkgs.config.allowUnfree = true;
           hardware.firmware = [ brcm43752pcieFirmware ];
+        };
+
+      brcm43456 =
+        system: with (scope system); {
+          nixpkgs.config.allowUnfree = true;
+          hardware.firmware = [ brcm43456wifiFirmware ];
         };
 
       boards =
@@ -121,7 +128,10 @@
           "PinebookPro" = {
             uBoot = uBoot.uBootPinebookPro;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ noZFS ];
+            extraModules = [
+              (brcm43456 system)
+              noZFS
+            ];
           };
           "OrangePiCM4" = {
             uBoot = uBoot.uBootOrangePiCM4;
@@ -235,6 +245,7 @@
           uBootNanoPCT6 = uBoot.uBootNanoPCT6;
 
           bes2600 = bes2600Firmware;
+          brcm43456 = brcm43456wifiFirmware;
           brcm43752 = brcm43752pcieFirmware;
         };
         formatter = (import inputs.nixpkgsStable { inherit system; }).nixfmt-tree;

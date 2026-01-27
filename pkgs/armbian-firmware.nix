@@ -54,7 +54,7 @@ in
 {
   armbian-firmware = stdenv.mkDerivation rec {
     pname = "armbian-firmware";
-    description = "Propietary firmwares included with armbian";
+    description = "Proprietary firmwares included with armbian";
     version = "1.0";
     meta = with lib; {
       inherit description;
@@ -70,7 +70,7 @@ in
   };
   brcm-43752-pcie = to-firmware-pkg {
     pname = "brcmfmac-firmware";
-    description = "Propietary firmware for broadcomm devices";
+    description = "Proprietary firmware for broadcomm devices";
     paths = [
       "brcm/nvram_ap6275s.txt"
       {
@@ -108,6 +108,24 @@ in
       17236 2 nvram_ap6356.txt \
       17241 9 nvram_ap6359sa.txt \
       43752 2 nvram_ap6275s.txt
+    '';
+  };
+  brcm-43456-wifi = stdenv.mkDerivation rec {
+    pname = "brcmfmac-firmware-43456";
+    version = "1.0";
+    meta = with lib; {
+      description = "Proprietary";
+      license = licenses.unfree;
+      homepage = "https://github.com/armbian/firmware";
+    };
+    src = armbian-firmware-src;
+    dontBuild = true;
+    installPhase = ''
+      mkdir -p "$out/lib/firmware"
+      cp ${src}/brcm/brcmfmac43456-sdio.txt $out/lib/firmware/brcm/brcmfmac43456-sdio.txt
+      cp ${src}/brcm/brcmfmac43456-sdio.bin $out/lib/firmware/brcm/brcmfmac43456-sdio.bin
+      ln -s $out/lib/firmware/brcm/brcmfmac43456-sdio.txt $out/lib/firmware/brcm/brcmfmac43456-sdio.pine64,pinebook-pro.txt
+      ln -s $out/lib/firmware/brcm/brcmfmac43456-sdio.bin $out/lib/firmware/brcm/brcmfmac43456-sdio.pine64,pinebook-pro.bin
     '';
   };
 }

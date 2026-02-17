@@ -44,6 +44,7 @@ let
     BES2600 = module;
     BES2600_5GHZ_SUPPORT = yes;
     BES2600_DEBUGFS = yes;
+    NOVA_CORE = module;
 
     DRM_PANEL_BOE_TH101MB31UIG002_28A = yes;
   };

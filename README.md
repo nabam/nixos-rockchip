@@ -73,22 +73,22 @@ Applies device tree overlay for OrangePI5B
 
 | Board                | Attribute       | Status          |
 | ---------------------|---------------- | ----------------|
-| Quartz64 Model A     | Quartz64A       | Tested & Works  |
-| Quartz64 Model B     | Quartz64A       | Tested & Works  |
-| SoQuartz Model A     | SoQuartzModelA  | Tested & Works  |
-| SoQuartz CM4         | SoQuartzCM4     | Tested & Works  |
-| SoQuartz Blade       | SoQuartzBlade   | Tested & Works  |
-| PineTab2             | PineTab2        | Tested & Works  |
-| [Rock64][]           | Rock64          | Untested        |
-| [RockPro64][]        | RockPro64       | Untested        |
-| [ROC PC RK3399][]    | ROCPCRK3399     | Untested        |
-| [Pinebook Pro][]     | PinebookPro     | Untested        |
-| Orange Pi CM4        | OrangePiCM4     | Untested        |
-| Orange Pi 5B         | OrangePi5B      | Tested & Works  |
-| Radxa CM3/CM3 I/O    | RadxaCM3IO      | Untested        |
-| [Radxa Rock 4][]     | RadxaRock4      | Tested & Works  |
-| [Radxa Rock4 SE][]   | RadxaRock4SE    | Tested & Works  |
-| Radxa Rock4 C+       | RadxaRock4CPlus | Tested & Works  |
+| Quartz64 Model A     | Quartz64A       | Tested & Works   |
+| Quartz64 Model B     | Quartz64A       | Tested & Works   |
+| SoQuartz Model A     | SoQuartzModelA  | Tested & Works   |
+| SoQuartz CM4         | SoQuartzCM4     | Tested & Works   |
+| SoQuartz Blade       | SoQuartzBlade   | Tested & Works   |
+| PineTab2             | PineTab2        | Tested & Works   |
+| [Rock64][]           | Rock64          | Untested         |
+| [RockPro64][]        | RockPro64       | Untested         |
+| [ROC PC RK3399][]    | ROCPCRK3399     | Untested         |
+| [Pinebook Pro][]     | PinebookPro     | Untested         |
+| Orange Pi CM4        | OrangePiCM4     | Untested         |
+| Orange Pi 5B         | OrangePi5B      | Needs New Kernel |
+| Radxa CM3/CM3 I/O    | RadxaCM3IO      | Untested         |
+| [Radxa Rock 4][]     | RadxaRock4      | Tested & Works   |
+| [Radxa Rock4 SE][]   | RadxaRock4SE    | Tested & Works   |
+| Radxa Rock4 C+       | RadxaRock4CPlus | Tested & Works   |
 
 [Rock64]: https://wiki.nixos.org/wiki/NixOS_on_ARM/PINE64_ROCK64
 [RockPro64]: https://wiki.nixos.org/wiki/NixOS_on_ARM/PINE64_ROCKPro64

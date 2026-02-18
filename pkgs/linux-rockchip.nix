@@ -58,7 +58,7 @@ in
 
   linux_6_18_pinetab_stable =
     let
-      version = "6.18.1-danctnix1";
+      version = "6.18.10-danctnix1";
     in
     pkgs-stable.linuxKernel.packagesFor (
       pkgs-stable.linuxKernel.kernels.linux_6_18.override {
@@ -68,7 +68,7 @@ in
             owner = "DanctNIX";
             repo = "linux-pinetab2";
             rev = "v${version}";
-            hash = "sha256-995F4CLGo7mC9UOM0rIqB91VYK34pt2aKoAWqeFtxXQ=";
+            hash = "sha256-AOifTyqX8x0ea6jg1GQaoiehS0H1oat3C9HK9fgMKwg=";
           };
           inherit version;
           modDirVersion = version;
@@ -85,7 +85,7 @@ in
 
   linux_6_18_pinetab_unstable =
     let
-      version = "6.18.1-danctnix1";
+      version = "6.18.10-danctnix1";
     in
     pkgs.linuxKernel.packagesFor (
       pkgs.linuxKernel.kernels.linux_6_18.override {
@@ -95,7 +95,7 @@ in
             owner = "DanctNIX";
             repo = "linux-pinetab2";
             rev = "v${version}";
-            hash = "sha256-995F4CLGo7mC9UOM0rIqB91VYK34pt2aKoAWqeFtxXQ=";
+            hash = "sha256-AOifTyqX8x0ea6jg1GQaoiehS0H1oat3C9HK9fgMKwg=";
           };
           inherit version;
           modDirVersion = version;

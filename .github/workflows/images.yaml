@@ -133,7 +133,8 @@ jobs:
         - PineTab2
         - RockPro64
         - RadxaCM3IO
-        - OrangePi5B
+        # Needs update to a fresh kernel
+        # - OrangePi5B
         - Rock64
         - ROCPCRK3399
         - PinebookPro

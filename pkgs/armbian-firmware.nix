@@ -121,7 +121,7 @@ in
     src = armbian-firmware-src;
     dontBuild = true;
     installPhase = ''
-      mkdir -p "$out/lib/firmware"
+      mkdir -p "$out/lib/firmware/brcm"
       cp ${src}/brcm/brcmfmac43456-sdio.txt $out/lib/firmware/brcm/brcmfmac43456-sdio.txt
       cp ${src}/brcm/brcmfmac43456-sdio.bin $out/lib/firmware/brcm/brcmfmac43456-sdio.bin
       ln -s $out/lib/firmware/brcm/brcmfmac43456-sdio.txt $out/lib/firmware/brcm/brcmfmac43456-sdio.pine64,pinebook-pro.txt

@@ -172,6 +172,14 @@
             kernel = kernel.linux_latest_rockchip_stable;
             extraModules = [ noZFS ];
           };
+          "Sige7" = {
+            uBoot = uBoot.uBootSige7;
+            kernel = kernel.linux_latest_rockchip_stable;
+            extraModules = [
+              (brcm43752 system)
+              noZFS
+            ];
+          };
         };
 
       osConfigs =
@@ -243,6 +251,8 @@
           uBootRadxaRock4CPlus = uBoot.uBootRadxaRock4CPlus;
 
           uBootNanoPCT6 = uBoot.uBootNanoPCT6;
+
+          uBootSige7 = uBoot.uBootSige7;
 
           bes2600 = bes2600Firmware;
           brcm43456 = brcm43456wifiFirmware;

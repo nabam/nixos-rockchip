@@ -4,6 +4,7 @@
   stdenv,
   lib,
   fetchpatch,
+  fetchurl,
   fetchFromGitHub,
   buildUBoot,
   buildPackages,
@@ -141,7 +142,42 @@ in
     defconfig = "soquartz-model-a-rk3566_defconfig";
     spi = false;
   };
-  uBootPineTab2 = buildRK3566UBoot { defconfig = "pinetab2-rk3566_defconfig"; };
+  uBootPineTab2 = buildUBoot rec {
+    # Pick 2025.07 for now since that's what the vop2 patchset
+    # is against
+    version = "v2025.07";
+    src = fetchFromGitHub {
+      owner = "u-boot";
+      repo = "u-boot";
+      tag = version;
+      sha256 = "sha256-X+JhVkDudkvQo08hGwAChOeMZZR+iunT9aU6tSAuMmg=";
+    };
+    defconfig = "pinetab2-rk3566_defconfig";
+    filesToInstall = [
+      "u-boot-rockchip.bin"
+      "u-boot-rockchip-spi.bin"
+    ];
+    extraConfig = ''
+      CONFIG_BOOTCOMMAND="usb start; bootflow scan -lb"
+    '';
+    extraPatches = [
+      # using fetchurl instead of fetchpatch here because it seems fetchpatch
+      # mucks with the ordering and that is relevant here.
+      # https://lists.denx.de/pipermail/u-boot/2025-January/thread.html#577641
+      (fetchurl {
+        name = "rockchip-video-output-processor-2.patch";
+        url = "https://raw.githubusercontent.com/dreemurrs-embedded/danctnix-packages/d2ba844cb9fdcda092f54f87827f8705727ce261/pine64/uboot-pinetab2/vop2.patch";
+        hash = "sha256-m04GQUvovmo7EuMvHjvxALc+dcBnn9l4TClOspd5i0k=";
+      })
+    ];
+    env = {
+      # Would be nicer to build from source, but
+      # "${pkgs.armTrustedFirmwareRK3568}/bl31.elf"
+      # doesn't seem to enable the GPU clock, so rkbin it is:
+      BL31 = (pkgs.rkbin + "/bin/rk35/rk3568_bl31_v1.45.elf");
+      ROCKCHIP_TPL = pkgs.rkbin.TPL_RK3568;
+    };
+  };
   uBootPinebookPro = buildRK3399UBoot "pinebook-pro-rk3399_defconfig";
   uBootRockPro64 = buildRK3399UBoot "rockpro64-rk3399_defconfig";
   uBootROCPCRK3399 = buildRK3399UBoot "roc-pc-rk3399_defconfig";

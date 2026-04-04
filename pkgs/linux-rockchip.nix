@@ -85,7 +85,7 @@ in
 
   linux_6_19_pinetab_unstable =
     let
-      version = "6.19.6-danctnix1";
+      version = "6.19.10-danctnix1";
     in
     pkgs.linuxKernel.packagesFor (
       pkgs.linuxKernel.kernels.linux_6_19.override {
@@ -95,7 +95,7 @@ in
             owner = "DanctNIX";
             repo = "linux-pinetab2";
             rev = "v${version}";
-            hash = "sha256-Sbl9oOK/ep5AYOvlAGFggca1JAwVJYnkt9tpUY3qG4M=";
+            hash = "sha256-IlL06x1Hf/A1QYP9dhjYv1d6Dy65T2vZ2G+SdZ+qAgQ=";
           };
           inherit version;
           modDirVersion = version;

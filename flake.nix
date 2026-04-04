@@ -3,7 +3,9 @@
 
   inputs = {
     nixpkgsStable.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # https://github.com/NixOS/nixpkgs/pull/505203
+    nixpkgsUnstable.url = "github:JamieMagee/nixpkgs/uboot-2026.01";
+    #nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
   };
 

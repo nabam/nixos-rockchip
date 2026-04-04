@@ -18,16 +18,16 @@
     },
     "nixpkgsUnstable": {
       "locked": {
-        "lastModified": 1774709303,
-        "narHash": "sha256-D3Q07BbIA2KnTcSXIqqu9P586uWxN74zNoCH3h2ESHg=",
-        "owner": "NixOS",
+        "lastModified": 1774939568,
+        "narHash": "sha256-xpp3c7GzInpoV10QTaF+euJ0EAecqAFKU2AUJ8jWyrc=",
+        "owner": "JamieMagee",
         "repo": "nixpkgs",
-        "rev": "8110df5ad7abf5d4c0f6fb0f8f978390e77f9685",
+        "rev": "4b2b5be22fa3e34fd1e5a6a60f355f70fcba8b20",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "owner": "JamieMagee",
+        "ref": "uboot-2026.01",
         "repo": "nixpkgs",
         "type": "github"
       }

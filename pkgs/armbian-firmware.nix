@@ -78,6 +78,7 @@ in
         dests = [
           "brcm/brcmfmac43752-pcie.txt"
           "brcm/brcmfmac43752-pcie.xunlong,orangepi-5b.txt"
+          "brcm/brcmfmac43752-pcie.armsom,sige7.txt"
         ];
       }
       {
@@ -85,6 +86,7 @@ in
         dests = [
           "brcm/brcmfmac43752-pcie.clm_blob"
           "brcm/brcmfmac43752-pcie.xunlong,orangepi-5b.clm_blob"
+          "brcm/brcmfmac43752-pcie.armsom,sige7.clm_blob"
         ];
       }
       {
@@ -92,6 +94,7 @@ in
         dests = [
           "brcm/brcmfmac43752-pcie.bin"
           "brcm/brcmfmac43752-pcie.xunlong,orangepi-5b.bin"
+          "brcm/brcmfmac43752-pcie.armsom,sige7.bin"
         ];
       }
     ];

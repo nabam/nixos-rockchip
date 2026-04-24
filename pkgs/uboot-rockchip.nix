@@ -143,15 +143,6 @@ in
     spi = false;
   };
   uBootPineTab2 = buildUBoot rec {
-    # Pick 2025.07 for now since that's what the vop2 patchset
-    # is against
-    version = "v2025.07";
-    src = fetchFromGitHub {
-      owner = "u-boot";
-      repo = "u-boot";
-      tag = version;
-      sha256 = "sha256-X+JhVkDudkvQo08hGwAChOeMZZR+iunT9aU6tSAuMmg=";
-    };
     defconfig = "pinetab2-rk3566_defconfig";
     filesToInstall = [
       "u-boot-rockchip.bin"
@@ -166,8 +157,8 @@ in
       # https://lists.denx.de/pipermail/u-boot/2025-January/thread.html#577641
       (fetchurl {
         name = "rockchip-video-output-processor-2.patch";
-        url = "https://raw.githubusercontent.com/dreemurrs-embedded/danctnix-packages/d2ba844cb9fdcda092f54f87827f8705727ce261/pine64/uboot-pinetab2/vop2.patch";
-        hash = "sha256-m04GQUvovmo7EuMvHjvxALc+dcBnn9l4TClOspd5i0k=";
+        url = "https://raw.githubusercontent.com/dreemurrs-embedded/danctnix-packages/6d8f2ce32260e8f94fded5c3ec4b2f983a64db49/pine64/uboot-pinetab2/vop2.patch";
+        hash = "sha256-LTuhALreDCc6hSyc7N7Q2i0x/+bvkDdzQ62r45iZjc8=";
       })
     ];
     env = {

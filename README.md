@@ -89,6 +89,7 @@ Applies device tree overlay for OrangePI5B
 | [Radxa Rock 4][]     | RadxaRock4      | Tested & Works   |
 | [Radxa Rock4 SE][]   | RadxaRock4SE    | Tested & Works   |
 | Radxa Rock4 C+       | RadxaRock4CPlus | Tested & Works   |
+| Armsom Sige7         | Sige7           | Tested & Works   |
 
 [Rock64]: https://wiki.nixos.org/wiki/NixOS_on_ARM/PINE64_ROCK64
 [RockPro64]: https://wiki.nixos.org/wiki/NixOS_on_ARM/PINE64_ROCKPro64

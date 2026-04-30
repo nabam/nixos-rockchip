@@ -43,6 +43,7 @@ jobs:
         - uBootSoQuartzCM4IO
         - uBootSoQuartzBlade
         - uBootOrangePiCM4
+        - uBootOrangePi3B
         - uBootRadxaCM3IO
         - uBootRadxaRock4
         - uBootRadxaRock4CPlus

@@ -110,8 +110,8 @@ in
       }
     );
 
-  linux_6_17_orangepi5b_stable = pkgs-stable.linuxKernel.packagesFor (
-    pkgs-stable.linuxKernel.kernels.linux_6_17.override {
+  linux_6_18_orangepi5b_stable = pkgs-stable.linuxKernel.packagesFor (
+    pkgs-stable.linuxKernel.kernels.linux_6_18.override {
       structuredExtraConfig = kernelConfig;
       kernelPatches = [
         {
@@ -122,8 +122,8 @@ in
     }
   );
 
-  linux_6_17_orangepi5b_unstable = pkgs.linuxKernel.packagesFor (
-    pkgs.linuxKernel.kernels.linux_6_17.override {
+  linux_6_18_orangepi5b_unstable = pkgs.linuxKernel.packagesFor (
+    pkgs.linuxKernel.kernels.linux_6_18.override {
       structuredExtraConfig = kernelConfig;
       kernelPatches = [
         {

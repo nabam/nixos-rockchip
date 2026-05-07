@@ -140,7 +140,7 @@
           };
           "OrangePi5B" = {
             uBoot = uBoot.uBootOrangePi5B;
-            kernel = kernel.linux_6_17_orangepi5b_stable;
+            kernel = kernel.linux_6_18_orangepi5b_stable;
             extraModules = [
               (brcm43752 system)
               noZFS
@@ -218,8 +218,8 @@
           kernel_linux_6_18_pinetab_stable = kernel.linux_6_18_pinetab_stable;
           kernel_linux_6_19_pinetab_unstable = kernel.linux_6_19_pinetab_unstable;
 
-          kernel_linux_6_17_orangepi5b_stable = kernel.linux_6_17_orangepi5b_stable;
-          kernel_linux_6_17_orangepi5b_unstable = kernel.linux_6_17_orangepi5b_unstable;
+          kernel_linux_6_18_orangepi5b_stable = kernel.linux_6_18_orangepi5b_stable;
+          kernel_linux_6_18_orangepi5b_unstable = kernel.linux_6_18_orangepi5b_unstable;
         };
         packages = (images system) // {
           uBootQuartz64A = uBoot.uBootQuartz64A;

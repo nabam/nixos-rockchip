@@ -83,27 +83,27 @@ in
       }
     );
 
-  linux_6_19_pinetab_unstable =
+  linux_7_0_pinetab_unstable =
     let
-      version = "6.19.10-danctnix1";
+      version = "7.0-danctnix1";
     in
     pkgs.linuxKernel.packagesFor (
-      pkgs.linuxKernel.kernels.linux_6_19.override {
+      pkgs.linuxKernel.kernels.linux_7_0.override {
         argsOverride = {
           src = pkgs.fetchFromGitea {
             domain = "codeberg.org";
             owner = "DanctNIX";
             repo = "linux-pinetab2";
             rev = "v${version}";
-            hash = "sha256-IlL06x1Hf/A1QYP9dhjYv1d6Dy65T2vZ2G+SdZ+qAgQ=";
+            hash = "sha256-1C1VAQcdzkdanew7fQjKfmWTWUTF4J5eQ+0IL1GKkE4=";
           };
           inherit version;
-          modDirVersion = version;
+          modDirVersion = "7.0.0-danctnix1";
         };
         kernelPatches = [
           {
             name = "Enable backlight in defconfig";
-            patch = ./backlight-6.19.patch;
+            patch = ./backlight-7.0.patch;
           }
         ];
         structuredExtraConfig = kernelConfig // pinetabKernelConfig;

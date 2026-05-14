@@ -85,7 +85,7 @@ in
 
   linux_7_0_pinetab_unstable =
     let
-      version = "7.0-danctnix1";
+      version = "7.0.6-danctnix1";
     in
     pkgs.linuxKernel.packagesFor (
       pkgs.linuxKernel.kernels.linux_7_0.override {
@@ -95,10 +95,10 @@ in
             owner = "DanctNIX";
             repo = "linux-pinetab2";
             rev = "v${version}";
-            hash = "sha256-1C1VAQcdzkdanew7fQjKfmWTWUTF4J5eQ+0IL1GKkE4=";
+            hash = "sha256-YYcJF5qmCJGsZhB1xLST/ecaPeOR5QGYEuHMqOHxjZ0=";
           };
           inherit version;
-          modDirVersion = "7.0.0-danctnix1";
+          modDirVersion = version;
         };
         kernelPatches = [
           {

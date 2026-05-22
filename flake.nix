@@ -2,7 +2,7 @@
   description = "Build NixOS images for rockchip based computers";
 
   inputs = {
-    nixpkgsStable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgsStable.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
   };

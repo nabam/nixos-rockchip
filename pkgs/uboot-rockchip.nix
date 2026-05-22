@@ -42,8 +42,10 @@ let
         "CONFIG_BOOTM_EFI=y"
       ];
 
-      BL31 = BL31;
-      ROCKCHIP_TPL = ROCKCHIP_TPL;
+      env = {
+        BL31 = BL31;
+        ROCKCHIP_TPL = ROCKCHIP_TPL;
+      };
 
       extraMeta = {
         platforms = [ "aarch64-linux" ];
@@ -99,8 +101,10 @@ let
           sha256 = "5mLjKiRpfnLCNVnyNuxBcDmmXg8xwcki3mmLisS4YbU=";
         })
       ];
-      BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.43.elf");
-      ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin");
+      env = {
+        BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.43.elf");
+        ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin");
+      };
     };
   buildRK3588UBoot =
     defconfig:
@@ -115,12 +119,14 @@ let
     pkgs-stable.buildUBoot {
       inherit defconfig src;
       version = "v2025.01-1-ga79ebd4e16";
-      BL31 = "${pkgs-stable.armTrustedFirmwareRK3588}/bl31.elf";
-      ROCKCHIP_TPL = pkgs-stable.rkbin.TPL_RK3588;
       filesToInstall = [ "u-boot-rockchip.bin" ];
       extraPatches = [
         ./patches/u-boot/2025.01/0001-Add-config-for-the-orangepi-5b-board.patch
       ];
+      env = {
+        BL31 = "${pkgs-stable.armTrustedFirmwareRK3588}/bl31.elf";
+        ROCKCHIP_TPL = pkgs-stable.rkbin.TPL_RK3588;
+      };
       extraMeta = {
         platforms = [ "aarch64-linux" ];
         license = pkgs-stable.lib.licenses.unfreeRedistributableFirmware;

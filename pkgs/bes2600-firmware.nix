@@ -23,6 +23,6 @@ stdenv.mkDerivation {
   meta = with lib; {
     description = "bes2600 firmware";
     homepage = "https://gitlab.com/pine64-org/bes2600-firmware";
-    license = licenses.unfree;
+    license = licenses.unfreeRedistributableFirmware;
   };
 }

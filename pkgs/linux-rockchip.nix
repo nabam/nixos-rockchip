@@ -41,13 +41,13 @@ let
     VIDEO_HANTRO_ROCKCHIP = yes;
   };
   pinetabKernelConfig = with lib.kernel; {
-    DRM_PANEL_BOE_TH101MB31UIG002_28A = yes;
+    DRM_PANEL_BOE_TH101MB31UIG002_28A = module;
   };
   pinetabKernelPatches = [
-    {
-      name = "Enable backlight in defconfig";
-      patch = ./backlight-7.0.patch;
-    }
+    #{
+    #  name = "Enable backlight in defconfig";
+    #  patch = ./backlight-7.0.patch;
+    #}
     {
       name = "power: supply: rk817: Fix battery capacity sanity check calculation";
       patch = (
@@ -70,16 +70,16 @@ let
         }
       );
     }
-    {
-      name = "usb: typec: husb311: Add HUSB311 TCPI driver";
-      patch = (
-        pkgs.fetchpatch {
-          name = "husb311.patch";
-          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/be6042fa9bda9cab4da6f35a40083be2c420043b.patch";
-          hash = "sha256-q3LcyGnyj6EkqVGvoz6qPz2nLOb3QJNIQxKuZjJIUzU=";
-        }
-      );
-    }
+    #{
+    #  name = "usb: typec: husb311: Add HUSB311 TCPI driver";
+    #  patch = (
+    #    pkgs.fetchpatch {
+    #      name = "husb311.patch";
+    #      url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/be6042fa9bda9cab4da6f35a40083be2c420043b.patch";
+    #      hash = "sha256-q3LcyGnyj6EkqVGvoz6qPz2nLOb3QJNIQxKuZjJIUzU=";
+    #    }
+    #  );
+    #}
     {
       name = "usb: typec: typec-extcon: Add typec -> extcon bridge driver";
       patch = (
@@ -228,12 +228,62 @@ in
     }
   );
 
-  linux_7_0_pinetab_unstable = pkgs.linuxKernel.packagesFor (
-    pkgs.linuxKernel.kernels.linux_7_0.override {
-      kernelPatches = pinetabKernelPatches;
+  linux_latest_pinetab_unstable = pkgs.linuxKernel.packagesFor (
+    pkgs.linuxKernel.kernels.linux_latest.override {
+      kernelPatches = pinetabKernelPatches ++ [
+        {
+          name = "husb311-v4-1.patch";
+          patch = (pkgs.fetchpatch {
+            name = "husb311-v4-1.patch";
+            url = "https://lore.kernel.org/all/20260318-husb311-v4-1-69e029255430@flipper.net/raw";
+            hash = "sha256-J2/owF5H87M16iRi7MUQ+UAs5z68ZkOpTmdVCrECbFM=";
+          });
+        }
+        # etekmicro is not a thing yet
+        #{
+        #  name = "husb311-v4-2.patch";
+        #  patch = (pkgs.fetchpatch {
+        #    name = "husb311-v4-2.patch";
+        #    url = "https://lore.kernel.org/all/20260318-husb311-v4-2-69e029255430@flipper.net/raw";
+        #    hash = "sha256-3LqbMpsiN+5V7RlTml78qndeOIwPKBCSYVvuEZLJ0Qs=";
+        #  });
+        #}
+        #{
+        #  name = "husb311-v4-3.patch";
+        #  patch = (pkgs.fetchpatch {
+        #    name = "husb311-v4-3.patch";
+        #    url = "https://lore.kernel.org/all/20260318-husb311-v4-3-69e029255430@flipper.net/raw";
+        #    hash = "sha256-6fT4yG9+eVpl27EWCwyDkoFv2YoYDHZ2C9deFSVNDB4=";
+        #  });
+        #}
+        {
+          name = "husb311-v4-23.patch";
+          patch = ./patches/linux/7.0/husb311-v4-23.patch;
+        }
+        {
+          name = "husb311-v4-4.patch";
+          patch = ./patches/linux/7.0/husb311-v4-4.patch;
+        }
+        #{
+        #  name = "husb311-v4-4.patch";
+        #  patch = (pkgs.fetchpatch {
+        #    name = "husb311-v4-4.patch";
+        #    url = "https://lore.kernel.org/all/20260318-husb311-v4-4-69e029255430@flipper.net/raw";
+        #    hash = "sha256-eIwbbysf4ykzh834HW7UOV1p+ox0+/ULsmd8zpjq4q0=";
+        #  });
+        #}
+      ];
       structuredExtraConfig = kernelConfig // pinetabKernelConfig;
     }
   );
+  linux_testing_pinetab_unstable = pkgs.linuxKernel.packagesFor (
+    pkgs.linuxKernel.kernels.linux_testing.override {
+      kernelPatches = pinetabKernelPatches;
+      # husb311 patches are already there in 7.1-rc4
+      structuredExtraConfig = kernelConfig // pinetabKernelConfig;
+    }
+  );
+
 
   linux_6_18_orangepi5b_stable = pkgs-stable.linuxKernel.packagesFor (
     pkgs-stable.linuxKernel.kernels.linux_6_18.override {

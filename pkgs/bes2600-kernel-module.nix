@@ -13,8 +13,8 @@ stdenv.mkDerivation rec {
     domain = "codeberg.org";
     owner = "raboof";
     repo = "bes2600";
-    rev = "028f51d4100eb3be170903ba26f2497b342dd46d";
-    hash = "sha256-kiK31kgQcy+I9dK3J1UNJAIdboHhKkrfwa+2qtU2RdM=";
+    rev = "2350a4a44ec3d0f1a1a8df4959410e33372f8603";
+    hash = "sha256-fKNjM3nK0Ni13MvkuM3Y5uVmO1b0034RdLrcWt1Rdmk=";
   };
   sourceRoot = "source/bes2600";
   hardeningDisable = [

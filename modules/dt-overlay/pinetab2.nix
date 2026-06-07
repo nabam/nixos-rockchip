@@ -72,7 +72,7 @@
 
         &i2c0 {
           usbc0: usb-typec@4e {
-            compatible = "hynetek,husb311";
+            compatible = "hynetek,husb311", "richtek,rt1711h";
             reg = <0x4e>;
             interrupt-parent = <&gpio0>;
             interrupts = <RK_PC5 IRQ_TYPE_LEVEL_LOW>;

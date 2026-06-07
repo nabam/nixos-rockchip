@@ -133,6 +133,14 @@
             kernel = kernel.linux_6_17_rockchip_stable;
             extraModules = [ noZFS ];
           };
+          "OrangePi3B" = {
+            uBoot = uBoot.uBootOrangePi3B;
+            kernel = kernel.linux_latest_rockchip_unstable;
+            extraModules = [
+              noZFS
+              { boot.initrd.allowMissingModules = true; }
+            ];
+          };
           "OrangePi5B" = {
             uBoot = uBoot.uBootOrangePi5B;
             kernel = kernel.linux_6_18_orangepi5b_stable;
@@ -232,6 +240,7 @@
           uBootSoQuartzBlade = uBoot.uBootSoQuartzBlade;
 
           uBootOrangePiCM4 = uBoot.uBootOrangePiCM4;
+          uBootOrangePi3B = uBoot.uBootOrangePi3B;
           uBootOrangePi5B = uBoot.uBootOrangePi5B;
 
           uBootRadxaCM3IO = uBoot.uBootRadxaCM3IO;

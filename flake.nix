@@ -107,7 +107,7 @@
           };
           "PineTab2" = {
             uBoot = uBoot.uBootPineTab2;
-            kernel = kernel.linux_7_0_pinetab_stable;
+            kernel = kernel.linux_7_0_pinetab_unstable;
             extraModules = [
               noZFS
               self.nixosModules.dtOverlayPineTab2

@@ -23,7 +23,8 @@ jobs:
         - kernel_linux_latest_rockchip_stable.kernel
         - kernel_linux_latest_rockchip_unstable.kernel
         - kernel_linux_6_18_pinetab_stable.kernel
-        # - kernel_linux_6_18_pinetab_unstable.kernel
+        - kernel_linux_7_0_pinetab_stable.kernel
+        - kernel_linux_7_0_pinetab_unstable.kernel
         # - kernel_linux_6_17_orangepi5b_stable.kernel
         # - kernel_linux_6_17_orangepi5b_unstable.kernel
         - uBootRock64
@@ -37,6 +38,7 @@ jobs:
         - uBootSoQuartzCM4IO
         - uBootSoQuartzBlade
         - uBootOrangePiCM4
+        - uBootOrangePi3B
         - uBootRadxaCM3IO
         - uBootRadxaRock4
         - uBootRadxaRock4CPlus

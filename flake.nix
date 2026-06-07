@@ -2,7 +2,7 @@
   description = "Build NixOS images for rockchip based computers";
 
   inputs = {
-    nixpkgsStable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgsStable.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
   };
@@ -60,12 +60,6 @@
         ];
       };
 
-      bes2600 =
-        system: with (scope system); {
-          nixpkgs.config.allowUnfree = true;
-          hardware.firmware = [ bes2600Firmware ];
-        };
-
       brcm43752 =
         system: with (scope system); {
           nixpkgs.config.allowUnfree = true;
@@ -113,10 +107,11 @@
           };
           "PineTab2" = {
             uBoot = uBoot.uBootPineTab2;
-            kernel = kernel.linux_6_18_pinetab_stable;
+            kernel = kernel.linux_7_0_pinetab_stable;
             extraModules = [
-              (bes2600 system)
               noZFS
+              self.nixosModules.dtOverlayPineTab2
+              self.nixosModules.bes2600
             ];
           };
           "Rock64" = {
@@ -147,9 +142,17 @@
             kernel = kernel.linux_6_17_rockchip_stable;
             extraModules = [ noZFS ];
           };
+          "OrangePi3B" = {
+            uBoot = uBoot.uBootOrangePi3B;
+            kernel = kernel.linux_latest_rockchip_unstable;
+            extraModules = [
+              noZFS
+              { boot.initrd.allowMissingModules = true; }
+            ];
+          };
           "OrangePi5B" = {
             uBoot = uBoot.uBootOrangePi5B;
-            kernel = kernel.linux_6_17_orangepi5b_stable;
+            kernel = kernel.linux_6_18_orangepi5b_stable;
             extraModules = [
               (brcm43752 system)
               noZFS
@@ -224,6 +227,8 @@
         dtOverlayQuartz64ASATA = import ./modules/dt-overlay/quartz64a-sata.nix;
         dtOverlayPCIeFix = import ./modules/dt-overlay/pcie-fix.nix;
         dtOrangePi5B = import ./modules/dt-overlay/rk3588s-orangepi5b.nix;
+        dtOverlayPineTab2 = import ./modules/dt-overlay/pinetab2.nix;
+        bes2600 = import ./modules/bes2600.nix;
       };
     }
     // inputs.utils.lib.eachDefaultSystem (
@@ -233,10 +238,10 @@
           kernel_linux_latest_rockchip_unstable = kernel.linux_latest_rockchip_unstable;
 
           kernel_linux_6_18_pinetab_stable = kernel.linux_6_18_pinetab_stable;
-          kernel_linux_6_19_pinetab_unstable = kernel.linux_6_19_pinetab_unstable;
+          kernel_linux_7_0_pinetab_unstable = kernel.linux_7_0_pinetab_unstable;
 
-          kernel_linux_6_17_orangepi5b_stable = kernel.linux_6_17_orangepi5b_stable;
-          kernel_linux_6_17_orangepi5b_unstable = kernel.linux_6_17_orangepi5b_unstable;
+          kernel_linux_6_18_orangepi5b_stable = kernel.linux_6_18_orangepi5b_stable;
+          kernel_linux_6_18_orangepi5b_unstable = kernel.linux_6_18_orangepi5b_unstable;
         };
         packages = (images system) // {
           uBootQuartz64A = uBoot.uBootQuartz64A;
@@ -252,6 +257,7 @@
           uBootSoQuartzBlade = uBoot.uBootSoQuartzBlade;
 
           uBootOrangePiCM4 = uBoot.uBootOrangePiCM4;
+          uBootOrangePi3B = uBoot.uBootOrangePi3B;
           uBootOrangePi5B = uBoot.uBootOrangePi5B;
 
           uBootRadxaCM3IO = uBoot.uBootRadxaCM3IO;
@@ -264,6 +270,7 @@
           uBootSige7 = uBoot.uBootSige7;
 
           bes2600 = bes2600Firmware;
+          bes2600Firmware = bes2600Firmware;
           brcm43456 = brcm43456wifiFirmware;
           brcm43752 = brcm43752pcieFirmware;
         };

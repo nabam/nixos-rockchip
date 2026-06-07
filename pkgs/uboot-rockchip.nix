@@ -42,8 +42,10 @@ let
         "CONFIG_BOOTM_EFI=y"
       ];
 
-      BL31 = BL31;
-      ROCKCHIP_TPL = ROCKCHIP_TPL;
+      env = {
+        BL31 = BL31;
+        ROCKCHIP_TPL = ROCKCHIP_TPL;
+      };
 
       extraMeta = {
         platforms = [ "aarch64-linux" ];
@@ -99,8 +101,10 @@ let
           sha256 = "5mLjKiRpfnLCNVnyNuxBcDmmXg8xwcki3mmLisS4YbU=";
         })
       ];
-      BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.43.elf");
-      ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin");
+      env = {
+        BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.43.elf");
+        ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin");
+      };
     };
   buildRK3588UBoot =
     defconfig:
@@ -115,12 +119,14 @@ let
     pkgs-stable.buildUBoot {
       inherit defconfig src;
       version = "v2025.01-1-ga79ebd4e16";
-      BL31 = "${pkgs-stable.armTrustedFirmwareRK3588}/bl31.elf";
-      ROCKCHIP_TPL = pkgs-stable.rkbin.TPL_RK3588;
       filesToInstall = [ "u-boot-rockchip.bin" ];
       extraPatches = [
         ./patches/u-boot/2025.01/0001-Add-config-for-the-orangepi-5b-board.patch
       ];
+      env = {
+        BL31 = "${pkgs-stable.armTrustedFirmwareRK3588}/bl31.elf";
+        ROCKCHIP_TPL = pkgs-stable.rkbin.TPL_RK3588;
+      };
       extraMeta = {
         platforms = [ "aarch64-linux" ];
         license = pkgs-stable.lib.licenses.unfreeRedistributableFirmware;
@@ -143,15 +149,6 @@ in
     spi = false;
   };
   uBootPineTab2 = buildUBoot rec {
-    # Pick 2025.07 for now since that's what the vop2 patchset
-    # is against
-    version = "v2025.07";
-    src = fetchFromGitHub {
-      owner = "u-boot";
-      repo = "u-boot";
-      tag = version;
-      sha256 = "sha256-X+JhVkDudkvQo08hGwAChOeMZZR+iunT9aU6tSAuMmg=";
-    };
     defconfig = "pinetab2-rk3566_defconfig";
     filesToInstall = [
       "u-boot-rockchip.bin"
@@ -166,8 +163,8 @@ in
       # https://lists.denx.de/pipermail/u-boot/2025-January/thread.html#577641
       (fetchurl {
         name = "rockchip-video-output-processor-2.patch";
-        url = "https://raw.githubusercontent.com/dreemurrs-embedded/danctnix-packages/d2ba844cb9fdcda092f54f87827f8705727ce261/pine64/uboot-pinetab2/vop2.patch";
-        hash = "sha256-m04GQUvovmo7EuMvHjvxALc+dcBnn9l4TClOspd5i0k=";
+        url = "https://raw.githubusercontent.com/dreemurrs-embedded/danctnix-packages/6d8f2ce32260e8f94fded5c3ec4b2f983a64db49/pine64/uboot-pinetab2/vop2.patch";
+        hash = "sha256-LTuhALreDCc6hSyc7N7Q2i0x/+bvkDdzQ62r45iZjc8=";
       })
     ];
     env = {
@@ -183,6 +180,7 @@ in
   uBootROCPCRK3399 = buildRK3399UBoot "roc-pc-rk3399_defconfig";
   uBootRock64 = buildRK3328UBoot "rock64-rk3328_defconfig";
   uBootOrangePiCM4 = buildRK3566UBoot { defconfig = "orangepi-3b-rk3566_defconfig"; };
+  uBootOrangePi3B = buildRK3566UBoot { defconfig = "orangepi-3b-rk3566_defconfig"; };
   uBootOrangePi5B = buildRK3588UBoot "orangepi-5b-rk3588s_defconfig";
   uBootRadxaCM3IO = buildRK3566UBoot {
     defconfig = "radxa-cm3-io-rk3566_defconfig";

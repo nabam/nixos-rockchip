@@ -41,12 +41,146 @@ let
     VIDEO_HANTRO_ROCKCHIP = yes;
   };
   pinetabKernelConfig = with lib.kernel; {
-    BES2600 = module;
-    BES2600_5GHZ_SUPPORT = yes;
-    BES2600_DEBUGFS = yes;
-
     DRM_PANEL_BOE_TH101MB31UIG002_28A = yes;
   };
+  pinetabKernelPatches = [
+    {
+      name = "Enable backlight in defconfig";
+      patch = ./backlight-7.0.patch;
+    }
+    {
+      name = "power: supply: rk817: Fix battery capacity sanity check calculation";
+      patch = (
+        pkgs.fetchpatch {
+          name = "rk817-sanity.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/065a04c34f2bea5bde99c79b759d9a7416bfe7f2.patch";
+          hash = "sha256-CU0rzv4M5dUEfCPBAxydhBRH4gY6EaAwiCvhQijP1E0=";
+        }
+      );
+    }
+
+    # The mmc-pwrseq change cannot be done in an overlay
+    {
+      name = "arm64: dts: rockchip: pinetab2: Add Bestechnic BES2600 device node";
+      patch = (
+        pkgs.fetchpatch {
+          name = "sdmmc1-pwrseq.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/93f677cdb83fd0e197056efa228da78c0fd8a576.patch";
+          hash = "sha256-bYR/QEB2mgrMW9FXp1/d9k2kWvAfmM3t4nLxcGOG/+Q=";
+        }
+      );
+    }
+    {
+      name = "usb: typec: husb311: Add HUSB311 TCPI driver";
+      patch = (
+        pkgs.fetchpatch {
+          name = "husb311.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/be6042fa9bda9cab4da6f35a40083be2c420043b.patch";
+          hash = "sha256-q3LcyGnyj6EkqVGvoz6qPz2nLOb3QJNIQxKuZjJIUzU=";
+        }
+      );
+    }
+    {
+      name = "usb: typec: typec-extcon: Add typec -> extcon bridge driver";
+      patch = (
+        pkgs.fetchpatch {
+          name = "typec-extcon.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/cbb637d5f28d43b665fbdb065f4fbd41d99b26b5.patch";
+          hash = "sha256-PZ9iztEHJZR1YFP/uCednNncGMqr94eEcaBvwe7gnfQ=";
+        }
+      );
+    }
+    {
+      name = "usb: typec: typec-extcon: Allow to force reset on each mux change";
+      patch = (
+        pkgs.fetchpatch {
+          name = "typec-extcon-reset.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/ba040cc6d03c480e2a0d456c8ffa70267f1e7fc9.patch";
+          hash = "sha256-IDElXsEk8hCz9H8wwkpppI5WC6iz0mjLNgJZSzrnle4=";
+        }
+      );
+    }
+    {
+      name = "phy: phy-rockchip-inno-usb2: Decrease delay between port init and charger detection";
+      patch = (
+        pkgs.fetchpatch {
+          name = "inno-usb2-delay.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/f49ea8937e24d70e55487ff9b01cd4e567436954.patch";
+          hash = "sha256-gUh0ECcJB++50uWTqygvPIsAWSDAAg4HTDPPsHVD0mo=";
+        }
+      );
+    }
+    {
+      name = "phy: rockchip-inno-usb2: More robust charger detection extcon updates";
+      patch = (
+        pkgs.fetchpatch {
+          name = "inno-usb2-extcon-updates.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/ba156be36961ff68f7dc324b12f32f999bf0d7aa.patch";
+          hash = "sha256-rAAvLpffxcPA8d3+QX5gCVp8grlqza4CdxGOa306PmI=";
+        }
+      );
+    }
+    {
+      name = "phy: rockchip: inno-usb2: Add support for RV1106/RV1103";
+      patch = (
+        pkgs.fetchpatch {
+          name = "inno-usb2-rv11036.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/a51393386eb02d204e52c11848a9dcc854fee955.patch";
+          hash = "sha256-ypRgJcgiHY94kDmZZGnJObtOWH6Sq1nKlxqL1Bg7jko=";
+        }
+      );
+    }
+    {
+      name = "phy: rockchip: inno-usb2: Add RK3568 PHY tuning";
+      patch = (
+        pkgs.fetchpatch {
+          name = "inno-usb2-rk3568-phy-tuning.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/5edf98f0ee96f79da90f5035e3aa9dac04b6ffe9.patch";
+          hash = "sha256-2roU/7vh46XDnGDTDTXL1ich6q0aL0UzImBN6H4sin4=";
+        }
+      );
+    }
+    {
+      name = "arm64: dts: rockchip: pinetab2: Change SD card speed to SDR50";
+      patch = (
+        pkgs.fetchpatch {
+          name = "sd-card-speed.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/1175e9059926724ccf363397611f6fb53925ce0e.patch";
+          hash = "sha256-0e8JQAJRj6hvdsjHqy9EZieVz1NypBGGpbYoZQSlF1c=";
+        }
+      );
+    }
+    {
+      name = "net: bluetooth: Add quirk for broken LE buffer size v2";
+      patch = (
+        pkgs.fetchpatch {
+          name = "bt-quirk-le-buffer.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/c3638c132135b290e40bb5303815af0d9b69803e.patch";
+          hash = "sha256-qOSGSkXMvT6MaZRSgjOPiFRLs/kbrRkEcRYWEpyQdI4=";
+        }
+      );
+    }
+    {
+      name = "drm/panel: boe-th101mb31ig002: Prepare the previous controller to LP-11";
+      patch = (
+        pkgs.fetchpatch {
+          name = "boe-th101mb31ig002-lp11.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/7398078b7d9fd557b4935c313f26581d3319060e.patch";
+          hash = "sha256-gA+QKzTTsd5L7eT/GRFmjlfKUIIajMgeTDWEUsX3Ayg=";
+        }
+      );
+    }
+    {
+      name = "drm/panel: boe-th101mb31ig002: Longer delay on sleep out mode";
+      patch = (
+        pkgs.fetchpatch {
+          name = "boe-th101mb31ig002-delay-on-sleep-outmode.patch";
+          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/120e2e838e3afa35d0159f8f3239e02f2b6c7822.patch";
+          hash = "sha256-gl7eO3pWakfxiJbborFSAs/Jo2O+o1JvIBdNcXtRgoY=";
+        }
+      );
+    }
+  ];
 in
 {
   linux_latest_rockchip_stable = pkgs-stable.linuxKernel.packagesFor (
@@ -83,35 +217,22 @@ in
       }
     );
 
-  linux_6_19_pinetab_unstable =
-    let
-      version = "6.19.10-danctnix1";
-    in
-    pkgs.linuxKernel.packagesFor (
-      pkgs.linuxKernel.kernels.linux_6_19.override {
-        argsOverride = {
-          src = pkgs.fetchFromGitea {
-            domain = "codeberg.org";
-            owner = "DanctNIX";
-            repo = "linux-pinetab2";
-            rev = "v${version}";
-            hash = "sha256-IlL06x1Hf/A1QYP9dhjYv1d6Dy65T2vZ2G+SdZ+qAgQ=";
-          };
-          inherit version;
-          modDirVersion = version;
-        };
-        kernelPatches = [
-          {
-            name = "Enable backlight in defconfig";
-            patch = ./backlight-6.19.patch;
-          }
-        ];
-        structuredExtraConfig = kernelConfig // pinetabKernelConfig;
-      }
-    );
+  linux_7_0_pinetab_stable = pkgs-stable.linuxKernel.packagesFor (
+    pkgs-stable.linuxKernel.kernels.linux_7_0.override {
+      kernelPatches = pinetabKernelPatches;
+      structuredExtraConfig = kernelConfig // pinetabKernelConfig;
+    }
+  );
 
-  linux_6_17_orangepi5b_stable = pkgs-stable.linuxKernel.packagesFor (
-    pkgs-stable.linuxKernel.kernels.linux_6_17.override {
+  linux_7_0_pinetab_unstable = pkgs.linuxKernel.packagesFor (
+    pkgs.linuxKernel.kernels.linux_7_0.override {
+      kernelPatches = pinetabKernelPatches;
+      structuredExtraConfig = kernelConfig // pinetabKernelConfig;
+    }
+  );
+
+  linux_6_18_orangepi5b_stable = pkgs-stable.linuxKernel.packagesFor (
+    pkgs-stable.linuxKernel.kernels.linux_6_18.override {
       structuredExtraConfig = kernelConfig;
       kernelPatches = [
         {
@@ -122,8 +243,8 @@ in
     }
   );
 
-  linux_6_17_orangepi5b_unstable = pkgs.linuxKernel.packagesFor (
-    pkgs.linuxKernel.kernels.linux_6_17.override {
+  linux_6_18_orangepi5b_unstable = pkgs.linuxKernel.packagesFor (
+    pkgs.linuxKernel.kernels.linux_6_18.override {
       structuredExtraConfig = kernelConfig;
       kernelPatches = [
         {

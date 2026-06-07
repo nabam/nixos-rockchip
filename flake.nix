@@ -107,7 +107,7 @@
           };
           "PineTab2" = {
             uBoot = uBoot.uBootPineTab2;
-            kernel = kernel.linux_7_2_pinetab_unstable;
+            kernel = kernel.linux_latest_pinetab_stable;
             extraModules = [
               noZFS
               self.nixosModules.dtOverlayPineTab2
@@ -250,10 +250,14 @@
           kernel_linux_latest_rockchip_stable = kernel.linux_latest_rockchip_stable;
           kernel_linux_latest_rockchip_unstable = kernel.linux_latest_rockchip_unstable;
 
+<<<<<<< HEAD
           kernel_linux_6_1_radxa_rk2312_stable = kernel.linux_6_1_radxa_rk2312_stable;
           kernel_linux_6_1_radxa_rk2312_unstable = kernel.linux_6_1_radxa_rk2312_unstable;
 
           kernel_linux_6_18_pinetab_stable = kernel.linux_6_18_pinetab_stable;
+=======
+          kernel_linux_latest_pinetab_stable = kernel.linux_latest_pinetab_stable;
+>>>>>>> c5000ad (Cleanup)
           kernel_linux_latest_pinetab_unstable = kernel.linux_latest_pinetab_unstable;
           kernel_linux_testing_pinetab_unstable = kernel.linux_testing_pinetab_unstable;
 

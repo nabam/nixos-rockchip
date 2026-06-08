@@ -80,7 +80,7 @@ Applies device tree overlay for OrangePI5B
 | SoQuartz Blade       | SoQuartzBlade   | Tested & Works   |
 | PineTab2             | PineTab2        | Tested & Works   |
 | [Rock64][]           | Rock64          | Untested         |
-| [RockPro64][]        | RockPro64       | Untested         |
+| [RockPro64][]        | RockPro64       | Tested & Works   |
 | [ROC PC RK3399][]    | ROCPCRK3399     | Untested         |
 | [Pinebook Pro][]     | PinebookPro     | Untested         |
 | Orange Pi CM4        | OrangePiCM4     | Untested         |

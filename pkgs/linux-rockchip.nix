@@ -51,18 +51,6 @@ let
         }
       );
     }
-
-    # The mmc-pwrseq change cannot be done in an overlay
-    {
-      name = "arm64: dts: rockchip: pinetab2: Add Bestechnic BES2600 device node";
-      patch = (
-        pkgs.fetchpatch {
-          name = "sdmmc1-pwrseq.patch";
-          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/93f677cdb83fd0e197056efa228da78c0fd8a576.patch";
-          hash = "sha256-bYR/QEB2mgrMW9FXp1/d9k2kWvAfmM3t4nLxcGOG/+Q=";
-        }
-      );
-    }
     {
       name = "usb: typec: typec-extcon: Add typec -> extcon bridge driver";
       patch = (
@@ -120,16 +108,6 @@ let
           name = "inno-usb2-rk3568-phy-tuning.patch";
           url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/5edf98f0ee96f79da90f5035e3aa9dac04b6ffe9.patch";
           hash = "sha256-2roU/7vh46XDnGDTDTXL1ich6q0aL0UzImBN6H4sin4=";
-        }
-      );
-    }
-    {
-      name = "arm64: dts: rockchip: pinetab2: Change SD card speed to SDR50";
-      patch = (
-        pkgs.fetchpatch {
-          name = "sd-card-speed.patch";
-          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/1175e9059926724ccf363397611f6fb53925ce0e.patch";
-          hash = "sha256-0e8JQAJRj6hvdsjHqy9EZieVz1NypBGGpbYoZQSlF1c=";
         }
       );
     }

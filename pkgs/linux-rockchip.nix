@@ -52,18 +52,6 @@ let
         }
       );
     }
-
-    # The mmc-pwrseq change cannot be done in an overlay
-    {
-      name = "arm64: dts: rockchip: pinetab2: Add Bestechnic BES2600 device node";
-      patch = (
-        pkgs.fetchpatch {
-          name = "sdmmc1-pwrseq.patch";
-          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/93f677cdb83fd0e197056efa228da78c0fd8a576.patch";
-          hash = "sha256-bYR/QEB2mgrMW9FXp1/d9k2kWvAfmM3t4nLxcGOG/+Q=";
-        }
-      );
-    }
     {
       name = "usb: typec: typec-extcon: Add typec -> extcon bridge driver";
       patch = (
@@ -106,16 +94,6 @@ let
     }
     # "Add support for RV1106/RV1103" and "Add RK3568 PHY tuning" are
     # upstream in 7.2; reapplying them double-defines phy_base and friends.
-    {
-      name = "arm64: dts: rockchip: pinetab2: Change SD card speed to SDR50";
-      patch = (
-        pkgs.fetchpatch {
-          name = "sd-card-speed.patch";
-          url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/1175e9059926724ccf363397611f6fb53925ce0e.patch";
-          hash = "sha256-0e8JQAJRj6hvdsjHqy9EZieVz1NypBGGpbYoZQSlF1c=";
-        }
-      );
-    }
     {
       name = "net: bluetooth: Add quirk for broken LE buffer size v2";
       patch = (

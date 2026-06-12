@@ -212,6 +212,10 @@ in
             name = "Enable backlight in defconfig";
             patch = ./backlight.patch;
           }
+          {
+            name = "Fix rust lifetime specification";
+            patch = ./patches/linux/6.18/rust-lifetime.patch;
+          }
         ];
         structuredExtraConfig = kernelConfig // pinetabKernelConfig;
       }

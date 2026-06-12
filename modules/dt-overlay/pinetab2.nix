@@ -24,21 +24,15 @@
         #include <dt-bindings/usb/pd.h>
         #include <dt-bindings/clock/rk3568-cru.h>
 
-        /* I don't fully understand why this needs to be split up
-           into two nodes and one should use the '&{/}' syntax, but
-           by trial and error this is the variation that works
-           (typec-extcon is created and bes2600 is correctly linked).
-           To review.
-        */
         / {
           compatible = "pine64,pinetab2-v2.0";
-
-          aliases {
-            ethernet0 = &bes2600;
-          };
         };
 
         &{/} {
+          aliases {
+            ethernet0 = "/mmc@fe2c0000/bes2600@0";
+          };
+
           typec_extcon_bridge: typec-extcon {
             compatible = "linux,typec-extcon-bridge";
             usb-role-switch;

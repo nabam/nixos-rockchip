@@ -141,6 +141,22 @@ let
         }
       );
     }
+    {
+      name = "drm/rockchip: vop2: Add clock resets support";
+      patch = pkgs.fetchpatch {
+        name = "vop2-clock-reset-support.patch";
+        url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/29359ea92209748327987bf95f08cc6c50ac1b76.patch";
+        hash = "sha256-wx9MvMS1xeb6dQcnUvSbbsv7K1Sm2GneFehROLeaWp8=";
+      };
+    }
+    {
+      name = "drm/rockchip: vop2: Add core reset support";
+      patch = pkgs.fetchpatch {
+        name = "vop2-core-reset-support.patch";
+        url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/99bbc51f54a8867600d080d14a8c90ad87408995.patch";
+        hash = "sha256-vihEvgR7NiNTXttSACJtZ/DjYVu//4xMjbemVssfb+8=";
+      };
+    }
   ];
 in
 {

@@ -22,6 +22,7 @@
         #include <dt-bindings/gpio/gpio.h>
         #include <dt-bindings/interrupt-controller/irq.h>
         #include <dt-bindings/usb/pd.h>
+        #include <dt-bindings/clock/rk3568-cru.h>
 
         /* I don't fully understand why this needs to be split up
            into two nodes and one should use the '&{/}' syntax, but
@@ -212,6 +213,23 @@
 
         &usb2phy0 {
           extcon = <&typec_extcon_bridge>;
+        };
+
+        /*
+         * arm64: dts: rockchip: rk356x: Add VOP2 resets
+         * https://codeberg.org/DanctNIX/linux-pinetab2/commit/c9b40fef9d6ef0f01c5c6b727b25ff1e73c00922
+         */
+        &vop {
+          resets = <&cru SRST_A_VOP>,
+                   <&cru SRST_H_VOP>,
+                   <&cru SRST_VOP0>,
+                   <&cru SRST_VOP1>,
+                   <&cru SRST_VOP2>;
+          reset-names = "aclk",
+                        "hclk",
+                        "dclk_vp0",
+                        "dclk_vp1",
+                        "dclk_vp2";
         };
       '';
     }

@@ -85,6 +85,7 @@ Applies device tree overlay for OrangePI5B
 | [Pinebook Pro][]     | PinebookPro     | Untested         |
 | Orange Pi CM4        | OrangePiCM4     | Untested         |
 | Orange Pi 5B         | OrangePi5B      | Needs New Kernel |
+| Radxa Rock 2         | RadxaRock2      | Tested & Works   |
 | Radxa CM3/CM3 I/O    | RadxaCM3IO      | Untested         |
 | [Radxa Rock 4][]     | RadxaRock4      | Tested & Works   |
 | [Radxa Rock4 SE][]   | RadxaRock4SE    | Tested & Works   |

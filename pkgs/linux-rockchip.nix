@@ -2,6 +2,7 @@
   pkgs,
   pkgs-stable,
   lib,
+  fetchFromGitHub,
 }:
 
 let
@@ -181,6 +182,25 @@ let
       );
     }
   ];
+  radxaRk2312BuildArgs = {
+    version = "6.1.43-26-rk2312";
+    modDirVersion = "6.1.43";
+    src = fetchFromGitHub {
+      owner = "radxa";
+      repo = "kernel";
+      # branch linux-6.1-stan-rkr1
+      rev = "ba75427f384faf9e1246fd2aeaacffae115ba88d";
+      hash = "sha256-PujHYvCuPwCMk9Yvou4Z2z51eJ6eyEeqpEs6ZYvQ3o0=";
+    };
+    extraMakeFlags = [
+      "KCFLAGS+=-Wno-error=enum-int-mismatch"
+      "KCFLAGS+=-Wno-error=calloc-transposed-args"
+      "KCFLAGS+=-Wno-error=incompatible-pointer-types"
+    ];
+    defconfig = "rockchip_linux_defconfig";
+    ignoreConfigErrors = true;
+    autoModules = false;
+  };
 in
 {
   linux_latest_rockchip_stable = pkgs-stable.linuxKernel.packagesFor (
@@ -188,6 +208,13 @@ in
   );
   linux_latest_rockchip_unstable = pkgs.linuxKernel.packagesFor (
     pkgs.linuxKernel.kernels.linux_latest.override { structuredExtraConfig = kernelConfig; }
+  );
+
+  linux_6_1_radxa_rk2312_stable = pkgs-stable.linuxKernel.packagesFor (
+    pkgs-stable.buildLinux radxaRk2312BuildArgs
+  );
+  linux_6_1_radxa_rk2312_unstable = pkgs.linuxKernel.packagesFor (
+    pkgs.buildLinux radxaRk2312BuildArgs
   );
 
   linux_6_18_pinetab_stable =

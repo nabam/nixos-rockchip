@@ -139,7 +139,7 @@
           };
           "OrangePiCM4" = {
             uBoot = uBoot.uBootOrangePiCM4;
-            kernel = kernel.linux_6_17_rockchip_stable;
+            kernel = kernel.linux_latest_rockchip_stable;
             extraModules = [ noZFS ];
           };
           "OrangePi3B" = {

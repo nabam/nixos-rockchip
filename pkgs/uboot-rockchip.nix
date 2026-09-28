@@ -32,6 +32,21 @@ let
         "u-boot-rockchip.bin"
         "u-boot-rockchip-spi.bin"
       ];
+      nativeBuildInputs = [
+        buildPackages.bc
+        buildPackages.bison
+        buildPackages.flex
+        buildPackages.openssl
+        buildPackages.installShellFiles
+        buildPackages.perl
+        buildPackages.which
+        buildPackages.swig
+        (buildPackages.python3.withPackages (ps: [
+          ps.setuptools
+          ps.libfdt
+          ps.pyelftools
+        ]))
+      ];
 
       extraPatches = [ ./ramdisk_addr_r.patch ] ++ extraPatches;
       extraConfiG = [
@@ -86,6 +101,21 @@ let
     in
     buildUBoot {
       inherit defconfig src version;
+      nativeBuildInputs = [
+        buildPackages.bc
+        buildPackages.bison
+        buildPackages.flex
+        buildPackages.openssl
+        buildPackages.installShellFiles
+        buildPackages.perl
+        buildPackages.which
+        buildPackages.swig
+        (buildPackages.python3.withPackages (ps: [
+          ps.setuptools
+          ps.libfdt
+          ps.pyelftools
+        ]))
+      ];
       filesToInstall =
         if spi then
           [
@@ -95,6 +125,7 @@ let
         else
           [ "u-boot-rockchip.bin" ];
       extraPatches = [
+        ./binman-resources.patch
         (fetchpatch {
           name = "quartz64.patch";
           url = "https://github.com/Kwiboo/u-boot-rockchip/compare/25049ad560826f7dc1c4740883b0016014a59789...830cfcfdf54a1f08a3ca7fc17e69b4bc18cece50.diff";

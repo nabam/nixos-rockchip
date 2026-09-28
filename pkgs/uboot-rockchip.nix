@@ -64,6 +64,31 @@ let
       inherit defconfig;
       BL31 = "${pkgs.armTrustedFirmwareRK3399}/bl31.elf";
     };
+  buildRK3528UBoot =
+    defconfig:
+    let
+      rkbin = pkgs-stable.fetchFromGitHub {
+        owner = "rockchip-linux";
+        repo = "rkbin";
+        rev = "74213af1e952c4683d2e35952507133b61394862";
+        sha256 = "gNCZwJd9pjisk6vmvtRNyGSBFfAYOADTa5Nd6Zk+qEk=";
+      };
+    in
+    pkgs-stable.buildUBoot {
+      inherit defconfig;
+
+      filesToInstall = [ "u-boot-rockchip.bin" ];
+
+      env = {
+        BL31 = (rkbin + "/bin/rk35/rk3528_bl31_v1.20.elf");
+        ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3528_ddr_1056MHz_v1.11.bin");
+      };
+
+      extraMeta = {
+        platforms = [ "aarch64-linux" ];
+        license = lib.licenses.unfreeRedistributableFirmware;
+      };
+    };
   buildRK3566UBoot =
     {
       defconfig,
@@ -182,6 +207,7 @@ in
   uBootOrangePiCM4 = buildRK3566UBoot { defconfig = "orangepi-3b-rk3566_defconfig"; };
   uBootOrangePi3B = buildRK3566UBoot { defconfig = "orangepi-3b-rk3566_defconfig"; };
   uBootOrangePi5B = buildRK3588UBoot "orangepi-5b-rk3588s_defconfig";
+  uBootRadxaRock2 = buildRK3528UBoot "rock-2-rk3528_defconfig";
   uBootRadxaCM3IO = buildRK3566UBoot {
     defconfig = "radxa-cm3-io-rk3566_defconfig";
     spi = false;

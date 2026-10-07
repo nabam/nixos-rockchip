@@ -238,7 +238,6 @@
           kernel_linux_latest_rockchip_unstable = kernel.linux_latest_rockchip_unstable;
 
           kernel_linux_latest_pinetab_stable = kernel.linux_latest_pinetab_stable;
-          kernel_linux_latest_pinetab_unstable = kernel.linux_latest_pinetab_unstable;
           kernel_linux_testing_pinetab_unstable = kernel.linux_testing_pinetab_unstable;
 
           kernel_linux_6_18_orangepi5b_stable = kernel.linux_6_18_orangepi5b_stable;

@@ -22,43 +22,74 @@
         #include <dt-bindings/gpio/gpio.h>
         #include <dt-bindings/interrupt-controller/irq.h>
         #include <dt-bindings/usb/pd.h>
+        #include <dt-bindings/clock/rk3568-cru.h>
 
-        /* I don't fully understand why this needs to be split up
-           into two nodes and one should use the '&{/}' syntax, but
-           by trial and error this is the variation that works
-           (typec-extcon is created and bes2600 is correctly linked).
-           To review.
-        */
         / {
           compatible = "pine64,pinetab2-v2.0";
-
-          aliases {
-            ethernet0 = &bes2600;
-          };
         };
 
         &{/} {
+          aliases {
+            ethernet0 = "/mmc@fe2c0000/bes2600@0";
+          };
+
           typec_extcon_bridge: typec-extcon {
             compatible = "linux,typec-extcon-bridge";
             usb-role-switch;
             mode-switch;
             orientation-switch;
           };
+
+          sdio_pwrkey: sdio-pwrkey {
+            compatible = "mmc-pwrseq-simple";
+            clocks = <&rk817 1>;
+            clock-names = "ext_clock";
+            pinctrl-names = "default";
+            pinctrl-0 = <&wifi_pwrkey>;
+            reset-gpios = <&gpio3 RK_PD3 GPIO_ACTIVE_HIGH>;
+            post-power-on-delay-ms = <500>;
+          };
+
+          sdio_pwrseq: sdio-pwrseq {
+            compatible = "mmc-pwrseq-simple";
+            clocks = <&rk817 1>;
+            clock-names = "ext_clock";
+            pinctrl-names = "default";
+            pinctrl-0 = <&wifi_reset>;
+            reset-gpios = <&gpio3 RK_PD2 GPIO_ACTIVE_LOW>;
+            post-power-on-delay-ms = <200>;
+          };
+
+          vcc_wl: vcc_wl {
+            compatible = "regulator-fixed";
+            pinctrl-names = "default";
+            pinctrl-0 = <&wifi_pwren>;
+            regulator-name = "vcc_wl";
+            regulator-min-microvolt = <3300000>;
+            regulator-max-microvolt = <3300000>;
+            vin-supply = <&vcc3v3_sys>;
+
+            // note enable-active-high is not valid for v0.1, only v2.0
+            enable-active-high;
+            gpio = <&gpio0 RK_PA0 GPIO_ACTIVE_HIGH>;
+
+            regulator-state-mem {
+              regulator-off-in-suspend;
+            };
+          };
         };
 
         &sdmmc1 {
+          vmmc-supply = <&vcc_wl>;
+          #address-cells = <1>;
+          #size-cells = <0>;
+          mmc-pwrseq = <&sdio_pwrseq &sdio_pwrkey>;
           bes2600: bes2600@0 {
             compatible = "bestechnic,bes2600-sdio";
             reg = <0>;
             wakeup-gpios = <&gpio0 RK_PB7 GPIO_ACTIVE_LOW>;
             host-wakeup-gpios = <&gpio0 RK_PC4 GPIO_ACTIVE_HIGH>;
           };
-        };
-
-        &vcc_wl {
-          // enable-active-high is not valid for v0.1
-          enable-active-high;
-          gpio = <&gpio0 RK_PA0 GPIO_ACTIVE_HIGH>;
         };
 
         &rk817 {
@@ -72,7 +103,7 @@
 
         &i2c0 {
           usbc0: usb-typec@4e {
-            compatible = "hynetek,husb311";
+            compatible = "hynetek,husb311", "richtek,rt1711h";
             reg = <0x4e>;
             interrupt-parent = <&gpio0>;
             interrupts = <RK_PC5 IRQ_TYPE_LEVEL_LOW>;
@@ -122,6 +153,24 @@
               rockchip,pins = <0 RK_PC5 RK_FUNC_GPIO &pcfg_pull_up>;
             };
           };
+
+          wifi {
+            wifi_pwrkey: wifi-pwrkey {
+              rockchip,pins = <3 RK_PD3 RK_FUNC_GPIO &pcfg_pull_none>;
+            };
+
+            wifi_pwren: wifi-pwren {
+              rockchip,pins = <0 RK_PA0 RK_FUNC_GPIO &pcfg_pull_none>;
+            };
+
+            wifi_reg_on_h: wifi-reg-on-h {
+              rockchip,pins = <0 RK_PC0 RK_FUNC_GPIO &pcfg_pull_none>;
+            };
+
+            wifi_reset: wifi-reset {
+              rockchip,pins = <3 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
+            };
+          };
         };
 
         &uart1 {
@@ -159,7 +208,64 @@
         &usb2phy0 {
           extcon = <&typec_extcon_bridge>;
         };
+
+        /*
+         * arm64: dts: rockchip: rk356x: Add VOP2 resets
+         * https://codeberg.org/DanctNIX/linux-pinetab2/commit/c9b40fef9d6ef0f01c5c6b727b25ff1e73c00922
+         */
+        &vop {
+          resets = <&cru SRST_A_VOP>,
+                   <&cru SRST_H_VOP>,
+                   <&cru SRST_VOP0>,
+                   <&cru SRST_VOP1>,
+                   <&cru SRST_VOP2>;
+          reset-names = "aclk",
+                        "hclk",
+                        "dclk_vp0",
+                        "dclk_vp1",
+                        "dclk_vp2";
+        };
       '';
     }
   ];
+
+  hardware.deviceTree.dtbSource =
+    let
+      patchPineTabDtb =
+        pkgs.writers.writePython3 "patch-pinetab2-dtb.py"
+          {
+            libraries = [ pkgs.python3Packages.libfdt ];
+          }
+          ''
+            import sys
+            import libfdt
+
+            with open(sys.argv[1], "rb") as f:
+                fdt = libfdt.Fdt(bytearray(f.read()))
+
+            fdt.resize(fdt.totalsize() + 256)
+
+            # sdmmc0: cap SD card UHS at SDR50
+            # like in 'arm64: dts: rockchip: pinetab2: Change SD card speed to SDR50'
+            sd = fdt.path_offset("/mmc@fe2b0000")
+            fdt.delprop(sd, "sd-uhs-sdr104")
+            fdt.setprop(sd, "sd-uhs-sdr50", b"")
+
+            # sdmmc1: drop the static regulator supply from SDIO (wifi)
+            # like in 'arm64: dts: rockchip: pinetab2: Add Bestechnic BES2600 device node'
+            sdio = fdt.path_offset("/mmc@fe2c0000")
+            fdt.delprop(sdio, "vmmc-supply")
+
+            fdt.pack()
+
+            with open(sys.argv[1], "wb") as f:
+                f.write(fdt.as_bytearray())
+          '';
+    in
+    pkgs.runCommand "pinetab2-patch-dtbs" { } ''
+      cp -r ${config.boot.kernelPackages.kernel}/dtbs $out
+      chmod -R u+w $out
+      ${patchPineTabDtb} $out/rockchip/rk3566-pinetab2-v2.0.dtb
+    '';
+
 }

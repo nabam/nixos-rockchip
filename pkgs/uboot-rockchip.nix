@@ -171,7 +171,7 @@ in
       # Would be nicer to build from source, but
       # "${pkgs.armTrustedFirmwareRK3568}/bl31.elf"
       # doesn't seem to enable the GPU clock, so rkbin it is:
-      BL31 = (pkgs.rkbin + "/bin/rk35/rk3568_bl31_v1.45.elf");
+      BL31 = (pkgs.rkbin + "/bin/rk35/rk3568_bl31_v1.46.elf");
       ROCKCHIP_TPL = pkgs.rkbin.TPL_RK3568;
     };
   };

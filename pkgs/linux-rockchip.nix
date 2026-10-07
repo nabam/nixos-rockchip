@@ -160,26 +160,6 @@ in
             }
           );
         }
-        {
-          name = "phy: rockchip: inno-usb2: Add support for RV1106/RV1103";
-          patch = (
-            pkgs.fetchpatch {
-              name = "inno-usb2-rv11036.patch";
-              url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/a51393386eb02d204e52c11848a9dcc854fee955.patch";
-              hash = "sha256-ypRgJcgiHY94kDmZZGnJObtOWH6Sq1nKlxqL1Bg7jko=";
-            }
-          );
-        }
-        {
-          name = "phy: rockchip: inno-usb2: Add RK3568 PHY tuning";
-          patch = (
-            pkgs.fetchpatch {
-              name = "inno-usb2-rk3568-phy-tuning.patch";
-              url = "https://codeberg.org/DanctNIX/linux-pinetab2/commit/5edf98f0ee96f79da90f5035e3aa9dac04b6ffe9.patch";
-              hash = "sha256-2roU/7vh46XDnGDTDTXL1ich6q0aL0UzImBN6H4sin4=";
-            }
-          );
-        }
       ];
       structuredExtraConfig = kernelConfig;
     }

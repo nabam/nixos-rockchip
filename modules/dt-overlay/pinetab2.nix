@@ -162,11 +162,11 @@
             wifi_pwren: wifi-pwren {
               rockchip,pins = <0 RK_PA0 RK_FUNC_GPIO &pcfg_pull_none>;
             };
-  
+
             wifi_reg_on_h: wifi-reg-on-h {
               rockchip,pins = <0 RK_PC0 RK_FUNC_GPIO &pcfg_pull_none>;
             };
-  
+
             wifi_reset: wifi-reset {
               rockchip,pins = <3 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
             };
@@ -231,38 +231,41 @@
 
   hardware.deviceTree.dtbSource =
     let
-      patchPineTabDtb = pkgs.writers.writePython3 "patch-pinetab2-dtb.py" {
-        libraries = [ pkgs.python3Packages.libfdt ];
-      } ''
-        import sys
-        import libfdt
+      patchPineTabDtb =
+        pkgs.writers.writePython3 "patch-pinetab2-dtb.py"
+          {
+            libraries = [ pkgs.python3Packages.libfdt ];
+          }
+          ''
+            import sys
+            import libfdt
 
-        with open(sys.argv[1], "rb") as f:
-            fdt = libfdt.Fdt(bytearray(f.read()))
+            with open(sys.argv[1], "rb") as f:
+                fdt = libfdt.Fdt(bytearray(f.read()))
 
-        fdt.resize(fdt.totalsize() + 256)
+            fdt.resize(fdt.totalsize() + 256)
 
-        # sdmmc0: cap SD card UHS at SDR50
-        # like in 'arm64: dts: rockchip: pinetab2: Change SD card speed to SDR50'
-        sd = fdt.path_offset("/mmc@fe2b0000")
-        fdt.delprop(sd, "sd-uhs-sdr104")
-        fdt.setprop(sd, "sd-uhs-sdr50", b"")
+            # sdmmc0: cap SD card UHS at SDR50
+            # like in 'arm64: dts: rockchip: pinetab2: Change SD card speed to SDR50'
+            sd = fdt.path_offset("/mmc@fe2b0000")
+            fdt.delprop(sd, "sd-uhs-sdr104")
+            fdt.setprop(sd, "sd-uhs-sdr50", b"")
 
-        # sdmmc1: drop the static regulator supply from SDIO (wifi)
-        # like in 'arm64: dts: rockchip: pinetab2: Add Bestechnic BES2600 device node'
-        sdio = fdt.path_offset("/mmc@fe2c0000")
-        fdt.delprop(sdio, "vmmc-supply")
+            # sdmmc1: drop the static regulator supply from SDIO (wifi)
+            # like in 'arm64: dts: rockchip: pinetab2: Add Bestechnic BES2600 device node'
+            sdio = fdt.path_offset("/mmc@fe2c0000")
+            fdt.delprop(sdio, "vmmc-supply")
 
-        fdt.pack()
+            fdt.pack()
 
-        with open(sys.argv[1], "wb") as f:
-            f.write(fdt.as_bytearray())
-      '';
+            with open(sys.argv[1], "wb") as f:
+                f.write(fdt.as_bytearray())
+          '';
     in
-      pkgs.runCommand "pinetab2-patch-dtbs" { } ''
-        cp -r ${config.boot.kernelPackages.kernel}/dtbs $out
-        chmod -R u+w $out
-        ${patchPineTabDtb} $out/rockchip/rk3566-pinetab2-v2.0.dtb
-      '';
+    pkgs.runCommand "pinetab2-patch-dtbs" { } ''
+      cp -r ${config.boot.kernelPackages.kernel}/dtbs $out
+      chmod -R u+w $out
+      ${patchPineTabDtb} $out/rockchip/rk3566-pinetab2-v2.0.dtb
+    '';
 
 }

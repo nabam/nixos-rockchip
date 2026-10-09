@@ -159,6 +159,14 @@
               self.nixosModules.dtOrangePi5B
             ];
           };
+          "RadxaRock2" = {
+            uBoot = uBoot.uBootRadxaRock2;
+            kernel = kernel.linux_6_1_radxa_rk2312_stable;
+            extraModules = [
+              noZFS
+              self.nixosModules.radxaRk2312DisableModules
+            ];
+          };
           "RadxaCM3IO" = {
             uBoot = uBoot.uBootRadxaCM3IO;
             kernel = kernel.linux_latest_rockchip_stable;
@@ -222,12 +230,14 @@
     {
       nixosModules = {
         inherit noZFS;
+        radxaRk2312DisableModules = import ./modules/radxa-rk2312-disable-modules.nix;
         sdImageRockchipInstaller = import ./modules/sd-card/sd-image-rockchip-installer.nix;
         sdImageRockchip = import ./modules/sd-card/sd-image-rockchip.nix;
         dtOverlayQuartz64ASATA = import ./modules/dt-overlay/quartz64a-sata.nix;
         dtOverlayPCIeFix = import ./modules/dt-overlay/pcie-fix.nix;
         dtOrangePi5B = import ./modules/dt-overlay/rk3588s-orangepi5b.nix;
         dtOverlayPineTab2 = import ./modules/dt-overlay/pinetab2.nix;
+        dtOverlayRock2AEnablePCIe = import ./modules/dt-overlay/rock-2a-enable-pcie.nix;
         bes2600 = import ./modules/bes2600.nix;
       };
     }
@@ -236,6 +246,9 @@
         legacyPackages = {
           kernel_linux_latest_rockchip_stable = kernel.linux_latest_rockchip_stable;
           kernel_linux_latest_rockchip_unstable = kernel.linux_latest_rockchip_unstable;
+
+          kernel_linux_6_1_radxa_rk2312_stable = kernel.linux_6_1_radxa_rk2312_stable;
+          kernel_linux_6_1_radxa_rk2312_unstable = kernel.linux_6_1_radxa_rk2312_unstable;
 
           kernel_linux_6_18_pinetab_stable = kernel.linux_6_18_pinetab_stable;
           kernel_linux_7_0_pinetab_unstable = kernel.linux_7_0_pinetab_unstable;
@@ -260,6 +273,7 @@
           uBootOrangePi3B = uBoot.uBootOrangePi3B;
           uBootOrangePi5B = uBoot.uBootOrangePi5B;
 
+          uBootRadxaRock2 = uBoot.uBootRadxaRock2;
           uBootRadxaCM3IO = uBoot.uBootRadxaCM3IO;
           uBootRadxaRock4 = uBoot.uBootRadxaRock4;
           uBootRadxaRock4SE = uBoot.uBootRadxaRock4SE;

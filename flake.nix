@@ -139,8 +139,11 @@
           };
           "OrangePiCM4" = {
             uBoot = uBoot.uBootOrangePiCM4;
-            kernel = kernel.linux_6_17_rockchip_stable;
-            extraModules = [ noZFS ];
+            kernel = kernel.linux_latest_rockchip_stable;
+            extraModules = [
+              noZFS
+              { hardware.deviceTree.name = "rockchip/rk3566-orangepi-3b-v2.1.dtb"; }
+            ];
           };
           "OrangePi3B" = {
             uBoot = uBoot.uBootOrangePi3B;

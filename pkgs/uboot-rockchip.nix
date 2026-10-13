@@ -101,6 +101,14 @@ let
           sha256 = "5mLjKiRpfnLCNVnyNuxBcDmmXg8xwcki3mmLisS4YbU=";
         })
       ];
+      # The default postPatch assumes dts/upstream/Makefile which doesn't
+      # exist in u-boot v2024.04 pinned here. Keep the dtc 1.8 workaround
+      # for scripts/Makefile.lib only.
+      postPatch = ''
+        patchShebangs tools
+        patchShebangs scripts
+        substituteInPlace scripts/Makefile.lib --replace-fail -Wno-graph_child_address -Eno-node_name_not_empty
+      '';
       env = {
         BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.43.elf");
         ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin");

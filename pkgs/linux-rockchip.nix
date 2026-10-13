@@ -221,15 +221,15 @@ in
       }
     );
 
-  linux_7_0_pinetab_stable = pkgs-stable.linuxKernel.packagesFor (
-    pkgs-stable.linuxKernel.kernels.linux_7_0.override {
+  linux_7_2_pinetab_stable = pkgs-stable.linuxKernel.packagesFor (
+    pkgs-stable.linuxKernel.kernels.linux_7_2.override {
       kernelPatches = pinetabKernelPatches;
       structuredExtraConfig = kernelConfig // pinetabKernelConfig;
     }
   );
 
-  linux_7_0_pinetab_unstable = pkgs.linuxKernel.packagesFor (
-    pkgs.linuxKernel.kernels.linux_7_0.override {
+  linux_7_2_pinetab_unstable = pkgs.linuxKernel.packagesFor (
+    pkgs.linuxKernel.kernels.linux_7_2.override {
       kernelPatches = pinetabKernelPatches;
       structuredExtraConfig = kernelConfig // pinetabKernelConfig;
     }

@@ -125,7 +125,18 @@ let
           url = "https://github.com/Kwiboo/u-boot-rockchip/compare/25049ad560826f7dc1c4740883b0016014a59789...830cfcfdf54a1f08a3ca7fc17e69b4bc18cece50.diff";
           sha256 = "5mLjKiRpfnLCNVnyNuxBcDmmXg8xwcki3mmLisS4YbU=";
         })
+        # binman in v2024.04 imports pkg_resources, which newer setuptools
+        # no longer ships. Backport of upstream 538719cb6a77.
+        ./patches/u-boot/2024.04/binman-importlib.patch
       ];
+      # The default postPatch assumes dts/upstream/Makefile which doesn't
+      # exist in u-boot v2024.04 pinned here. Keep the dtc 1.8 workaround
+      # for scripts/Makefile.lib only.
+      postPatch = ''
+        patchShebangs tools
+        patchShebangs scripts
+        substituteInPlace scripts/Makefile.lib --replace-fail -Wno-graph_child_address -Eno-node_name_not_empty
+      '';
       env = {
         BL31 = (rkbin + "/bin/rk35/rk3568_bl31_v1.43.elf");
         ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin");
@@ -196,7 +207,7 @@ in
       # Would be nicer to build from source, but
       # "${pkgs.armTrustedFirmwareRK3568}/bl31.elf"
       # doesn't seem to enable the GPU clock, so rkbin it is:
-      BL31 = (pkgs.rkbin + "/bin/rk35/rk3568_bl31_v1.45.elf");
+      BL31 = (pkgs.rkbin + "/bin/rk35/rk3568_bl31_v1.46.elf");
       ROCKCHIP_TPL = pkgs.rkbin.TPL_RK3568;
     };
   };

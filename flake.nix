@@ -107,7 +107,7 @@
           };
           "PineTab2" = {
             uBoot = uBoot.uBootPineTab2;
-            kernel = kernel.linux_7_0_pinetab_unstable;
+            kernel = kernel.linux_7_2_pinetab_unstable;
             extraModules = [
               noZFS
               self.nixosModules.dtOverlayPineTab2
@@ -254,7 +254,7 @@
           kernel_linux_6_1_radxa_rk2312_unstable = kernel.linux_6_1_radxa_rk2312_unstable;
 
           kernel_linux_6_18_pinetab_stable = kernel.linux_6_18_pinetab_stable;
-          kernel_linux_7_0_pinetab_unstable = kernel.linux_7_0_pinetab_unstable;
+          kernel_linux_7_2_pinetab_unstable = kernel.linux_7_2_pinetab_unstable;
 
           kernel_linux_6_18_orangepi5b_stable = kernel.linux_6_18_orangepi5b_stable;
           kernel_linux_6_18_orangepi5b_unstable = kernel.linux_6_18_orangepi5b_unstable;

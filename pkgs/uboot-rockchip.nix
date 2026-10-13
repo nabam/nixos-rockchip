@@ -100,6 +100,9 @@ let
           url = "https://github.com/Kwiboo/u-boot-rockchip/compare/25049ad560826f7dc1c4740883b0016014a59789...830cfcfdf54a1f08a3ca7fc17e69b4bc18cece50.diff";
           sha256 = "5mLjKiRpfnLCNVnyNuxBcDmmXg8xwcki3mmLisS4YbU=";
         })
+        # binman in v2024.04 imports pkg_resources, which newer setuptools
+        # no longer ships. Backport of upstream 538719cb6a77.
+        ./patches/u-boot/2024.04/binman-importlib.patch
       ];
       # The default postPatch assumes dts/upstream/Makefile which doesn't
       # exist in u-boot v2024.04 pinned here. Keep the dtc 1.8 workaround

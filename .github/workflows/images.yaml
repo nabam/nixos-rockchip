@@ -130,6 +130,7 @@ jobs:
     needs: create_release
     if: needs.create_release.outputs.upload_url != ''
     strategy:
+      fail-fast: false
       matrix:
         board:
         - Quartz64A

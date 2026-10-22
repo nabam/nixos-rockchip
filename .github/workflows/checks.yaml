@@ -48,6 +48,7 @@ jobs:
         - uBootRadxaRock4
         - uBootRadxaRock4CPlus
         - uBootRadxaRock4SE
+        - uBootRockPiS
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Free disk space

@@ -52,6 +52,28 @@ let
         license = lib.licenses.unfreeRedistributableFirmware;
       };
     };
+  # No SPI flash on RK3308 boards, so only the SD/eMMC image is installed.
+  # RK3308 is not supported by armTrustedFirmware in nixpkgs, use rkbin blobs.
+  buildRK3308UBoot =
+    defconfig:
+    buildUBoot {
+      inherit defconfig;
+      filesToInstall = [ "u-boot-rockchip.bin" ];
+      extraPatches = [ ./ramdisk_addr_r-rk3308.patch ];
+      env = {
+        BL31 = "${pkgs.rkbin}/bin/rk33/rk3308_bl31_v2.28.elf";
+        # Upstream rkbin only ships UART2/UART4 variants, which leave UART0 (the
+        # ROCK Pi S debug console) unclocked and garble all bootloader output.
+        ROCKCHIP_TPL = fetchurl {
+          url = "https://raw.githubusercontent.com/radxa/rkbin/69de99907a4b51e4012c704502d234ea3c0f0423/bin/rk33/rk3308_ddr_589MHz_uart0_m0_v2.11.bin";
+          hash = "sha256-Fsq7XHlyLVQMyOF2DkGHvl5NaHAlMD0/Pdi50cz4xVY=";
+        };
+      };
+      extraMeta = {
+        platforms = [ "aarch64-linux" ];
+        license = lib.licenses.unfreeRedistributableFirmware;
+      };
+    };
   buildRK3328UBoot =
     defconfig:
     buildPatchedUBoot {
@@ -219,6 +241,7 @@ in
   uBootOrangePi3B = buildRK3566UBoot { defconfig = "orangepi-3b-rk3566_defconfig"; };
   uBootOrangePi5B = buildRK3588UBoot "orangepi-5b-rk3588s_defconfig";
   uBootRadxaRock2 = buildRK3528UBoot "rock-2-rk3528_defconfig";
+  uBootRockPiS = buildRK3308UBoot "rock-pi-s-rk3308_defconfig";
   uBootRadxaCM3IO = buildRK3566UBoot {
     defconfig = "radxa-cm3-io-rk3566_defconfig";
     spi = false;

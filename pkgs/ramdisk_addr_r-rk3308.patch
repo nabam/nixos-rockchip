@@ -1,0 +1,12 @@
+diff --git a/include/configs/rk3308_common.h b/include/configs/rk3308_common.h
+--- a/include/configs/rk3308_common.h
++++ b/include/configs/rk3308_common.h
+@@ -21,7 +21,7 @@
+ 	"fdt_addr_r=0x01e00000\0"	\
+ 	"fdtoverlay_addr_r=0x01f00000\0"	\
+ 	"kernel_addr_r=0x02080000\0"	\
+-	"ramdisk_addr_r=0x06000000\0"	\
++	"ramdisk_addr_r=0x0a200000\0"	\
+ 	"kernel_comp_addr_r=0x08000000\0"	\
+ 	"kernel_comp_size=0x2000000\0"
+ 

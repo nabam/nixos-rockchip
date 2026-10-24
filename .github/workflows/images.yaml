@@ -44,6 +44,8 @@ jobs:
         - uBootRadxaRock4
         - uBootRadxaRock4CPlus
         - uBootRadxaRock4SE
+        - uBootRockPiE
+        - uBootRockPiEV3
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Free disk space
@@ -149,6 +151,8 @@ jobs:
         - RadxaRock4
         - RadxaRock4CPlus
         - RadxaRock4SE
+        - RockPiE
+        - RockPiEV3
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Free disk space

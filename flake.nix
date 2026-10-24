@@ -173,7 +173,10 @@
           "RockPiE" = {
             uBoot = uBoot.uBootRockPiE;
             kernel = kernel.linux_latest_rockchip_stable;
-            extraModules = [ noZFS ];
+            extraModules = [
+              noZFS
+              self.nixosModules.dtOverlayRockPiEGmacDelays
+            ];
           };
           "RockPiEV3" = {
             uBoot = uBoot.uBootRockPiEV3;
@@ -251,6 +254,7 @@
         dtOrangePi5B = import ./modules/dt-overlay/rk3588s-orangepi5b.nix;
         dtOverlayPineTab2 = import ./modules/dt-overlay/pinetab2.nix;
         dtOverlayRock2AEnablePCIe = import ./modules/dt-overlay/rock-2a-enable-pcie.nix;
+        dtOverlayRockPiEGmacDelays = import ./modules/dt-overlay/rock-pi-e-gmac-delays.nix;
         bes2600 = import ./modules/bes2600.nix;
       };
     }

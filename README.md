@@ -69,6 +69,11 @@ Applies device tree overlay to enable SATA port on Quartz64A.
 
 Applies device tree overlay for OrangePI5B
 
+#### nixosModules.dtOverlayRockPiEGmacDelays
+
+Applies device tree overlay to fix gigabit Ethernet RX on the ROCK Pi E
+(v1.x/v2.x) by retuning the RGMII delays.
+
 ## Supported Boards
 
 | Board                | Attribute       | Status          |

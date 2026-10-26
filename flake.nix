@@ -175,6 +175,19 @@
             kernel = kernel.linux_latest_rockchip_stable;
             extraModules = [ noZFS ];
           };
+          "RockPiE" = {
+            uBoot = uBoot.uBootRockPiE;
+            kernel = kernel.linux_latest_rockchip_stable;
+            extraModules = [
+              noZFS
+              self.nixosModules.dtOverlayRockPiEGmacDelays
+            ];
+          };
+          "RockPiEV3" = {
+            uBoot = uBoot.uBootRockPiEV3;
+            kernel = kernel.linux_latest_rockchip_stable;
+            extraModules = [ noZFS ];
+          };
           "RadxaCM3IO" = {
             uBoot = uBoot.uBootRadxaCM3IO;
             kernel = kernel.linux_latest_rockchip_stable;
@@ -246,6 +259,7 @@
         dtOrangePi5B = import ./modules/dt-overlay/rk3588s-orangepi5b.nix;
         dtOverlayPineTab2 = import ./modules/dt-overlay/pinetab2.nix;
         dtOverlayRock2AEnablePCIe = import ./modules/dt-overlay/rock-2a-enable-pcie.nix;
+        dtOverlayRockPiEGmacDelays = import ./modules/dt-overlay/rock-pi-e-gmac-delays.nix;
         bes2600 = import ./modules/bes2600.nix;
       };
     }
@@ -283,6 +297,8 @@
 
           uBootRadxaRock2 = uBoot.uBootRadxaRock2;
           uBootRockPiS = uBoot.uBootRockPiS;
+          uBootRockPiE = uBoot.uBootRockPiE;
+          uBootRockPiEV3 = uBoot.uBootRockPiEV3;
           uBootRadxaCM3IO = uBoot.uBootRadxaCM3IO;
           uBootRadxaRock4 = uBoot.uBootRadxaRock4;
           uBootRadxaRock4SE = uBoot.uBootRadxaRock4SE;

@@ -17,6 +17,7 @@ let
       BL31,
       ROCKCHIP_TPL ? "",
       extraPatches ? [ ],
+      spi ? true,
     }:
     let
       inherit
@@ -28,10 +29,14 @@ let
     in
     buildUBoot {
       defconfig = defconfig;
-      filesToInstall = [
-        "u-boot-rockchip.bin"
-        "u-boot-rockchip-spi.bin"
-      ];
+      filesToInstall =
+        if spi then
+          [
+            "u-boot-rockchip.bin"
+            "u-boot-rockchip-spi.bin"
+          ]
+        else
+          [ "u-boot-rockchip.bin" ];
 
       extraPatches = [ ./ramdisk_addr_r.patch ] ++ extraPatches;
       extraConfiG = [
@@ -75,9 +80,12 @@ let
       };
     };
   buildRK3328UBoot =
-    defconfig:
+    {
+      defconfig,
+      spi ? true,
+    }:
     buildPatchedUBoot {
-      inherit defconfig;
+      inherit defconfig spi;
       BL31 = "${pkgs.armTrustedFirmwareRK3328}/bl31.elf";
     };
   buildRK3399UBoot =
@@ -236,7 +244,16 @@ in
   uBootPinebookPro = buildRK3399UBoot "pinebook-pro-rk3399_defconfig";
   uBootRockPro64 = buildRK3399UBoot "rockpro64-rk3399_defconfig";
   uBootROCPCRK3399 = buildRK3399UBoot "roc-pc-rk3399_defconfig";
-  uBootRock64 = buildRK3328UBoot "rock64-rk3328_defconfig";
+  uBootRock64 = buildRK3328UBoot { defconfig = "rock64-rk3328_defconfig"; };
+  # v1.x/v2.x boards have DDR3, v3.x boards have DDR4.
+  uBootRockPiE = buildRK3328UBoot {
+    defconfig = "rock-pi-e-rk3328_defconfig";
+    spi = false;
+  };
+  uBootRockPiEV3 = buildRK3328UBoot {
+    defconfig = "rock-pi-e-v3-rk3328_defconfig";
+    spi = false;
+  };
   uBootOrangePiCM4 = buildRK3566UBoot { defconfig = "orangepi-3b-rk3566_defconfig"; };
   uBootOrangePi3B = buildRK3566UBoot { defconfig = "orangepi-3b-rk3566_defconfig"; };
   uBootOrangePi5B = buildRK3588UBoot "orangepi-5b-rk3588s_defconfig";

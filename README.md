@@ -91,6 +91,7 @@ Applies device tree overlay to fix gigabit Ethernet RX on the ROCK Pi E
 | Orange Pi CM4        | OrangePiCM4     | Untested         |
 | Orange Pi 5B         | OrangePi5B      | Needs New Kernel |
 | Radxa Rock 2         | RadxaRock2      | Tested & Works   |
+| [Radxa ROCK Pi S][]  | RockPiS         | Tested & Works   |
 | [Radxa ROCK Pi E][]  | RockPiE         | Tested & Works   |
 | Radxa ROCK Pi E v3   | RockPiEV3       | Untested         |
 | Radxa CM3/CM3 I/O    | RadxaCM3IO      | Untested         |
@@ -105,4 +106,5 @@ Applies device tree overlay to fix gigabit Ethernet RX on the ROCK Pi E
 [Pinebook Pro]: https://wiki.nixos.org/wiki/NixOS_on_ARM/PINE64_Pinebook_Pro
 [Radxa Rock 4]: https://wiki.nixos.org/wiki/NixOS_on_ARM/Radxa_ROCK_4
 [Radxa Rock4 SE]: https://wiki.nixos.org/wiki/NixOS_on_ARM/Radxa_ROCK_4
+[Radxa ROCK Pi S]: https://radxa.com/products/rockpi/pis/
 [Radxa ROCK Pi E]: https://radxa.com/products/rockpi/pie/

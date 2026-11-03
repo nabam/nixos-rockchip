@@ -170,6 +170,11 @@
               self.nixosModules.radxaRk2312DisableModules
             ];
           };
+          "RockPiS" = {
+            uBoot = uBoot.uBootRockPiS;
+            kernel = kernel.linux_latest_rockchip_stable;
+            extraModules = [ noZFS ];
+          };
           "RockPiE" = {
             uBoot = uBoot.uBootRockPiE;
             kernel = kernel.linux_latest_rockchip_stable;
@@ -291,6 +296,7 @@
           uBootOrangePi5B = uBoot.uBootOrangePi5B;
 
           uBootRadxaRock2 = uBoot.uBootRadxaRock2;
+          uBootRockPiS = uBoot.uBootRockPiS;
           uBootRockPiE = uBoot.uBootRockPiE;
           uBootRockPiEV3 = uBoot.uBootRockPiEV3;
           uBootRadxaCM3IO = uBoot.uBootRadxaCM3IO;

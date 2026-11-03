@@ -44,6 +44,7 @@ jobs:
         - uBootRadxaRock4
         - uBootRadxaRock4CPlus
         - uBootRadxaRock4SE
+        - uBootRockPiS
         - uBootRockPiE
         - uBootRockPiEV3
     runs-on: ubuntu-24.04-arm
@@ -151,6 +152,7 @@ jobs:
         - RadxaRock4
         - RadxaRock4CPlus
         - RadxaRock4SE
+        - RockPiS
         - RockPiE
         - RockPiEV3
     runs-on: ubuntu-24.04-arm

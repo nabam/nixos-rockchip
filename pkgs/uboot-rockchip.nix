@@ -150,6 +150,25 @@ let
         ROCKCHIP_TPL = (rkbin + "/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin");
       };
     };
+  # The DDR blob runs only at 0x3ff81000, after the boost blob; see rk3576-idblock.py.
+  buildRK3576UBoot =
+    defconfig:
+    buildUBoot {
+      inherit defconfig;
+      filesToInstall = [ "u-boot-rockchip.bin" ];
+      env = {
+        BL31 = "${pkgs.rkbin}/bin/rk35/rk3576_bl31_v1.25.elf";
+        ROCKCHIP_TPL = "${pkgs.rkbin}/bin/rk35/rk3576_ddr_lp4_2112MHz_lp5_2736MHz_v1.13.bin";
+      };
+      postBuild = ''
+        python3 -I ${./rk3576-idblock.py} u-boot-rockchip.bin \
+          ${pkgs.rkbin}/bin/rk35/rk3576_boost_v1.03.bin u-boot-rockchip.bin
+      '';
+      extraMeta = {
+        platforms = [ "aarch64-linux" ];
+        license = lib.licenses.unfreeRedistributableFirmware;
+      };
+    };
   buildRK3588UBoot =
     defconfig:
     let
@@ -244,5 +263,6 @@ in
   uBootRadxaRock4SE = buildRK3399UBoot "rock-4se-rk3399_defconfig";
   uBootRadxaRock4CPlus = buildRK3399UBoot "rock-4c-plus-rk3399_defconfig";
   uBootNanoPCT6 = buildRK3588UBoot "nanopc-t6-rk3588_defconfig";
+  uBootNanoPiR76S = buildRK3576UBoot "nanopi-r76s-rk3576_defconfig";
   uBootSige7 = buildRK3588UBoot "sige7-rk3588_defconfig";
 }

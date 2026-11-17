@@ -50,6 +50,7 @@ jobs:
         - uBootRadxaRock4SE
         - uBootRockPiE
         - uBootRockPiEV3
+        - uBootNanoPiR76S
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Free disk space
